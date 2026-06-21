@@ -61,6 +61,16 @@ assistant:
   max_tokens: 200
   reflection_awareness_min: 40
 
+storyteller:
+  # Used when the LLM is unreachable after retries (configurable, not hardcoded).
+  fallback_narration: "The forest holds its breath. Smoke drifts from a distant chimney, and the road waits for a decision."
+
+governance:
+  infer_attempts: 2            # LLM inference retries on transient error
+  infer_backoff_seconds: 0.4   # exponential backoff base between attempts
+  max_tokens_per_turn: 0       # per-turn approx-token ceiling (chars/4); 0 = unlimited
+  max_seconds_per_turn: 0      # per-turn wall-clock ceiling across retries; 0 = unlimited
+
 paths:
   saves: "data/saves"
   lore: "data/lore"

@@ -62,6 +62,16 @@ class StorytellerEvaluator:
 
     PASS_THRESHOLD = 0.6
     MECHANICS_FAIL_THRESHOLD = 0.5
+    REQUIRED_TOOLS = frozenset(
+        {
+            "roll_dice",
+            "resolve_skill_check",
+            "move_to",
+            "query_evil_state",
+            "resolve_combat",
+            "query_combat_state",
+        }
+    )
 
     def evaluate(
         self,
@@ -95,6 +105,16 @@ class StorytellerEvaluator:
 
         if not parsed.get("narration"):
             notes.append("Missing narration in JSON epilogue.")
+
+        # Propagate genuine tool-execution failures (errors, not game-logic
+        # "no": a failed REQUIRED mechanic forces a retry).
+        failed = [r for r in tool_receipts if r.get("success") is False]
+        if failed:
+            names = ", ".join(str(r.get("skill")) for r in failed)
+            notes.append(f"Tool call(s) failed: {names}.")
+            if any(r.get("skill") in self.REQUIRED_TOOLS for r in failed):
+                mechanics = min(mechanics, 0.4)
+
         if mechanics < self.MECHANICS_FAIL_THRESHOLD:
             notes.append("Mechanical outcome claimed without tool receipt.")
 
