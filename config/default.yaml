@@ -36,6 +36,22 @@ world:
   tick_interval_seconds: 60
   evil_base_rate_per_day: 0.01
 
+combat:                       # v0.2 grounded combat tunables (engine-authoritative)
+  player_attack_mod: 2        # base d20 to-hit modifier
+  player_base_defense: 11     # DC enemies must meet to hit the player
+  attack_die: 6               # damage die for player attacks
+  defend_defense_bonus: 4     # added to defense while defending
+  defend_stamina_regen: 6
+  flee_dc: 12
+  flee_stamina_cost: 8
+  fear_penalty_step: 3        # to-hit penalty = floor(fear / step)
+  exhaustion_threshold: 25    # stamina below this applies a to-hit penalty
+  exhaustion_penalty: 2
+  sympathy_focus_cost: 3
+  sympathy_die: 8             # "unmaking" damage die vs clockwork foes
+  defeat_respawn_location: edgewood_square
+  defeat_stamina_penalty: 40
+
 awareness:
   reveal_threshold: 20
   reflection_form_min: 40
@@ -50,6 +66,8 @@ paths:
   lore: "data/lore"
   lore_db: "data/lore/lore.db"
   economy: "data/economy.yaml"
+  bestiary: "data/bestiary.yaml"
+  recipes: "data/recipes"
   procgen_templates: "data/procgen_templates/edgewood.yaml"
   world_schedules: "data/world/schedules.yaml"
   comfyui_templates: "data/procgen_templates/comfyui.yaml"

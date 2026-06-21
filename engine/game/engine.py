@@ -198,6 +198,28 @@ class GameEngine:
         """Storyteller-only evil state."""
         return EvilTicker.snapshot(self.state)
 
+    def start_combat(self, enemy_id: str) -> dict[str, Any]:
+        """Begin a grounded-combat encounter (v0.2)."""
+        from engine.game.combat import start_combat
+
+        return start_combat(self.state, enemy_id).to_dict()
+
+    def resolve_combat(
+        self, action: str, target_id: str = "", item_id: str = ""
+    ) -> dict[str, Any]:
+        """Resolve one combat action; engine owns all outcome math (v0.2)."""
+        from engine.game.combat import resolve_combat
+
+        return resolve_combat(
+            self.state, action, target_id=target_id, item_id=item_id
+        ).to_dict()
+
+    def combat_state(self) -> dict[str, Any]:
+        """Return the active encounter snapshot (v0.2)."""
+        from engine.game.combat import combat_snapshot
+
+        return combat_snapshot(self.state)
+
 
 # Module-level engine for skill handlers (set per request in PR5+)
 _active_engine: Optional[GameEngine] = None

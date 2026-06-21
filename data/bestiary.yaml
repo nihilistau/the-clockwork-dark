@@ -1,0 +1,70 @@
+# Bestiary — mechanical stat blocks for grounded combat (v0.2, PR13).
+# Engine-authoritative; the Storyteller narrates but never invents these numbers.
+# Enemy ids match data/assets/manifest.yaml -> enemies (so portraits resolve).
+#
+# Fields:
+#   name     display name
+#   hp       hit points
+#   defense  DC the player's attack roll must meet to hit
+#   to_hit   enemy attack modifier vs the player's defense
+#   damage   damage dealt on a successful enemy hit
+#   fear     fear inflicted on the player per hit (0..n; raises to-hit penalty)
+#   tags     [beast|clockwork|human|undead] — sympathy "unmaking" hits clockwork
+#   loot     optional {id, name} dropped on victory
+
+wolf:
+  name: Forest Wolf
+  hp: 9
+  defense: 12
+  to_hit: 3
+  damage: 4
+  fear: 1
+  tags: [beast]
+
+scarecrow:
+  name: Field Scarecrow
+  hp: 8
+  defense: 11
+  to_hit: 2
+  damage: 3
+  fear: 1
+  tags: [construct]
+
+scarecrow_brass:
+  name: Brass-Toothed Scarecrow
+  hp: 14
+  defense: 13
+  to_hit: 4
+  damage: 5
+  fear: 2
+  tags: [clockwork]
+  loot: { id: dice_rune, name: Rune-etched Die }
+
+clockwork_beast:
+  name: Clockwork Beast
+  hp: 22
+  defense: 14
+  to_hit: 5
+  damage: 6
+  fear: 3
+  tags: [clockwork]
+  loot: { id: talisman, name: Sympathy Charm }
+
+husk:
+  name: Brass-Veined Husk
+  hp: 16
+  defense: 13
+  to_hit: 4
+  damage: 5
+  fear: 3
+  tags: [clockwork, undead]
+
+deserter:
+  name: Millhaven Deserter
+  hp: 13
+  defense: 12
+  to_hit: 4
+  damage: 5
+  fear: 1
+  tags: [human]
+  loot: { id: iron_knife, name: Iron Knife }

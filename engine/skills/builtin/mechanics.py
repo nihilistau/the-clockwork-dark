@@ -146,3 +146,31 @@ def query_evil_state() -> str:
     """Evil snapshot for GM narration."""
     engine = get_active_engine()
     return json.dumps(engine.get_evil_snapshot())
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Resolve one combat action against a foe. MUST call before narrating any "
+        "fight outcome. action in {attack, defend, flee, use_item, sympathy}; pass "
+        "target_id (enemy id) to begin an encounter, item_id for use_item."
+    ),
+    category="GAME",
+    trigger=TRIGGER_REQUIRED,
+)
+def resolve_combat(action: str, target_id: str = "", item_id: str = "") -> str:
+    """Engine-authoritative combat resolution (v0.2)."""
+    engine = get_active_engine()
+    return json.dumps(engine.resolve_combat(action, target_id=target_id, item_id=item_id))
+
+
+@skill(
+    pack="clockwork",
+    description="Return the active combat encounter snapshot (enemy hp, fear, round).",
+    category="GAME",
+    trigger=TRIGGER_REQUIRED,
+)
+def query_combat_state() -> str:
+    """Current encounter snapshot for narration/UI."""
+    engine = get_active_engine()
+    return json.dumps(engine.combat_state())

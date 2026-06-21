@@ -116,13 +116,17 @@ def _scene_payload(
     meta: dict[str, Any],
 ) -> dict[str, Any]:
     """Build scene block for turn payloads."""
+    from engine.game.combat import combat_snapshot
+
+    in_combat = state.combat is not None
     return {
         "location_id": state.location_id,
         "name": place.get("name", state.location_id),
         "caption": place.get("caption", ""),
         "image_url": image_url,
         "kind": meta.get("kind", place.get("kind", "")),
-        "overlay": meta.get("overlay") or overlay_for_location(state.location_id),
+        "combat": combat_snapshot(state) if in_combat else None,
+        "overlay": "combat" if in_combat else (meta.get("overlay") or overlay_for_location(state.location_id)),
         "cutscene_id": meta.get("cutscene_id", ""),
         "npcs": merge_npcs_at_location(state, state.location_id),
         "mural_fragment": mural_fragment_for_phase(state.evil_phase.value),
