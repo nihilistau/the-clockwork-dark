@@ -28,6 +28,8 @@ vines_breach_forest:
     - "Cold filigree threads the birches at the forest margin. Aldric the woodcutter will not work past the first birch."
   world_events:
     - { id: forest_margin_turns, text: "Clockwork-vines have crept into the forest margin, ticking where the sap should run." }
+  npc_moves:
+    npc_aldric: edgewood_square   # the woodcutter abandons the margin, axe idle, in the square now
 
 tunnels_open:
   set_flags: [tunnels_open]
@@ -37,10 +39,14 @@ tunnels_open:
     - "Greta Moss has stopped tending the shrine candles. She stands at the square's edge and watches the ground."
   world_events:
     - { id: tunnels_unsealed, text: "The tunnels under Edgewood are unsealed; the hidden path to Hollow Hill is open." }
+  npc_moves:
+    npc_greta: edgewood_square   # the shrine-keeper abandons the candles to watch the ground
 
 tower_assembles:
-  set_flags: [tower_visible]
+  set_flags: [tower_visible, gate_thinning]
   rumors:
     - "A tower is assembling itself out of the bruised sky on the southern horizon. It was not there yesterday."
+    - "The road behind Millhaven gate is thick with refugees and thin with anyone going back."
   world_events:
     - { id: tower_rises, text: "The Clockwork Tower is assembling on the horizon, gear fitting to gear." }
+    - { id: gate_thins, text: "Refugees thin the road behind Millhaven gate; Sergeant Sera holds the line with fewer each day." }

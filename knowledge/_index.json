@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "cd0c389f227908f8",
+  "bundle_hash": "4e9311b4db881fee",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "9b184fe835838037",
+      "hash": "a273820ae8b4b13b",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
@@ -92,6 +92,7 @@
         "the-tinkers-questline",
         "the-tunnel-mouth",
         "the-two-powers",
+        "the-village-empties",
         "turn-metrics"
       ],
       "slug": "changelog",
@@ -891,6 +892,27 @@
       "type": "Lore"
     },
     {
+      "hash": "fb61c868457cb239",
+      "links": [
+        "beneath-the-tunnels",
+        "doom-arcs",
+        "maris-hearth",
+        "the-clockwork-dark",
+        "the-reactive-world",
+        "the-two-powers"
+      ],
+      "slug": "the-village-empties",
+      "tags": [
+        "lore",
+        "npcs",
+        "reactive",
+        "doom",
+        "edgewood"
+      ],
+      "title": "The Village Empties",
+      "type": "Lore"
+    },
+    {
       "hash": "a423264f52a37215",
       "links": [
         "clockwork-architecture"
@@ -906,5 +928,5 @@
       "type": "Metric"
     }
   ],
-  "count": 46
+  "count": 47
 }

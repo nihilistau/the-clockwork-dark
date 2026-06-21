@@ -201,7 +201,7 @@ npcs:
     tends the candles and refuses to finish the mural. She knew the road would change
     before the traders did, and she will not say how.
   voice: Dry · scripture worn to plain warning
-  image: ''
+  image: assets/NPC-Move-Dark/female-move.jpg
   ambiguous: false
 - id: npc_wren
   name: Wren
@@ -222,7 +222,7 @@ npcs:
     timber and knows which trails double back. Lately he will not work past the third
     birch — the game trails, he says, have started watching him back.
   voice: Blunt · fewer words after dark
-  image: ''
+  image: assets/NPC-Move-Dark/male-move.jpg
   ambiguous: false
 archetypes:
 - id: wayfarer
