@@ -1,0 +1,38 @@
+# Notice-board & character contracts (v0.6). Opt-in missions — the player may
+# take none and simply bake bread, or chase bounties against the Dark.
+# Fields: title, giver, kind (anti_dark|mundane|bounty), summary, location
+# (where it can be picked up), optional min_phase / min_awareness gates,
+# reward (effects: gold, engagement, awareness, hp, item{id,name}, reputation{npc:amt}).
+
+still_south_harvester:
+  title: "Still the South Harvester"
+  giver: noticeboard
+  kind: anti_dark
+  summary: "Pinned to the board: something brass is cutting the south field in rows too straight. Still it before the harvest is lost."
+  location: edgewood_square
+  reward: { gold: 8, engagement: 12, reputation: { npc_sera: 2 } }
+
+deliver_dawn_bread:
+  title: "Deliver the Dawn Bread"
+  giver: npc_maris
+  kind: mundane
+  summary: "Maris needs the dawn loaves carried to the gatehouse before the militia changes watch."
+  location: edgewood_bakery
+  reward: { gold: 3, reputation: { npc_maris: 2 } }
+
+bounty_brass_scarecrow:
+  title: "Bounty: The Brass Scarecrow"
+  giver: noticeboard
+  kind: bounty
+  summary: "A standing bounty for the scarecrow in the east field that no longer stands where it was put."
+  location: edgewood_square
+  min_awareness: 20
+  reward: { gold: 12, engagement: 8, item: { id: brass_filings, name: Brass Filings } }
+
+tinkers_lost_cog:
+  title: "The Tinker's Lost Cog"
+  giver: npc_ilya
+  kind: mundane
+  summary: "Ilya the tinker lost a brass cog on the forest path and would pay to have it found."
+  location: tinker_caravan
+  reward: { gold: 5, item: { id: old_clock_part, name: Old Clock Part }, reputation: { npc_ilya: 2 } }

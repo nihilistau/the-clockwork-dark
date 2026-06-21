@@ -125,6 +125,7 @@ class GameState:
     world_events: list[dict[str, Any]] = field(default_factory=list)
     rumors: list[str] = field(default_factory=list)
     doom_beats_seen: list[str] = field(default_factory=list)  # crossed Doom Clock beats
+    contracts: list[dict[str, Any]] = field(default_factory=list)  # accepted notice-board contracts
     last_sim_tick_at: float = 0.0
     media_cache: dict[str, str] = field(default_factory=dict)
     media_cutscenes_shown: list[str] = field(default_factory=list)
@@ -155,6 +156,7 @@ class GameState:
             "rumors": list(self.rumors),
             "engagement": self.engagement,
             "doom_beats_seen": list(self.doom_beats_seen),
+            "contracts": list(self.contracts),
             "last_sim_tick_at": self.last_sim_tick_at,
             "media_cache": dict(self.media_cache),
             "media_cutscenes_shown": list(self.media_cutscenes_shown),
@@ -214,6 +216,7 @@ class GameState:
             rumors=list(data.get("rumors", [])),
             engagement=float(data.get("engagement", 0.0)),
             doom_beats_seen=list(data.get("doom_beats_seen", [])),
+            contracts=list(data.get("contracts", [])),
             last_sim_tick_at=float(data.get("last_sim_tick_at", 0.0)),
             media_cache=dict(data.get("media_cache", {})),
             media_cutscenes_shown=list(data.get("media_cutscenes_shown", [])),

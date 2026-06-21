@@ -14,6 +14,7 @@ import logging
 from typing import Any
 
 import engine.skills.builtin.assistant  # noqa: F401 — register skills
+import engine.skills.builtin.contracts  # noqa: F401 — register skills
 import engine.skills.builtin.knowledge  # noqa: F401 — register skills
 import engine.skills.builtin.mechanics  # noqa: F401 — register skills
 from engine.game.engine import GameEngine, set_active_engine
