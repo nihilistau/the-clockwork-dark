@@ -9,7 +9,7 @@
 <br/>
 
 ![Python 3.13](https://img.shields.io/badge/python-3.13+-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-318%20passing-2ea44f?logo=pytest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-359%20passing-2ea44f?logo=pytest&logoColor=white)
 ![Local-first](https://img.shields.io/badge/local--first-no%20cloud%20required-444)
 ![LLM](https://img.shields.io/badge/LLM-provider--agnostic%20(LM%20Studio)-555)
 ![Status](https://img.shields.io/badge/status-v0.7%20·%20PR1–37%20landed-blueviolet)
@@ -173,7 +173,7 @@ lmstudio:
 ## Running the tests
 
 ```bash
-pytest            # 318 tests, all passing
+pytest            # 359 tests, all passing
 pytest -v         # verbose
 ```
 
@@ -207,7 +207,7 @@ clockwork-dark/
 ├── config/default.yaml     # all ports, models, paths — never hard-coded
 ├── data/                   # economy, bestiary, recipes, contracts, world content
 ├── scripts/                # build_okfs_index.py, start.ps1 …
-├── tests/                  # 318 tests
+├── tests/                  # 359 tests
 └── launcher.py
 ```
 
