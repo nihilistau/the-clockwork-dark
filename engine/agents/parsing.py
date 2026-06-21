@@ -118,8 +118,31 @@ def _candidate_objects(raw: str) -> list[tuple[int, int, str]]:
         candidates.append((s, e, raw[s:e]))
     # epilogue objects (those naming narration/choices/tool_calls) rank highest
     keyed = [c for c in candidates if '"narration"' in c[2] or '"choices"' in c[2]
-             or '"tool_calls"' in c[2]]
+             or '"tool_calls"' in c[2] or '"text"' in c[2]]
     return keyed or candidates
+
+
+def extract_json_object(raw: str) -> Optional[dict[str, Any]]:
+    """Best-effort parse of the last balanced JSON object in messy LLM text.
+
+    Reuses the same balanced-brace scanner + lenient repair as the Storyteller
+    parser, so the Assistant gets the same robustness (no brittle non-greedy
+    regex that truncates on nested objects). Returns None if nothing parses.
+    """
+    for _start, _end, blob in reversed(_candidate_objects(raw or "")):
+        data = _loads_lenient(blob)
+        if data is not None:
+            return data
+    return None
+
+
+def prose_outside_json(raw: str) -> str:
+    """Return ``raw`` with code fences and balanced JSON objects stripped — the
+    human prose around an epilogue."""
+    text = _FENCE.sub(" ", raw or "")
+    for s, e in reversed(extract_balanced_objects(text)):
+        text = text[:s] + " " + text[e:]
+    return text.strip()
 
 
 def normalize_tool_calls(raw_calls: Any) -> list[dict[str, Any]]:

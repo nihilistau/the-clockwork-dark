@@ -24,7 +24,8 @@ import yaml
 
 from engine.config import get_config
 from engine.game.dice import roll_dice
-from engine.game.state import GameState, InventoryItem
+from engine.game.inventory import add_item
+from engine.game.state import GameState
 
 _ROOT = Path(__file__).resolve().parents[2]
 _BESTIARY_CACHE: Optional[dict[str, Any]] = None
@@ -511,10 +512,4 @@ def _snapshot_result(
 
 
 def _add_item(state: GameState, item_id: str, name: str, qty: int = 1) -> None:
-    if not item_id:
-        return
-    for entry in state.inventory:
-        if entry.id == item_id:
-            entry.qty += qty
-            return
-    state.inventory.append(InventoryItem(id=item_id, name=name or item_id, qty=qty, tags=[]))
+    add_item(state, item_id, name, qty)

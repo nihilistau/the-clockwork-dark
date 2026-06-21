@@ -136,8 +136,16 @@ class GameState:
     ended: bool = False
     save_version: int = 1
 
-    def to_dict(self, *, include_hidden: bool = False) -> dict[str, Any]:
-        """Serialize to dict. Redacts awareness unless include_hidden."""
+    def to_dict(
+        self, *, include_hidden: bool = False, include_minds: bool = False
+    ) -> dict[str, Any]:
+        """Serialize to dict.
+
+        Redacts awareness/evil_progress unless ``include_hidden`` and the
+        GM-internal agent minds unless ``include_minds`` — keeping the default
+        payload client-safe, while ``include_minds=True`` makes ``to_dict`` /
+        ``from_dict`` a symmetric round-trip (used by ``save_game``).
+        """
         data: dict[str, Any] = {
             "session_id": self.session_id,
             "player_name": self.player_name,
@@ -168,6 +176,9 @@ class GameState:
             "save_version": self.save_version,
             "procgen": self.procgen.to_dict(),
         }
+        if include_minds:
+            data["storyteller_mind"] = asdict(self.storyteller_mind)
+            data["assistant_mind"] = asdict(self.assistant_mind)
         if include_hidden:
             data["awareness"] = self.awareness
             data["evil_progress"] = self.evil_progress

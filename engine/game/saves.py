@@ -42,15 +42,7 @@ def save_game(state: GameState, *, label: str = "") -> dict[str, Any]:
     Returns:
         Metadata dict with path and saved_at.
     """
-    payload = state.to_dict(include_hidden=True)
-    payload["storyteller_mind"] = {
-        k: getattr(state.storyteller_mind, k)
-        for k in state.storyteller_mind.__dataclass_fields__
-    }
-    payload["assistant_mind"] = {
-        k: getattr(state.assistant_mind, k)
-        for k in state.assistant_mind.__dataclass_fields__
-    }
+    payload = state.to_dict(include_hidden=True, include_minds=True)
     payload["save_label"] = label or state.player_name
     payload["saved_at"] = datetime.now(timezone.utc).isoformat()
 

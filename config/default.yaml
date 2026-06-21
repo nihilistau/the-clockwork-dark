@@ -1,7 +1,13 @@
 scene:
   clockwork:
     port: 5573
-    host: "0.0.0.0"
+    host: "127.0.0.1"        # localhost-only by default; set "0.0.0.0" to expose the game UI on the LAN
+
+security:
+  cors_origins:              # Socket.IO allowed origins — localhost-only by default (was "*")
+    - "http://localhost:5573"
+    - "http://127.0.0.1:5573"
+  max_upload_mb: 8           # cap on request body size (guards the voice-upload endpoint)
 
 lmstudio:
   base_url: "http://localhost:1234/v1"   # localhost or the network "beast" (e.g. http://192.168.x.x:1234/v1)

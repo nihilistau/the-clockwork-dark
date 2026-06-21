@@ -12,11 +12,15 @@ from __future__ import annotations
 import json
 import logging
 import random
-import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
 from engine.agents.assistant_director import AssistantDirector
+from engine.agents.parsing import (
+    extract_json_object,
+    normalize_tool_calls,
+    prose_outside_json,
+)
 from engine.agents.prompts import assistant_system_prompt
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import execute_tool_calls
@@ -27,9 +31,6 @@ from engine.skills.builtin.assistant import ASSISTANT_FORMS, compute_hint_tier
 from engine.skills.registry import SKILL_REGISTRY
 
 logger = logging.getLogger(__name__)
-
-_JSON_BLOCK = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL)
-_JSON_LOOSE = re.compile(r"(\{[^{}]*\"text\"[^{}]*\})", re.DOTALL)
 
 FORM_VOICE_STYLES: dict[str, str] = {
     "cat": "chime",
@@ -75,28 +76,28 @@ def parse_assistant_response(raw: str) -> dict[str, Any]:
     """
     Parse Assistant LLM output — plain prose or optional JSON epilogue.
 
+    Shares the Storyteller's robust extractor (balanced-brace scan + lenient
+    repair) instead of a brittle non-greedy regex, so nested objects and
+    trailing-comma/smart-quote noise no longer truncate or drop the epilogue.
+
     Args:
         raw: Full LLM response.
 
     Returns:
-        Dict with text, tool_calls, voice_style.
+        Dict with text, tool_calls (normalized), voice_style.
     """
-    match = _JSON_BLOCK.search(raw)
-    if not match:
-        match = _JSON_LOOSE.search(raw)
-
-    if match:
-        try:
-            data = json.loads(match.group(1))
-            prose = raw.split("```")[0].strip()
-            text = str(data.get("text") or prose or raw).strip()
-            return {
-                "text": text,
-                "tool_calls": data.get("tool_calls", []),
-                "voice_style": str(data.get("voice_style", "")),
-            }
-        except json.JSONDecodeError:
-            pass
+    raw = raw or ""
+    data = extract_json_object(raw)
+    if isinstance(data, dict) and any(
+        k in data for k in ("text", "tool_calls", "voice_style")
+    ):
+        prose = prose_outside_json(raw)
+        text = str(data.get("text") or prose or raw).strip()
+        return {
+            "text": text,
+            "tool_calls": normalize_tool_calls(data.get("tool_calls")),
+            "voice_style": str(data.get("voice_style") or ""),
+        }
 
     return {
         "text": raw.strip(),
