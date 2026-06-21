@@ -14,6 +14,7 @@ lmstudio:
     enabled: true
     draft_profile: "draft"
     refine_profile: "big"
+  structured_output: false      # enable to force schema-valid epilogue (capable models); see knowledge/reference/lmstudio/lmstudio-structured-output.md
 
 comfyui:
   base_url: "http://localhost:8188"

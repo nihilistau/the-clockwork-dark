@@ -17,6 +17,7 @@ from engine.agents.evaluator import EvaluationResult, StorytellerEvaluator
 from engine.agents.parsing import parse_storyteller_response  # noqa: F401 (re-export)
 from engine.agents.prompts import evaluator_retry_prompt, storyteller_system_prompt
 from engine.agents.resilience import TurnBudget, retry_call
+from engine.agents.schemas import STORYTELLER_RESPONSE_FORMAT
 from engine.agents.streaming import ProseStreamGate
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import (
@@ -104,6 +105,7 @@ class StorytellerAgent:
         self._infer_backoff = float(cfg.get("governance.infer_backoff_seconds", 0.4))
         self._budget_max_tokens = int(cfg.get("governance.max_tokens_per_turn", 0))
         self._budget_max_seconds = float(cfg.get("governance.max_seconds_per_turn", 0))
+        self._structured = bool(cfg.get("lmstudio.structured_output", False))
 
     def _infer(
         self,
@@ -126,11 +128,15 @@ class StorytellerAgent:
             return raw
 
         from engine.lmstudio.client import get_lms_client
+        from engine.lmstudio.profiles import resolve_profile
 
         client = self._client or get_lms_client()
         feed = gate.feed if gate is not None else None
+        rf = STORYTELLER_RESPONSE_FORMAT if self._structured else None
 
-        if self.use_speculative:
+        # Speculative draft→refine is incompatible with strict structured output
+        # (the draft pass is free prose); skip it when structured.
+        if self.use_speculative and not self._structured:
             resp = speculative_stream(
                 client,
                 messages,
@@ -142,22 +148,27 @@ class StorytellerAgent:
                 gate.flush()
             return resp.content
 
+        mp = resolve_profile("big")
         if gate is not None:
             parts: list[str] = []
-            for chunk in client.infer_stream(messages, profile="big"):
+            for chunk in client.chat_stream(
+                messages,
+                model=mp.model,
+                temperature=mp.temperature,
+                max_tokens=mp.max_tokens,
+                response_format=rf,
+            ):
                 parts.append(chunk)
                 gate.feed(chunk)
             gate.flush()
             return "".join(parts)
 
-        from engine.lmstudio.profiles import resolve_profile
-
-        mp = resolve_profile("big")
         return client.chat(
             messages,
             model=mp.model,
             temperature=mp.temperature,
             max_tokens=mp.max_tokens,
+            response_format=rf,
         ).content
 
     def _build_messages(

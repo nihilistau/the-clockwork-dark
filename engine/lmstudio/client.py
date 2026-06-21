@@ -71,6 +71,7 @@ class LMSClient:
         model: Optional[str] = None,
         temperature: float = 0.8,
         max_tokens: int = 1500,
+        response_format: Optional[dict[str, Any]] = None,
     ) -> LMSResponse:
         """Non-streaming chat completion."""
         chunks: list[str] = []
@@ -79,6 +80,7 @@ class LMSClient:
             model=model,
             temperature=temperature,
             max_tokens=max_tokens,
+            response_format=response_format,
         ):
             chunks.append(chunk)
         return LMSResponse(content="".join(chunks), model=model or "")
@@ -91,20 +93,24 @@ class LMSClient:
         temperature: float = 0.8,
         max_tokens: int = 1500,
         on_event: Optional[Callable[[LMSStreamEvent], None]] = None,
+        response_format: Optional[dict[str, Any]] = None,
     ) -> Generator[str, None, LMSResponse]:
         """
         Stream chat completion tokens.
 
         Yields content deltas. Fires typed LMSStreamEvent via on_event.
+        ``response_format`` enables OpenAI-compatible structured output.
         """
         resolved = model or resolve_profile("big").model
-        payload = {
+        payload: dict[str, Any] = {
             "model": resolved,
             "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens,
             "stream": True,
         }
+        if response_format is not None:
+            payload["response_format"] = response_format
         t0 = time.perf_counter()
         if on_event:
             on_event(LMSStreamEvent(event_type="chat.start", model_instance_id=resolved))
