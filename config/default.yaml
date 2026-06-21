@@ -81,6 +81,7 @@ paths:
   economy: "data/economy.yaml"
   bestiary: "data/bestiary.yaml"
   recipes: "data/recipes"
+  contracts: "data/contracts.yaml"
   knowledge: "knowledge"        # OKFS knowledge bundle root
   procgen_templates: "data/procgen_templates/edgewood.yaml"
   world_schedules: "data/world/schedules.yaml"
