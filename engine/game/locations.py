@@ -25,6 +25,7 @@ _LOCATION_META: dict[str, dict[str, Any]] = {
     "hollow_hill": {"name": "Hollow Hill", "ring": 0, "evil_multiplier": 0.65},
     "edgewood_square": {"name": "Edgewood Square", "ring": 1, "evil_multiplier": 0.8},
     "edgewood_bakery": {"name": "Edgewood Bakery", "ring": 1, "evil_multiplier": 0.7},
+    "edgewood_forge": {"name": "The Forge", "ring": 1, "evil_multiplier": 0.8},
     "edgewood_shrine": {"name": "Shrine of Unnamed Saints", "ring": 1, "evil_multiplier": 0.75},
     "notice_board": {"name": "Notice Board", "ring": 1, "evil_multiplier": 0.8},
     "tinker_caravan": {"name": "Tinker Caravan", "ring": 1, "evil_multiplier": 0.9},

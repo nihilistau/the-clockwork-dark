@@ -1,0 +1,39 @@
+# The Forge — Brann Holt's smithy recipes (station: edgewood_forge).
+# Arms and wards, craftable only at the anvil. See [[the-forge]]. The warded
+# blade is honest anti-Dark gear: brass filings and a sympathy charm worked into
+# steel that bites clockwork. Inputs/outputs align with data/economy.yaml.
+
+mend_blade:
+  name: Mend a Blade
+  station: edgewood_forge
+  skill: craft
+  dc: 9
+  time_hours: 1
+  inputs:
+    - { id: whetstone, qty: 1 }
+    - { id: iron_knife, qty: 1 }
+  output: { id: honed_knife, name: Honed Knife, qty: 1 }
+
+forge_warded_blade:
+  name: Forge a Warded Blade
+  station: edgewood_forge
+  skill: craft
+  dc: 13
+  focus_cost: 1
+  time_hours: 2
+  inputs:
+    - { id: brass_filings, qty: 2 }
+    - { id: sympathy_charm, qty: 1 }
+  output: { id: warded_blade, name: Warded Blade, qty: 1 }
+
+reforge_relic:
+  name: Reforge a Relic
+  station: edgewood_forge
+  skill: focus
+  dc: 14
+  focus_cost: 2
+  time_hours: 2
+  inputs:
+    - { id: old_clock_part, qty: 1 }
+    - { id: brass_filings, qty: 1 }
+  output: { id: brass_keepsake, name: Brass Keepsake, qty: 1 }

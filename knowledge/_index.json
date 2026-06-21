@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "4e9311b4db881fee",
+  "bundle_hash": "f0450ccf92669c5b",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "a273820ae8b4b13b",
+      "hash": "15500277a1fa7ac7",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
@@ -84,6 +84,7 @@
         "systems-catalog",
         "the-convergence",
         "the-first-warden",
+        "the-forge",
         "the-harvest",
         "the-heartlands",
         "the-notice-board",
@@ -728,6 +729,28 @@
       "type": "Lore"
     },
     {
+      "hash": "382b10c1638545f8",
+      "links": [
+        "sympathy-and-naming",
+        "systems-catalog",
+        "the-notice-board",
+        "the-tinkers",
+        "the-two-powers"
+      ],
+      "slug": "the-forge",
+      "tags": [
+        "lore",
+        "forge",
+        "blacksmith",
+        "crafting",
+        "edgewood",
+        "npc",
+        "wards"
+      ],
+      "title": "The Forge & Brann Holt",
+      "type": "Lore"
+    },
+    {
       "hash": "00f5abd25e861fd6",
       "links": [
         "beneath-the-tunnels",
@@ -928,5 +951,5 @@
       "type": "Metric"
     }
   ],
-  "count": 47
+  "count": 48
 }

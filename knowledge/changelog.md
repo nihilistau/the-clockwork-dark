@@ -13,6 +13,18 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the Forge
+A new village location + NPC + crafting station ([[the-forge]]):
+- **`edgewood_forge`** off the square (scene graph + `locations.py` meta +
+  manifest art `Design_files/assets/Forge/`), kept by **Brann Holt** the
+  blacksmith (a canon NPC).
+- **Station-gated recipes** (`data/recipes/forge.yaml`) — *Mend a Blade*, *Reforge
+  a Relic*, and the **Warded Blade** (brass filings + a sympathy charm worked into
+  steel that bites clockwork): honest anti-Dark gear, craftable only at the anvil.
+- The smith's counterpart to Maris: a mundane anchor — you can pass the whole story
+  at the forge and never go to the tower. Tests in `tests/test_forge.py`; bundle at
+  48 concepts.
+
 ## 2026-06-22 — the village empties (NPCs move with the Dark)
 The `world_events` flavor is now real movement ([[the-village-empties]]):
 - **`npc_moves` world-effect** (`engine/game/world_effects.py` +

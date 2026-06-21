@@ -15,6 +15,11 @@ canon_npcs:
     role: baker
     location_id: edgewood_bakery
     traits: [warm, watchful, maternal]
+  - id: npc_brann
+    name: Brann Holt
+    role: blacksmith
+    location_id: edgewood_forge
+    traits: [grim, steady, close-mouthed]
   - id: npc_odran
     name: Odran Cartwright
     role: caravan_master
