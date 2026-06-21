@@ -1,0 +1,46 @@
+# World effects for Doom Clock beats — the Dark made tangible.
+# Applied once, when a beat is crossed (engine/game/world_effects.py, fired from
+# DoomClock.pending_beats). Effects land on existing GameState fields so they
+# persist with the save. Keys per beat:
+#   set_flags    : [flag, ...]            -> state.flags[flag] = True
+#   discoveries  : [key, ...]             -> state.flags["discovery_<key>"] = True
+#                                            (opens edges/locations gated by requires_discovery)
+#   rumors       : ["text", ...]          -> appended to state.rumors (village chatter)
+#   world_events : [{id, text}, ...]      -> appended to state.world_events (narration ledger)
+
+harvest_south:
+  set_flags: [harvest_begun]
+  rumors:
+    - "No one will walk the south harvest line now — the wheat cuts itself in rows too straight for any wind."
+  world_events:
+    - { id: south_field_falls, text: "The south wheatfield has gone over to the rows; something low and brass harvests it." }
+
+scarecrow_wakes:
+  set_flags: [scarecrow_awake]
+  rumors:
+    - "The east-field scarecrow turned to face the road, and no hand turned it. Its grin shows brass now."
+  world_events:
+    - { id: scarecrow_walks, text: "The brass scarecrow no longer stands where it was put; it follows the road when unwatched." }
+
+vines_breach_forest:
+  set_flags: [vines_breached]
+  rumors:
+    - "Cold filigree threads the birches at the forest margin. Aldric the woodcutter will not work past the first birch."
+  world_events:
+    - { id: forest_margin_turns, text: "Clockwork-vines have crept into the forest margin, ticking where the sap should run." }
+
+tunnels_open:
+  set_flags: [tunnels_open]
+  discoveries: [hidden_path]   # the worked-stone seam unseals the barrow road: Hollow Hill & the Mage-Ruins
+  rumors:
+    - "Beneath the old stump a seam of worked stone has yawned open, breathing a draught of oil and old time."
+    - "Greta Moss has stopped tending the shrine candles. She stands at the square's edge and watches the ground."
+  world_events:
+    - { id: tunnels_unsealed, text: "The tunnels under Edgewood are unsealed; the hidden path to Hollow Hill is open." }
+
+tower_assembles:
+  set_flags: [tower_visible]
+  rumors:
+    - "A tower is assembling itself out of the bruised sky on the southern horizon. It was not there yesterday."
+  world_events:
+    - { id: tower_rises, text: "The Clockwork Tower is assembling on the horizon, gear fitting to gear." }

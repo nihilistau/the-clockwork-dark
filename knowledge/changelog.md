@@ -13,6 +13,21 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the reactive world
+The Doom Clock's beats now **change the world** instead of only narrating it
+([[the-reactive-world]]):
+- **`engine/game/world_effects.py`** + `data/world/doom_effects.yaml` — crossing a
+  beat applies declarative effects onto existing `GameState` fields (so they save
+  for free): set flags, accrue village rumors, log world_events, and **unlock
+  discoveries**. The `tunnels_open` beat sets `discovery_hidden_path`, unsealing
+  the barrow road to Hollow Hill and the Mage-Ruins — new ground reachable *because
+  the Dark opened it*. Wired into `DoomClock.pending_beats` (idempotent).
+- **Flag-gated contracts** — notice-board postings can carry `requires_flag`, so
+  the board responds to the spread: *Seal the Tunnel* (tunnels_open), *Tend the
+  Forest Margin* (vines_breached), *Watch: The Walking Scarecrow* (scarecrow_awake)
+  appear only once their world-sign falls.
+- Tests in `tests/test_world_effects.py`; bundle at 44 concepts.
+
 ## 2026-06-22 — behavioural smoke + CI
 - **jsdom dialog tests** — the a11y dialog manager is extracted to
   `clockwork-dialogs.js` (a `create(doc)` factory) and behaviourally tested under
