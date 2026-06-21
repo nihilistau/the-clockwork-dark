@@ -9,13 +9,12 @@ Version: v0.1.0 [2026-06-20]
 
 from __future__ import annotations
 
-import json
 import logging
-import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
 from engine.agents.evaluator import EvaluationResult, StorytellerEvaluator
+from engine.agents.parsing import parse_storyteller_response  # noqa: F401 (re-export)
 from engine.agents.prompts import evaluator_retry_prompt, storyteller_system_prompt
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import (
@@ -30,9 +29,6 @@ from engine.lore.manager import get_lore_manager
 from engine.media.pipeline import MediaPipeline
 
 logger = logging.getLogger(__name__)
-
-_JSON_BLOCK = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL)
-_JSON_LOOSE = re.compile(r"(\{[^{}]*\"narration\"[^{}]*\})", re.DOTALL)
 
 
 @dataclass
@@ -62,52 +58,6 @@ class StorytellerTurnResult:
             "media": self.media,
             "retries": self.retries,
         }
-
-
-def parse_storyteller_response(raw: str) -> dict[str, Any]:
-    """
-    Extract JSON epilogue from Storyteller LLM output.
-
-    Args:
-        raw: Full LLM response text.
-
-    Returns:
-        Parsed dict with narration, choices, tool_calls, etc.
-    """
-    match = _JSON_BLOCK.search(raw)
-    if not match:
-        match = _JSON_LOOSE.search(raw)
-
-    if match:
-        try:
-            data = json.loads(match.group(1))
-            data.setdefault("narration", raw.split("```")[0].strip())
-            data.setdefault("choices", [])
-            data.setdefault("tool_calls", [])
-            data.setdefault("npc_voices", [])
-            data.setdefault("stat_changes", {})
-            data.setdefault("items_gained", [])
-            data.setdefault("items_lost", [])
-            data.setdefault("skill_check", None)
-            data.setdefault("tags_inline", "")
-            return data
-        except json.JSONDecodeError:
-            pass
-
-    return {
-        "narration": raw.strip(),
-        "choices": [
-            {"id": "a", "text": "Look around"},
-            {"id": "b", "text": "Continue"},
-        ],
-        "tool_calls": [],
-        "npc_voices": [],
-        "stat_changes": {},
-        "items_gained": [],
-        "items_lost": [],
-        "skill_check": None,
-        "tags_inline": "",
-    }
 
 
 class StorytellerAgent:
