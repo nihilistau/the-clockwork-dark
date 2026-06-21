@@ -130,6 +130,7 @@ class GameState:
     media_cutscenes_shown: list[str] = field(default_factory=list)
     last_cutscene_phase: str = ""
     combat: Optional[dict[str, Any]] = None  # active encounter (v0.2); None when not fighting
+    challenge: Optional[dict[str, Any]] = None  # active ephemeral challenge (v0.6); None when idle
     turn_number: int = 0
     ended: bool = False
     save_version: int = 1
@@ -159,6 +160,7 @@ class GameState:
             "media_cutscenes_shown": list(self.media_cutscenes_shown),
             "last_cutscene_phase": self.last_cutscene_phase,
             "combat": self.combat,
+            "challenge": self.challenge,
             "turn_number": self.turn_number,
             "ended": self.ended,
             "save_version": self.save_version,
@@ -217,6 +219,7 @@ class GameState:
             media_cutscenes_shown=list(data.get("media_cutscenes_shown", [])),
             last_cutscene_phase=str(data.get("last_cutscene_phase", "")),
             combat=data.get("combat"),
+            challenge=data.get("challenge"),
             turn_number=int(data.get("turn_number", 0)),
             ended=bool(data.get("ended", False)),
             save_version=int(data.get("save_version", 1)),
