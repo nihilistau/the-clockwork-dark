@@ -16,12 +16,14 @@ from typing import Any, Callable, Optional
 from engine.agents.evaluator import EvaluationResult, StorytellerEvaluator
 from engine.agents.parsing import parse_storyteller_response  # noqa: F401 (re-export)
 from engine.agents.prompts import evaluator_retry_prompt, storyteller_system_prompt
+from engine.agents.resilience import TurnBudget, retry_call
 from engine.agents.streaming import ProseStreamGate
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import (
     auto_resolve_skill_check,
     execute_tool_calls,
 )
+from engine.config import get_config
 from engine.game.engine import GameEngine
 from engine.game.plot import PlotFormula
 from engine.lmstudio.speculative import speculative_stream
@@ -88,6 +90,18 @@ class StorytellerAgent:
         self._client = lms_client
         self._evaluator = StorytellerEvaluator()
         self._media = MediaPipeline()
+
+        cfg = get_config()
+        self._fallback_narration = str(
+            cfg.get(
+                "storyteller.fallback_narration",
+                "The forest holds its breath. Smoke drifts from a distant chimney.",
+            )
+        )
+        self._infer_attempts = int(cfg.get("governance.infer_attempts", 2))
+        self._infer_backoff = float(cfg.get("governance.infer_backoff_seconds", 0.4))
+        self._budget_max_tokens = int(cfg.get("governance.max_tokens_per_turn", 0))
+        self._budget_max_seconds = float(cfg.get("governance.max_seconds_per_turn", 0))
 
     def _infer(
         self,
@@ -206,22 +220,32 @@ class StorytellerAgent:
             passed=False,
         )
 
+        budget = TurnBudget(
+            max_tokens=self._budget_max_tokens,
+            max_seconds=self._budget_max_seconds,
+        )
+
         while retries <= self.MAX_RETRIES:
             messages = self._build_messages(
                 player_action,
                 retry_notes=retry_notes if retries else None,
             )
+            # Stream prose only on the first attempt; retries re-infer silently
+            # and the final turn_update replaces any streamed (rejected) text.
+            stream_cb = on_delta if retries == 0 else None
             try:
-                # Stream prose only on the first attempt; retries re-infer silently
-                # and the final turn_update replaces any streamed (rejected) text.
-                raw = self._infer(messages, on_delta=on_delta if retries == 0 else None)
+                raw = retry_call(
+                    lambda: self._infer(messages, on_delta=stream_cb),
+                    attempts=self._infer_attempts,
+                    base_delay=self._infer_backoff,
+                    log=logger,
+                )
             except Exception as exc:
                 logger.warning(
-                    "[storyteller] LLM unavailable (operation=run_turn): %s", exc
+                    "[storyteller] inference failed after retries (operation=run_turn): %s",
+                    exc,
                 )
-                raw = (
-                    "The forest holds its breath. Smoke drifts from a distant chimney."
-                )
+                raw = self._fallback_narration
 
             parsed = parse_storyteller_response(raw)
             tool_receipts = execute_tool_calls(
@@ -248,7 +272,14 @@ class StorytellerAgent:
                 lore_snippets=[c.text for c in lore_chunks],
             )
 
+            budget.add_text(raw)
             if evaluation.passed:
+                break
+            if budget.exceeded():
+                logger.info(
+                    "[storyteller] budget stop (operation=run_turn): %s",
+                    budget.reason(),
+                )
                 break
 
             retry_notes = evaluation.notes
