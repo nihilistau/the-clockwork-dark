@@ -13,6 +13,19 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the four-stream fleet
+A documentation/feature fleet shipped four streams in parallel, merged in sequence:
+- **Prove the engine** — *The Drowned Carillon*, a second story under `games/drowned-carillon/`
+  (its own OKFS sub-bundle + data), reusing the engine with zero edits ([[building-on-the-engine]]).
+- **Bespoke UI** — the doom gauge, beat toasts, end-state, the challenge overlay, the
+  contract slate, and Assistant gift/intent cues, on the candlelit design tokens.
+- **More world** — chance encounters on travel, the convergence finale + reckoning,
+  the tinker's questline, and deeper lore ([[the-heartlands]], [[the-tinkers]],
+  [[beneath-the-tunnels]], [[sympathy-and-naming]], [[the-convergence]]).
+- **Self-improvement** — the DataCollector (JSONL turn capture → fine-tuning, gated off)
+  and a testable Scheduler ([[data-collection]]).
+- **318 tests passing.**
+
 ## 2026-06-21 — world expansion
 - **Chance encounters on travel** — a new seeded, deterministic `engine/game/encounters.py`
   rolls once on arrival from the destination edge's `danger_dc` and the evil phase,
