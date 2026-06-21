@@ -53,7 +53,7 @@ paths:
   procgen_templates: "data/procgen_templates/edgewood.yaml"
   world_schedules: "data/world/schedules.yaml"
   comfyui_templates: "data/procgen_templates/comfyui.yaml"
-  design_files: "${CLOCKWORK_DESIGN_FILES}"
+  design_files: "Design_files"  # repo-relative; override with CLOCKWORK_DESIGN_FILES env var
   asset_manifest: "data/assets/manifest.yaml"
   world_content: "data/world/content.yaml"
 

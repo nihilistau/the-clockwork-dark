@@ -1,0 +1,7 @@
+[     530ms] TypeError: Cannot read properties of null (reading 'addEventListener')
+    at http://127.0.0.1:5573/static/js/clockwork.js:572:12
+    at http://127.0.0.1:5573/static/js/clockwork.js:581:3
+[    1031ms] [ERROR] Failed to load resource: the server responded with a status of 404 (NOT FOUND) @ http://127.0.0.1:5573/favicon.ico:0
+[  248842ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:5573/socket.io/?EIO=4&transport=polling&t=PxdvQIm:0
+[  252031ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:5573/socket.io/?EIO=4&transport=polling&t=PxdvR4q:0
+[  259067ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:5573/socket.io/?EIO=4&transport=polling&t=PxdvSok:0

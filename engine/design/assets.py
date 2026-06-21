@@ -23,28 +23,40 @@ _ROOT = Path(__file__).resolve().parents[2]
 _MANIFEST_CACHE: Optional[dict[str, Any]] = None
 _DESIGN_ROOT_CACHE: Optional[Optional[Path]] = None
 
+# Repo-relative fallbacks only — no machine-specific absolute paths (golden rule).
 _FALLBACK_DESIGN_ROOTS = (
-    Path(r"C:\Projects\clockwork-dark\Design_files"),
-    _ROOT.parent / "Design_files",
     _ROOT / "Design_files",
+    _ROOT.parent / "Design_files",
 )
 
 
 def get_design_root() -> Optional[Path]:
-    """Return resolved Design_files directory, or None if unavailable."""
+    """Return resolved Design_files directory, or None if unavailable.
+
+    Resolution order (first existing dir wins):
+      1. ``CLOCKWORK_DESIGN_FILES`` environment variable
+      2. config ``paths.design_files`` (relative paths resolve against the repo
+         root; a literal ``"${VAR}"`` value is expanded from the environment)
+      3. bundled fallbacks (``<repo>/Design_files``, ``<repo>/../Design_files``)
+    """
     global _DESIGN_ROOT_CACHE
     if _DESIGN_ROOT_CACHE is not None:
         return _DESIGN_ROOT_CACHE
 
-    cfg_path = get_config().get("paths.design_files")
     candidates: list[Path] = []
+
+    env_override = os.environ.get("CLOCKWORK_DESIGN_FILES", "").strip()
+    if env_override:
+        candidates.append(Path(env_override))
+
+    cfg_path = get_config().get("paths.design_files")
     if cfg_path:
-        raw = str(cfg_path)
+        raw = str(cfg_path).strip()
         if raw.startswith("${") and raw.endswith("}"):
-            env_val = os.environ.get(raw[2:-1], "")
+            env_val = os.environ.get(raw[2:-1], "").strip()
             if env_val:
                 candidates.append(Path(env_val))
-        else:
+        elif raw:
             p = Path(raw)
             candidates.append(p if p.is_absolute() else _ROOT / raw)
 
@@ -52,7 +64,7 @@ def get_design_root() -> Optional[Path]:
     for candidate in candidates:
         if candidate.is_dir():
             _DESIGN_ROOT_CACHE = candidate.resolve()
-            logger.debug(
+            logger.info(
                 "[design_assets] Root resolved (operation=get_design_root, path=%s)",
                 _DESIGN_ROOT_CACHE,
             )

@@ -1,0 +1,9 @@
+- generic [ref=e5]:
+  - img "The Clockwork Dark" [ref=e6]
+  - paragraph [ref=e7]: You wake at the margin of an old forest, the last comfortable village a smudge of smoke to the west. The roads have begun to change when no one is watching. Choose how you came to be here.
+  - paragraph [ref=e8]: Traveler
+  - radiogroup "Choose archetype"
+  - generic [ref=e9]:
+    - button "Step into the clearing" [ref=e10] [cursor=pointer]
+    - button "Watch the intro" [ref=e11] [cursor=pointer]
+  - generic [ref=e12]: Loading assets…

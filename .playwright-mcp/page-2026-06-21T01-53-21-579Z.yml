@@ -1,0 +1,39 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - heading "THE CLOCKWORK DARK" [level=1] [ref=e5]
+    - generic [ref=e6]: Day 1 · 08:00
+  - main [ref=e7]:
+    - complementary [ref=e8]:
+      - paragraph [ref=e9]: Assistant
+      - paragraph
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Scene still
+        - generic [ref=e13]: Forest edge · dawn mist
+      - group "Choices" [ref=e15]
+      - generic [ref=e16]:
+        - textbox "Or type an action…" [ref=e17]
+        - button "Send" [ref=e18] [cursor=pointer]
+    - complementary [ref=e19]:
+      - paragraph [ref=e20]: Traveler
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - term [ref=e23]: HP
+          - definition [ref=e24]: —
+        - generic [ref=e25]:
+          - term [ref=e26]: Stamina
+          - definition [ref=e27]: —
+        - generic [ref=e28]:
+          - term [ref=e29]: Gold
+          - definition [ref=e30]: —
+        - generic [ref=e31]:
+          - term [ref=e32]: Location
+          - definition [ref=e33]: —
+      - paragraph [ref=e34]: Inventory
+      - list
+  - contentinfo [ref=e35]:
+    - generic [ref=e36]: Day 1 · Morning · Overcast
+    - generic [ref=e37]: Evil phase
+    - group "Evil phase (display only)"
+    - button "🎤" [ref=e38] [cursor=pointer]
+    - generic [ref=e39]: Connecting…
