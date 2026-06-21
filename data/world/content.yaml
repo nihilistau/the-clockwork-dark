@@ -713,7 +713,8 @@ cutscene_map:
   millhaven_gate: cutscene_closing_gates
   corruption_border: cutscene_consuming_horizon
   edgewood_shrine: cutscene_notice_board
-  hollow_hill: cutscene_hidden_tunnel
+  edgewood_forge: cutscene_forge
+  hollow_hill: cutscene_hollow_hill
   marches_road: cutscene_spider_wheat
   ruins_temple: cutscene_ruins
   clockwork_tower: cutscene_tower

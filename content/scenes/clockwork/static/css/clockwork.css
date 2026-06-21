@@ -1538,3 +1538,14 @@ body {
 .notice-posting-body p { margin: 0; font-size: 0.92em; line-height: 1.45; color: #cabfa6; }
 .notice-empty { font-style: italic; color: var(--text-muted, #9a9484); margin: 0 0 14px; }
 .notice-chatter { margin: 4px 0 0; }
+
+/* --- Dice toast: the exact rolled face -------------------------------- */
+.dice-face {
+  display: block;
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  border-radius: 4px;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.65));
+}
