@@ -1,0 +1,33 @@
+---
+type: Architecture
+title: The Clockwork Dark — Knowledge Index
+description: Root of the OKFS knowledge bundle; start here and follow the links.
+tags: [index, okfs, clockwork]
+timestamp: 2026-06-21
+---
+
+# The Clockwork Dark — Knowledge Index
+
+This is the root of our **OKFS** knowledge bundle — one concept per Markdown
+file, traversed by following `[[slug]]` links. Agents and humans start here and
+read only what's relevant (progressive disclosure), not 3,000 lines at once.
+
+## How to read this
+The format itself is defined in [[okfs-spec]]. The bundle is loaded by
+`engine/okfs/` (`OKFSBundle`), validated for frontmatter + link integrity, and
+(Phase 3) queried by the agents through a confidence cascade.
+
+## Start points
+- **What we're building** → [[clockwork-architecture]]
+- **How we talk to the LLM today + where it's going** → [[lmstudio-integration-overview]]
+- **Native-LLM migration plan** (structured output, tool-calls, MCP) → [[llm-migration-plan]]
+
+## LM Studio reference (provider-agnostic)
+LM Studio is our current local backend; these concepts capture its capabilities,
+each with a "how The Clockwork Dark applies this" note so nothing hard-couples us
+to one vendor.
+
+- REST: [[lmstudio-streaming-events]], [[lmstudio-stateful-chats]]
+- OpenAI-compat: [[lmstudio-structured-output]], [[lmstudio-tool-use]], [[lmstudio-responses-api]]
+- Python SDK: [[lmstudio-chat-completion]], [[lmstudio-structured-response]], [[lmstudio-cancelling-predictions]], [[lmstudio-repl]]
+- Agentic / tools: [[lmstudio-act-agentic-loop]], [[lmstudio-python-agent-tools]], [[lmstudio-mcp-host]]

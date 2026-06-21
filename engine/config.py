@@ -17,8 +17,20 @@ import yaml
 
 _ROOT = Path(__file__).resolve().parent.parent
 _DEFAULT_PATH = _ROOT / "config" / "default.yaml"
+# Optional, gitignored, machine-local override (secrets, remote endpoints).
+_LOCAL_PATH = _ROOT / "config" / "local.yaml"
 
 _instance: Optional["ConfigManager"] = None
+
+
+def _deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    """Recursively merge ``override`` into ``base`` (override wins on leaves)."""
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(base.get(key), dict):
+            _deep_merge(base[key], value)
+        else:
+            base[key] = value
+    return base
 
 
 class ConfigManager:
@@ -46,6 +58,11 @@ def get_config() -> ConfigManager:
     if _instance is None:
         with _DEFAULT_PATH.open(encoding="utf-8") as fh:
             data = yaml.safe_load(fh) or {}
+        if _LOCAL_PATH.exists():
+            with _LOCAL_PATH.open(encoding="utf-8") as fh:
+                local = yaml.safe_load(fh) or {}
+            if isinstance(local, dict):
+                _deep_merge(data, local)
         _instance = ConfigManager(data)
     return _instance
 

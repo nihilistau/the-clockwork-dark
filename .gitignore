@@ -34,9 +34,14 @@ Design_files/*.zip
 Design_files/**/*.zip
 Design_files/assets/art-min/
 
+# ---- Machine-local config override (secrets, remote endpoints) ----
+config/local.yaml
+
 # ---- Local dev/run artifacts (never commit) ----
 /_server.out
 /_server.err
+/_live_smoke.py
+/_live_smoke.json
 /_server.*.out
 /_server.*.err
 .playwright-mcp/
