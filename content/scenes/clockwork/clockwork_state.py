@@ -238,11 +238,26 @@ def run_turn(
     # Telemetry: roll this turn into the Oracle metrics.
     from engine.observability import get_oracle
 
+    _latency_ms = (time.perf_counter() - _t0) * 1000.0
     get_oracle().record_turn(
         turn_payload,
-        latency_ms=(time.perf_counter() - _t0) * 1000.0,
+        latency_ms=_latency_ms,
         evil_progress=state.evil_progress,
     )
+
+    # Self-improvement: capture the turn to JSONL for future fine-tuning.
+    # Config-gated (training.collect, default off) and fail-safe — never break a turn.
+    try:
+        from engine.training import get_collector
+
+        get_collector().record(
+            turn_payload,
+            player_action=player_action,
+            latency_ms=_latency_ms,
+            evil_progress=state.evil_progress,
+        )
+    except Exception:  # pragma: no cover - data capture must never break a turn
+        logger.exception("[clockwork_state] DataCollector.record failed (turn continues)")
 
     if emit_callback:
         emit_callback("turn_update", turn_payload)

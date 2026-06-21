@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "14b652565aa0160a",
+  "bundle_hash": "aaf308d5c83cffa3",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -42,12 +42,13 @@
       "type": "Reference"
     },
     {
-      "hash": "d4e75197eb53a8d4",
+      "hash": "236126b689eb8027",
       "links": [
         "agent-architecture",
         "building-on-the-engine",
         "clockwork-architecture",
         "clockwork-engine",
+        "data-collection",
         "doom-arcs",
         "ephemeral-challenges",
         "extending-the-engine",
@@ -109,6 +110,23 @@
       ],
       "title": "The Clockwork Engine",
       "type": "Architecture"
+    },
+    {
+      "hash": "2e3255a681c23df4",
+      "links": [
+        "clockwork-architecture",
+        "turn-metrics"
+      ],
+      "slug": "data-collection",
+      "tags": [
+        "runbook",
+        "training",
+        "data",
+        "fine-tuning",
+        "scheduler"
+      ],
+      "title": "Turn Data Collection (self-improvement)",
+      "type": "Runbook"
     },
     {
       "hash": "7633463755a733f1",
@@ -666,5 +684,5 @@
       "type": "Metric"
     }
   ],
-  "count": 36
+  "count": 37
 }

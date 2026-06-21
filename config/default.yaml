@@ -74,6 +74,11 @@ governance:
   post:                        # POST audit interceptors (priority-ordered)
     - RulesGovernor            # wires SceneRulesEngine R001-R005 into every turn
 
+training:
+  collect: false                      # capture each turn to JSONL for future fine-tuning (off by default; CI writes nothing)
+  data_path: "data/training/turns.jsonl"  # repo-relative JSONL sink; gitignored (data/training/)
+  tick_interval_seconds: 300          # cadence hint for the maintenance Scheduler (deterministic, clock-injected)
+
 paths:
   saves: "data/saves"
   lore: "data/lore"

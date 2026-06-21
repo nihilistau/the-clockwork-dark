@@ -25,6 +25,7 @@ _pytest_baseline.txt
 # ---- Runtime / generated game data ----
 data/saves/
 data/lore/lore.db          # regenerate with: python scripts/seed_lore.py
+data/training/             # captured turn JSONL for self-improvement (training.collect)
 *.sqlite
 *.sqlite3
 

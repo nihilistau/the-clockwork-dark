@@ -14,6 +14,11 @@ Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
 ## 2026-06-21
+- **Self-improvement plumbing** — a `DataCollector` (`engine/training/`) captures each
+  resolved turn to JSONL for future fine-tuning (gated by `training.collect`, off by
+  default; sink `data/training/` is gitignored), wired beside the Oracle in `run_turn`
+  so it never breaks a turn; plus a deterministic, clock-injected `Scheduler` for
+  world-tick / maintenance cadence. New runbook [[data-collection]].
 - **It's an engine** — reframed as a reusable engine, not just one game. New engine
   concepts [[clockwork-engine]], [[agent-architecture]], [[building-on-the-engine]],
   [[systems-catalog]], [[extending-the-engine]]; a comprehensive `README.md` (assets,
