@@ -41,6 +41,13 @@ fixed in this pass.
 All locked by `tests/test_audit_tighten.py` (9 tests); suite **327 passing**.
 
 ### Recommended next (not in this pass)
+> **Update (follow-up PR):** the a11y, frontend-harness, and top backend-test-gap
+> items below were **done** — and the new tests surfaced a real bug:
+> `tool_dispatcher.execute_tool` was laundering a rejected required action (an
+> illegal `move_to`) into a `success: True` receipt, so the Evaluator's
+> failed-required-tool gate never fired; now fixed (dice resolvers excluded). Suite
+> **359 passing** (+32). A jsdom/Playwright behavioural smoke is the remaining nice-to-have.
+
 Higher-effort items surfaced by the review, for a follow-up:
 - **Frontend a11y** — the four `role="dialog"` overlays have no Escape/focus-trap,
   and the doom-end modal can't be dismissed. Add keyboard handling + `:focus-visible`

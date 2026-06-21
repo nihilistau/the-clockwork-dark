@@ -40,6 +40,13 @@ def execute_tool(name: str, args: dict[str, Any], engine: GameEngine) -> dict[st
     try:
         result = json.loads(raw)
         success = "error" not in result
+        # For action skills, an explicit ``success: False`` means the action was
+        # *rejected* (an illegal move_to, a refused trade) — a genuine tool failure
+        # the Evaluator must see. Dice skills (roll_dice / resolve_skill_check) also
+        # carry a ``success`` flag, but there it is the *roll outcome* (the player
+        # failed the DC) — a valid result, NOT a tool failure — so it is excluded.
+        if name not in ("roll_dice", "resolve_skill_check"):
+            success = success and result.get("success", True) is not False
     except json.JSONDecodeError:
         result = {"raw": raw}
         success = False

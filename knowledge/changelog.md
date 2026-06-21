@@ -13,6 +13,27 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — audit follow-ups (a11y · frontend harness · test gaps)
+The deferred items from the review, plus a real bug the new tests surfaced:
+- **Accessibility** — all four `role="dialog"` overlays now have Escape-to-close,
+  focus-trap, focus-on-open, and focus-restore; the doom-end modal got a dismiss
+  button; global `:focus-visible` + a `prefers-reduced-motion` block; the dead
+  mic button is disabled; ambient toasts are `polite`, not `assertive`.
+- **Frontend test harness** — pure helpers (`escapeHtml`, `challengeView`)
+  extracted to `clockwork-helpers.js`; a vitest project under `frontend-tests/`
+  (11 tests) unit-tests them, and `tests/test_frontend_contract.py` (8) locks the
+  a11y/XSS invariants from the Python suite with no Node needed.
+- **Backend test gaps** — +32 tests: governance through the real turn (R003 in the
+  payload), `chat_stream` error/timeout → fallback, the **consumed** finale,
+  contract double-complete/accept guards, challenge branch/failure paths, socket
+  `narration_delta`/`error`.
+- **Engine fix** — `tool_dispatcher.execute_tool` was laundering a *rejected*
+  required action (an illegal `move_to`) into a `success: True` receipt, so the
+  Evaluator's failed-required-tool gate never fired; now an explicit
+  `success: False` counts as a failure (dice resolvers excluded, where `success`
+  is the roll outcome).
+- **359 tests passing.**
+
 ## 2026-06-22 — review & audit tighten
 A full five-dimension review (correctness · security · architecture · tests ·
 docs), every finding verified in code. No critical defects; the fixes are

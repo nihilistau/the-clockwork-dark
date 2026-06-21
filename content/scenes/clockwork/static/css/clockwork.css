@@ -1428,3 +1428,39 @@ body {
     display: none;
   }
 }
+
+/* --- a11y: focus visibility, dialog dismissal, reduced motion --------- */
+:focus-visible {
+  outline: 2px solid var(--accent-candle, #d6b26c);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.doom-end-close {
+  margin-top: 22px;
+  padding: 8px 22px;
+  font: inherit;
+  letter-spacing: 0.04em;
+  color: var(--text-soft, #d6c9a8);
+  background: transparent;
+  border: 1px solid rgba(214, 178, 108, 0.5);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.doom-end-close:hover,
+.doom-end-close:focus-visible {
+  background: rgba(214, 178, 108, 0.12);
+  border-color: rgba(214, 178, 108, 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
