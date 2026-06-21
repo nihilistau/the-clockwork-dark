@@ -173,7 +173,12 @@ def run_turn(
     if WorldSim.should_run_realtime_tick(state.last_sim_tick_at):
         WorldSim.on_tick(state, days_elapsed=0.25)
 
-    storyteller_result = session.storyteller.run_turn(player_action)
+    # Stream narration prose to the client live (epilogue withheld by the gate).
+    on_delta = None
+    if emit_callback is not None:
+        on_delta = lambda chunk: emit_callback("narration_delta", chunk)  # noqa: E731
+
+    storyteller_result = session.storyteller.run_turn(player_action, on_delta=on_delta)
     assistant_result = session.assistant.run_turn(storyteller_result.narration)
 
     # Fire a story-milestone cutscene if one is due (phase-shift budgeted).

@@ -16,6 +16,7 @@ from typing import Any, Callable, Optional
 from engine.agents.evaluator import EvaluationResult, StorytellerEvaluator
 from engine.agents.parsing import parse_storyteller_response  # noqa: F401 (re-export)
 from engine.agents.prompts import evaluator_retry_prompt, storyteller_system_prompt
+from engine.agents.streaming import ProseStreamGate
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import (
     auto_resolve_skill_check,
@@ -88,22 +89,50 @@ class StorytellerAgent:
         self._evaluator = StorytellerEvaluator()
         self._media = MediaPipeline()
 
-    def _infer(self, messages: list[dict[str, Any]]) -> str:
-        """Call LLM via injectable fn, speculative stream, or plain chat."""
+    def _infer(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        on_delta: Optional[Callable[[str], None]] = None,
+    ) -> str:
+        """Call LLM via injectable fn, speculative stream, or plain chat.
+
+        When ``on_delta`` is given, narration *prose* is streamed through a
+        :class:`ProseStreamGate` (the JSON epilogue is withheld from the client).
+        """
+        gate = ProseStreamGate(on_delta) if on_delta is not None else None
+
         if self.llm_fn is not None:
-            return self.llm_fn(messages)
+            raw = self.llm_fn(messages)
+            if gate is not None:
+                gate.feed(raw)
+                gate.flush()
+            return raw
 
         from engine.lmstudio.client import get_lms_client
 
         client = self._client or get_lms_client()
+        feed = gate.feed if gate is not None else None
+
         if self.use_speculative:
             resp = speculative_stream(
                 client,
                 messages,
                 refine_profile="big",
                 draft_profile="draft",
+                on_delta=feed,
             )
+            if gate is not None:
+                gate.flush()
             return resp.content
+
+        if gate is not None:
+            parts: list[str] = []
+            for chunk in client.infer_stream(messages, profile="big"):
+                parts.append(chunk)
+                gate.feed(chunk)
+            gate.flush()
+            return "".join(parts)
 
         from engine.lmstudio.profiles import resolve_profile
 
@@ -143,12 +172,19 @@ class StorytellerAgent:
             )
         return messages
 
-    def run_turn(self, player_action: str) -> StorytellerTurnResult:
+    def run_turn(
+        self,
+        player_action: str,
+        *,
+        on_delta: Optional[Callable[[str], None]] = None,
+    ) -> StorytellerTurnResult:
         """
         Execute one Storyteller turn with tools and evaluator retry.
 
         Args:
             player_action: Player choice or free-text action.
+            on_delta: Optional prose-streaming callback (first attempt only);
+                the JSON epilogue is withheld from it.
 
         Returns:
             StorytellerTurnResult with narration and evaluation.
@@ -176,7 +212,9 @@ class StorytellerAgent:
                 retry_notes=retry_notes if retries else None,
             )
             try:
-                raw = self._infer(messages)
+                # Stream prose only on the first attempt; retries re-infer silently
+                # and the final turn_update replaces any streamed (rejected) text.
+                raw = self._infer(messages, on_delta=on_delta if retries == 0 else None)
             except Exception as exc:
                 logger.warning(
                     "[storyteller] LLM unavailable (operation=run_turn): %s", exc

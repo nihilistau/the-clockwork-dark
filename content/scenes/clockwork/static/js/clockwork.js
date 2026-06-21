@@ -153,11 +153,25 @@
     hideIntro();
   }
 
+  let streamingEntry = null;
+  let streamedThisTurn = false;
+
   function appendNarration(text) {
     const entry = document.createElement("p");
     entry.className = "narrative-entry";
     entry.textContent = text;
     logEl.appendChild(entry);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function appendNarrationDelta(chunk) {
+    if (!streamingEntry) {
+      streamingEntry = document.createElement("p");
+      streamingEntry.className = "narrative-entry narrative-entry--streaming";
+      logEl.appendChild(streamingEntry);
+    }
+    streamingEntry.textContent += chunk;
+    streamedThisTurn = true;
     logEl.scrollTop = logEl.scrollHeight;
   }
 
@@ -341,7 +355,15 @@
   }
 
   function applyTurn(payload) {
-    if (payload.narration) appendNarration(payload.narration);
+    if (streamedThisTurn && streamingEntry) {
+      // Prose already rendered live; finalize with the authoritative text.
+      if (payload.narration) streamingEntry.textContent = payload.narration;
+      streamingEntry.classList.remove("narrative-entry--streaming");
+    } else if (payload.narration) {
+      appendNarration(payload.narration);
+    }
+    streamingEntry = null;
+    streamedThisTurn = false;
     renderChoices(payload.choices);
     updateStats(payload.state);
     if (payload.scene) applySceneVisual(payload.scene);
@@ -445,6 +467,8 @@
   function submitChoice(choiceId, custom) {
     if (!sessionId || busy) return;
     setBusy(true);
+    streamingEntry = null;
+    streamedThisTurn = false;
     socket.emit("player_choice", {
       session_id: sessionId,
       choice_id: choiceId,
@@ -553,7 +577,7 @@
   });
 
   socket.on("narration_delta", (chunk) => {
-    if (typeof chunk === "string") appendNarration(chunk);
+    if (typeof chunk === "string") appendNarrationDelta(chunk);
   });
 
   socket.on("error", (err) => {

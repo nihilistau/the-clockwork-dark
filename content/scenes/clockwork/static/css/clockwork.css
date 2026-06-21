@@ -403,6 +403,18 @@ body {
   margin: 0 0 16px;
 }
 
+/* Live-streaming narration: a candlelit caret blinks while the Storyteller writes. */
+.narrative-entry--streaming::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--accent-candle, #d6b26c);
+  animation: cw-caret 1s steps(1) infinite;
+}
+
+@keyframes cw-caret {
+  50% { opacity: 0; }
+}
+
 .choices {
   display: flex;
   flex-wrap: wrap;
