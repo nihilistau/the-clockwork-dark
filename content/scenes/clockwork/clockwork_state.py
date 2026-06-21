@@ -10,6 +10,7 @@ Version: v0.1.0 [2026-06-20]
 from __future__ import annotations
 
 import logging
+import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
@@ -178,6 +179,7 @@ def run_turn(
     if emit_callback is not None:
         on_delta = lambda chunk: emit_callback("narration_delta", chunk)  # noqa: E731
 
+    _t0 = time.perf_counter()
     storyteller_result = session.storyteller.run_turn(player_action, on_delta=on_delta)
     assistant_result = session.assistant.run_turn(storyteller_result.narration)
 
@@ -206,6 +208,15 @@ def run_turn(
         "scene": _scene_payload(state, scene_meta, scene_image, loc_meta),
     }
     session.last_turn = turn_payload
+
+    # Telemetry: roll this turn into the Oracle metrics.
+    from engine.observability import get_oracle
+
+    get_oracle().record_turn(
+        turn_payload,
+        latency_ms=(time.perf_counter() - _t0) * 1000.0,
+        evil_progress=state.evil_progress,
+    )
 
     if emit_callback:
         emit_callback("turn_update", turn_payload)
