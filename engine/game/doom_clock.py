@@ -322,6 +322,11 @@ class Convergence:
 
         dc = Convergence.reckoning_dc(state)
         bonus = int(min(8, state.engagement // 12))  # the line you held lifts the roll
+        # The older name (learned at the Mage-Ruins, [[the-first-warden]]) is the
+        # Dark's true name — it sharpens an *unmake*, which is naming turned back on
+        # the naming. A concrete payoff for the barrow discovery at the finale.
+        if choice == RECKONING_UNMAKE and state.flags.get("knows_older_name"):
+            bonus += int(get_config().get("doom.older_name_bonus", 5))
         die = roll_dice(20, modifier=bonus, reason=f"reckoning:{choice}", rng=rng)
         won = die.critical or (not die.fumble and die.total >= dc)
         state.flags["reckoning_resolved"] = True

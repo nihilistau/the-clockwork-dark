@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "794567a2b8f89a2b",
+  "bundle_hash": "cd0c389f227908f8",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "25344b4de5662d82",
+      "hash": "9b184fe835838037",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
@@ -83,6 +83,7 @@
         "sympathy-and-naming",
         "systems-catalog",
         "the-convergence",
+        "the-first-warden",
         "the-harvest",
         "the-heartlands",
         "the-notice-board",
@@ -704,6 +705,28 @@
       "type": "Lore"
     },
     {
+      "hash": "4d9a381a1c4c80f4",
+      "links": [
+        "beneath-the-tunnels",
+        "sympathy-and-naming",
+        "the-convergence",
+        "the-tunnel-mouth",
+        "the-two-powers"
+      ],
+      "slug": "the-first-warden",
+      "tags": [
+        "lore",
+        "hollow-hill",
+        "mage-ruins",
+        "first-warden",
+        "naming",
+        "set-piece",
+        "convergence"
+      ],
+      "title": "The First Warden & the Older Name",
+      "type": "Lore"
+    },
+    {
       "hash": "00f5abd25e861fd6",
       "links": [
         "beneath-the-tunnels",
@@ -883,5 +906,5 @@
       "type": "Metric"
     }
   ],
-  "count": 45
+  "count": 46
 }
