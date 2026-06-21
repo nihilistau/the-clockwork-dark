@@ -51,8 +51,13 @@
         <p class="panel-label">Assistant</p>
         <div class="assistant-bubble hidden" id="assistant-bubble">
           <img class="assistant-portrait hidden" id="assistant-portrait" alt="" />
-          <span class="assistant-form" id="assistant-form">cat</span>
+          <span class="assistant-meta-row">
+            <span class="assistant-form" id="assistant-form">cat</span>
+            <span class="assistant-intent hidden" id="assistant-intent"></span>
+          </span>
           <p id="assistant-text"></p>
+          <p class="assistant-gift hidden" id="assistant-gift"></p>
+          <p class="assistant-unreliable hidden" id="assistant-unreliable">The voice wavers — trust it lightly.</p>
         </div>
         <p class="assistant-whisper" id="assistant-whisper"></p>
       </aside>
@@ -83,11 +88,32 @@
         </dl>
         <p class="panel-label panel-label--spaced">Inventory</p>
         <ul class="inventory" id="inventory"></ul>
+
+        <section class="contract-slate hidden" id="contract-slate" aria-label="Contracts">
+          <p class="panel-label panel-label--spaced">Contracts</p>
+          <ul class="contract-list" id="contract-list"></ul>
+        </section>
       </aside>
     </main>
 
     <footer class="scene-footer">
       <span class="footer-meta" id="footer-meta">Day 1 · Morning · Overcast</span>
+
+      <div class="doom-gauge hidden" id="doom-gauge" aria-label="The Doom Clock" title="The slow darkness, made legible">
+        <span class="doom-arc" id="doom-arc">quiet life</span>
+        <div class="doom-meters">
+          <div class="doom-meter doom-meter--evil" title="The Clockwork Dark, spreading">
+            <span class="doom-meter-fill" id="doom-evil-fill"></span>
+            <span class="doom-meter-label" id="doom-evil-label">0%</span>
+          </div>
+          <div class="doom-meter doom-meter--engagement" title="The line you have held">
+            <span class="doom-meter-fill" id="doom-engagement-fill"></span>
+            <span class="doom-meter-label" id="doom-engagement-label">0</span>
+          </div>
+        </div>
+        <span class="doom-beat" id="doom-beat-latest" aria-live="polite"></span>
+      </div>
+
       <span class="footer-spacer"></span>
       <span class="phase-label">Evil phase</span>
       <div class="phase-chips" id="phase-chips" role="group" aria-label="Evil phase (display only)"></div>
@@ -99,6 +125,19 @@
   <div class="dice-toast hidden" id="dice-toast" aria-live="assertive">
     <video class="dice-video hidden" id="dice-video" muted playsinline></video>
     <p class="dice-line" id="dice-line"></p>
+  </div>
+
+  <div class="doom-toast hidden" id="doom-toast" aria-live="assertive" role="status">
+    <span class="doom-toast-kicker" id="doom-toast-kicker">A world sign</span>
+    <p class="doom-toast-text" id="doom-toast-text"></p>
+  </div>
+
+  <div class="doom-end hidden" id="doom-end" role="dialog" aria-modal="true" aria-labelledby="doom-end-title">
+    <div class="doom-end-sheet">
+      <span class="doom-end-glyph" id="doom-end-glyph">✶</span>
+      <h2 class="doom-end-title" id="doom-end-title">The last clock-stroke</h2>
+      <p class="doom-end-text" id="doom-end-text"></p>
+    </div>
   </div>
 
   <div class="overlay-panel hidden" id="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
