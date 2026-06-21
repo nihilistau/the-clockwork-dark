@@ -14,6 +14,7 @@ from engine.game.state import GameState, ProcgenResult
 
 CANON_NPC_IDS = {
     "npc_maris",
+    "npc_brann",
     "npc_odran",
     "npc_ilya",
     "npc_sera",
@@ -27,7 +28,7 @@ CANON_NPC_IDS = {
 def test_templates_load():
     templates = load_templates()
     assert "canon_npcs" in templates
-    assert len(templates["canon_npcs"]) == 8
+    assert len(templates["canon_npcs"]) == 9
 
 
 def test_same_seed_identical_npcs():
@@ -56,7 +57,7 @@ def test_canon_npcs_always_present():
 
 def test_npc_and_building_counts():
     result = generate_world(12345)
-    assert len(result.npcs) == 11
+    assert len(result.npcs) == 12
     assert len(result.buildings) == 12
     assert all(n.get("id") and n.get("name") for n in result.npcs)
     assert all(b.get("id") and b.get("name") for b in result.buildings)
@@ -98,7 +99,7 @@ def test_populate_state():
     state = GameState()
     procgen = populate_state(state, seed=31415)
     assert state.procgen.seed == 31415
-    assert len(procgen.npcs) == 11
+    assert len(procgen.npcs) == 12
 
 
 def test_new_game_state_defaults():

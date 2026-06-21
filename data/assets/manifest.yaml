@@ -32,6 +32,11 @@ places:
     kind: Interior
     caption: Brick oven · morning prep
     image: assets/art/scenes/bakery.jpg
+  edgewood_forge:
+    name: The Forge
+    kind: Interior
+    caption: Anvil & hearth · the ring of the hammer
+    image: assets/Forge/blacksmith-interior-anvil.jpg
   tinker_caravan:
     name: The Tinker Caravan
     kind: Caravan

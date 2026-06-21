@@ -36,6 +36,19 @@ places:
   min_phase: dormant
   requires_discovery: false
   note: Domestic UI (recipes, oven timer) must look as polished as adventure UI.
+- id: edgewood_forge
+  name: The Forge
+  kind: Interior
+  caption: Anvil & hearth · the ring of the hammer
+  blurb: A timber-and-stone smithy off the square. Brann Holt keeps the fire and the
+    anvil; since the wheat turned he forges fewer ploughshares and more blades, and
+    works brass filings into wards he will not explain. A strange crystal sits on the
+    cold corner of the anvil, catching a light that isn't in the room.
+  corrupted: false
+  image: assets/Forge/blacksmith-interior-anvil.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Crafting station (arms / wards). The heart-crystal hums when the Dark is near.
 - id: tinker_caravan
   name: The Tinker Caravan
   kind: Caravan
@@ -214,6 +227,16 @@ npcs:
   voice: Small · matter-of-fact about impossible things
   image: assets/art/souls/child-assistant.jpg
   ambiguous: true
+- id: npc_brann
+  name: Brann Holt
+  role: The Blacksmith
+  mood: Grim · steady hands, tired eyes
+  blurb: Man, 40s, soot in the creases, a chainmail collar under a scorched apron.
+    He shoes horses and mends pots, and since the wheat turned he has been forging
+    wards he learned from no one. He will not say where the crystal on his anvil came from.
+  voice: Low · few words, each one struck
+  image: assets/Forge/forge.jpg
+  ambiguous: false
 - id: npc_aldric
   name: Aldric Thorn
   role: The Woodcutter
@@ -734,6 +757,10 @@ scene_graph:
     hours: 0
     danger_dc: 0
     awareness_delta: 0
+  - to: edgewood_forge
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
   - to: tinker_caravan
     hours: 0
     danger_dc: 0
@@ -751,6 +778,11 @@ scene_graph:
     danger_dc: 12
     awareness_delta: 2
   edgewood_bakery:
+  - to: edgewood_square
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  edgewood_forge:
   - to: edgewood_square
     hours: 0
     danger_dc: 0
