@@ -83,6 +83,33 @@ class OKFSBundle:
         scored.sort(key=lambda s: s[0], reverse=True)
         return [c for _s, c in scored[:limit]]
 
+    # --- index / hashing -------------------------------------------------
+    def manifest(self) -> dict[str, Any]:
+        """A deterministic, content-hashed index of the bundle (the OKFS lockfile).
+
+        Used by `scripts/build_okfs_index.py` to write `knowledge/_index.json` and
+        by tests to detect drift.
+        """
+        import hashlib
+
+        concepts = []
+        for slug in sorted(self.concepts):
+            c = self.concepts[slug]
+            concepts.append(
+                {
+                    "slug": c.slug,
+                    "type": c.type,
+                    "title": c.title,
+                    "tags": list(c.tags),
+                    "links": list(c.links),
+                    "hash": c.content_hash(),
+                }
+            )
+        digest = hashlib.sha256(
+            "\n".join(f"{c['slug']}:{c['hash']}" for c in concepts).encode("utf-8")
+        ).hexdigest()[:16]
+        return {"count": len(concepts), "bundle_hash": digest, "concepts": concepts}
+
     # --- validation ------------------------------------------------------
     def validate(self) -> list[tuple[str, str]]:
         """Return (slug, problem) for missing required fields + broken links."""

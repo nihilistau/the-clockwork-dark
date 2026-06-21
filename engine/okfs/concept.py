@@ -24,6 +24,7 @@ Frontmatter (required: type, title, description):
 
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -97,6 +98,23 @@ class Concept:
 
     def missing_fields(self) -> list[str]:
         return [f for f in REQUIRED_FIELDS if not getattr(self, f)]
+
+    def content_hash(self) -> str:
+        """Stable content hash of the concept's substance (type/title/desc/tags/body).
+
+        Content-addressed: the hash changes only when the meaning changes, so the
+        index can detect drift and dedupe. Excludes provenance (source/resource).
+        """
+        material = "\n".join(
+            [
+                self.type,
+                self.title,
+                self.description,
+                ",".join(sorted(self.tags)),
+                self.body.strip(),
+            ]
+        )
+        return hashlib.sha256(material.encode("utf-8")).hexdigest()[:16]
 
     def to_dict(self, *, include_body: bool = False) -> dict[str, Any]:
         data = {
