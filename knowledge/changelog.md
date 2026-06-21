@@ -14,6 +14,11 @@ Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
 ## 2026-06-21
+- **It's an engine** — reframed as a reusable engine, not just one game. New engine
+  concepts [[clockwork-engine]], [[agent-architecture]], [[building-on-the-engine]],
+  [[systems-catalog]], [[extending-the-engine]]; a comprehensive `README.md` (assets,
+  diagram, systems, OKFS-as-engine); agent guides updated to the index/changelog
+  workflow. Authored by a documentation fleet.
 - **OKFS hashing + index** — every concept now carries a content hash; the bundle
   a roll-up hash. `scripts/build_okfs_index.py` writes the lockfile
   `knowledge/_index.json`; a test fails if it goes stale. This changelog added.

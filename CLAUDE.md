@@ -17,9 +17,10 @@ then code.** (Why: [[okfs-conventions]].)
 ## Start here (OKFS)
 1. `knowledge/index.md` — the root; follow the links.
 2. [[okfs-spec]] — the format + tooling (`engine/okfs/`, `query_knowledge` / `read_concept` skills).
-3. [[clockwork-architecture]] — what we're building.
-4. [[lmstudio-integration-overview]] + [[llm-migration-plan]] — the LLM layer.
-5. Long-form specs: `docs/CLAUDE_CODE_BRIEF.md`, `docs/DESIGN.md`, `docs/AUDIT.md`.
+3. [[clockwork-architecture]] — what we're building (project view).
+4. The engine (more than this one game): [[clockwork-engine]], [[agent-architecture]], [[building-on-the-engine]], [[systems-catalog]], [[extending-the-engine]].
+5. [[lmstudio-integration-overview]] + [[llm-migration-plan]] — the LLM layer.
+6. Long-form specs: `docs/CLAUDE_CODE_BRIEF.md`, `docs/DESIGN.md`, `docs/AUDIT.md`.
 
 ## Use OKFS as you work
 - **Read it:** `from engine.okfs import get_bundle` (or, in-game, the `query_knowledge` /
@@ -29,6 +30,9 @@ then code.** (Why: [[okfs-conventions]].)
   atomic (one idea per file).
 - **Validate it:** `OKFSBundle.validate()` and `tests/test_okfs.py` fail on missing
   frontmatter or broken links — keep the bundle green.
+- **Index it:** after editing concepts run `python scripts/build_okfs_index.py`
+  (refreshes the content-hashed `knowledge/_index.json`; `tests/test_okfs_index.py`
+  fails if it's stale), and note meaningful changes in [[changelog]].
 
 ## Critical rules
 1. **Engine resolves mechanics; LLMs narrate.** Dice / combat / craft / inventory /

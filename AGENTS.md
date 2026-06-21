@@ -18,13 +18,18 @@ One concept = one Markdown file with YAML frontmatter (`type`, `title`,
 `description` required) + body + `[[slug]]` links. Git-native, agent-traversable,
 zero runtime lock-in. Spec + tooling: [[okfs-spec]]. Root: `knowledge/index.md`.
 
+This repo is **more than one game**: a reusable engine ([[clockwork-engine]]) you
+can retarget to a new story ([[building-on-the-engine]]). The catalogue of systems
+is [[systems-catalog]]; to add one, [[extending-the-engine]].
+
 ## Your loop
 1. **Orient** — read `knowledge/index.md`, follow the links your task needs
    (progressive disclosure: read three small files, not three thousand lines).
 2. **Act** — the engine owns mechanics; you propose, it resolves. Config-first
    (`get_config()`), reuse before rewrite, keep `pytest` green.
 3. **Record** — capture durable findings as new concepts (`knowledge/<area>/<slug>.md`);
-   run `OKFSBundle.validate()` (no missing frontmatter, no broken links).
+   run `OKFSBundle.validate()` (no missing frontmatter, no broken links), refresh the
+   index (`python scripts/build_okfs_index.py`), and log notable changes in [[changelog]].
 
 ## Programmatic access
 - Python: `from engine.okfs import get_bundle; get_bundle().search("...")`.
