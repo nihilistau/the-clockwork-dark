@@ -86,3 +86,83 @@ tunnel_mouth:
       image: assets/Tunnels/tunnel-entrance-reveal.jpg
       text: "You climb back to the daylight and the smell of crushed fern. The brass ring ticks behind you, patient as ever. The tunnels are still open; whatever holds them open is still down there. Another day, perhaps — if there are many more."
       fail: {}
+
+# --- The Warden's Barrow & the Mage-Ruins -------------------------------------
+# Reachable once the tunnels open the hidden path (requires_discovery: hidden_path).
+# The First Warden sleeps in the barrow, finished by the Dark into a clockwork husk;
+# the mages who raised the ruins bound the Dark by its true name — the *older name* —
+# read from a broken star-chart on the floor. Learn it and the convergence 'unmake'
+# reckoning sharpens ([[the-first-warden]], [[sympathy-and-naming]], [[the-convergence]]).
+warden_barrow:
+  kind: decision_tree
+  title: The Warden's Barrow
+  requires_discovery: hidden_path
+  start: approach
+  nodes:
+    approach:
+      image: assets/Hollow-Hill-Mage-Ruins/Hollow-Hill-Far.jpg
+      text: "The hidden path climbs to a turf-roofed barrow crowned with leaning stones, older than Edgewood, older than the road. A lintel worn smooth marks a door best left shut. Beyond it the broken mage-ruins keep their vigil in the mist."
+      riddle: "Aldric's warning, and Greta's: the First Warden sleeps here, and not alone."
+      options:
+        - { id: read, text: "Read the standing stones before you enter", goto: read_stones }
+        - { id: enter, text: "Go down into the barrow", goto: hall_blind }
+        - { id: leave, text: "Leave the door shut — climb back down", goto: t_leave }
+    read_stones:
+      image: assets/Hollow-Hill-Mage-Ruins/Altar-Hollow-Hill-maybe.jpg
+      text: "You trace the worn glyphs. They tell of the First Warden, who held the line when the Dark first stirred, and of the mages who bound it not with iron but with its true name — cut into the sky-chart below as a star. The stones name that star plainly: the Hollow Crown."
+      riddle: "Remember the name the mages bound it by: the Hollow Crown."
+      options:
+        - { id: enter, text: "Go down, the name in mind", goto: hall_clued }
+        - { id: leave, text: "Leave the door shut", goto: t_leave }
+    hall_blind:
+      image: assets/Hollow-Hill-Mage-Ruins/Clockwork-Skeleton-Assistant-Mage-Help.jpg
+      text: "The barrow opens into a ruined hall. On a stone seat the First Warden still keeps watch — but the Dark has been here first: gears turn slow where the heart was, brass threads the old bones. In the shadows a faceless figure in lichened robes lifts a hand wreathed in cold violet light. It does not introduce itself."
+      options:
+        - { id: map, text: "Go to the star-chart on the floor", goto: star_map_blind }
+        - { id: fight, text: "Put the husk down before it wakes", goto: t_husk_hurt }
+        - { id: leave, text: "Back to the daylight", goto: t_leave }
+    hall_clued:
+      image: assets/Hollow-Hill-Mage-Ruins/Clockwork-Skeleton-Assistant-Mage-Help.jpg
+      text: "The barrow opens into a ruined hall. The First Warden keeps its clockwork vigil on the stone seat, gears slow in the dark of its chest. A faceless figure in lichened robes waits by the broken sky-chart, one violet-lit hand half-raised — as if to point. You hold the name the stones gave you, and do not need its help."
+      options:
+        - { id: map, text: "Go to the star-chart, the name in mind", goto: star_map_clued }
+        - { id: fight, text: "Put the husk down before it wakes", goto: t_husk_hurt }
+        - { id: leave, text: "Back to the daylight", goto: t_leave }
+    star_map_blind:
+      image: assets/Hollow-Hill-Mage-Ruins/mage-ruins-map-solar.jpg
+      text: "A great solar chart lies broken across the flagstones, constellations picked out in failing gold. To speak the binding you must name the right star. The faceless figure points, without a word, at one of them. Its pointing is not the same as its meaning."
+      options:
+        - { id: trust, text: "Name the star the figure points to", goto: t_wrong_name }
+        - { id: crown, text: "Name the Hollow Crown", goto: t_older_name }
+        - { id: serpent, text: "Name the Drowned Serpent", goto: t_wrong_name }
+    star_map_clued:
+      image: assets/Hollow-Hill-Mage-Ruins/mage-ruins-map-solar.jpg
+      text: "A great solar chart lies broken across the flagstones, constellations picked out in failing gold. The faceless figure points, without a word, at a star low on the chart — but the stones named the Hollow Crown, high at the chart's brow, and stones do not flatter."
+      riddle: "The stones named the Hollow Crown."
+      options:
+        - { id: crown, text: "Name the Hollow Crown (the stones' star)", goto: t_older_name }
+        - { id: trust, text: "Name the star the figure points to", goto: t_wrong_name }
+    t_older_name:
+      terminal: true
+      outcome: success
+      image: assets/Hollow-Hill-Mage-Ruins/mage-ruins-altar.jpg
+      text: "You speak the Hollow Crown aloud, and the chart drinks the word like rain. Gold runs along the dead constellations; the First Warden's clockwork head bows, slow, and stills at last — released, or only finished. You carry the older name out of the barrow now. It is the Dark's true name, and a true name cuts both ways."
+      reward: { set_flags: [knows_older_name], engagement: 12, awareness: 6, item: { id: older_name, name: "The Older Name" } }
+    t_wrong_name:
+      terminal: true
+      outcome: failure
+      image: assets/Hollow-Hill-Mage-Ruins/Assistant-Faceless-Encounter-Mage.jpg
+      text: "The wrong star. The gold gutters and goes out; the faceless figure's shoulders shake in something that is not quite laughter, and the husk on its seat turns its gear-wound head toward you with a sound like a clock being wound too far. You take the stairs two at a time and do not look back. The name keeps its secret."
+      fail: { hp: -5, awareness: 5 }
+    t_husk_hurt:
+      terminal: true
+      outcome: failure
+      image: assets/Hollow-Hill-Mage-Ruins/Clockwork-Skeleton-Assistant-Mage-Help.jpg
+      text: "You raise a hand against the First Warden — and the First Warden, who held the line longer than you have been alive, defends itself even now. Brass and bone move faster than grief. You come away bleeding and ashamed, the barrow's secret still its own. Some things the Dark has finished are not enemies. They are warnings."
+      fail: { hp: -8, awareness: 4 }
+    t_leave:
+      terminal: true
+      outcome: failure
+      image: assets/Hollow-Hill-Mage-Ruins/Hollow-Hill-Far.jpg
+      text: "You leave the door shut and the stones to their watch. Whatever the mages knew, it stays under the hill a while longer. The mist closes behind you."
+      fail: {}

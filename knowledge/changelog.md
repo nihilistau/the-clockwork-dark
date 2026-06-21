@@ -13,6 +13,22 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — Hollow Hill, the Mage-Ruins & the older name
+The tunnels now lead somewhere that matters at the end ([[the-first-warden]]):
+- **`warden_barrow` set-piece** (`data/set_pieces.yaml`) — reachable once the
+  hidden path opens. A branching descent into the barrow: the **First Warden
+  husk** (raise a hand against it and it defends itself — force is the wrong
+  tool), and a broken **solar star-chart**. Read the standing stones for the
+  binding-star (the **Hollow Crown**), name it at the chart, and learn the
+  **older name** — or trust the **faceless Assistant**, who points at the wrong
+  star. Scene art from `Design_files/assets/Hollow-Hill-Mage-Ruins/`.
+- **Convergence payoff** — learning the older name sets `knows_older_name`, which
+  sharpens the **unmake** reckoning at the tower (`+doom.older_name_bonus`, default
+  5): a true name cuts both ways. The barrow is where a player earns the edge that
+  makes refusal at the tower more than a prayer ([[the-convergence]]).
+- Hollow Hill & Mage-Ruins scene art wired into the manifest. Tests in
+  `tests/test_warden_barrow.py`; bundle at 46 concepts.
+
 ## 2026-06-22 — the tunnel-mouth set-piece
 The first **set-piece**: a discovery you descend into and *experience*, unlocked
 when the reactive world opens the tunnels ([[the-tunnel-mouth]]).

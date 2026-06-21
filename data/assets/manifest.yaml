@@ -62,7 +62,7 @@ places:
     name: Hollow Hill
     kind: Barrow
     caption: Standing stones · a door best left shut
-    image: assets/art/scenes/forest-hidden-tunnel.jpg
+    image: assets/Hollow-Hill-Mage-Ruins/Hollow-Hill-Far.jpg
   marches_road:
     name: The Marches Road
     kind: Wrongness
@@ -78,7 +78,7 @@ places:
     name: The Mage-Ruins
     kind: Ruins
     caption: Broken colonnade · older than the wound
-    image: assets/art/scenes/ruins-temple-mages.jpg
+    image: assets/Hollow-Hill-Mage-Ruins/Mage-Ruins-Far.jpg
   clockwork_tower:
     name: The Clockwork Tower
     kind: Wrongness
