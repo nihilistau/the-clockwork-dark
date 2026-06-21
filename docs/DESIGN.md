@@ -592,9 +592,27 @@ Incremental pull requests with t-shirt sizes. ✅ = complete.
 - **Dependencies:** PR1
 - **Done when:** `seed_lore.py` ingests markdown; FTS retrieval returns chunks; LoreInject + AwarenessGate wired to Storyteller; tests pass
 
-### PR12 — Vertical Slice Playtest (S)
+### PR12 — Vertical Slice Playtest (S) ✅
 - **Dependencies:** PR1–PR11 (PR7+PR8 required for baker/caravan acceptance criteria)
 - **Description:** `test_vertical_slice.py` end-to-end smoke
+
+---
+
+## v0.2 PRs (landed)
+
+### PR13 — Grounded Combat ✅ (M)
+- **Files:** `engine/game/combat.py`, `data/bestiary.yaml`, `GameState.combat`, combat skills, `tests/test_combat.py`
+- **Done:** engine-authoritative `resolve_combat(action, target_id)`; actions attack/defend/flee/use_item/sympathy; fear + exhaustion modifiers; victory loot, defeat respawn; persists across save/load.
+
+### PR14 — Crafting & Professions ✅ (M)
+- **Files:** `engine/game/crafting.py`, `data/recipes/clockwork.yaml`, craft skills, `tests/test_crafting.py`
+- **Done:** `craft_item(recipe_id)` with station + input gating, craft check, crit "fine" extra, fumble spoilage, practice progression; outputs feed combat item-effects.
+
+### PR15 — March Arc + Cutscene Milestones ✅ (M)
+- **Files:** `engine/world/content.py` (awareness-or-phase gating), `engine/media/milestones.py`, `data/world/content.yaml`, `tests/test_millhaven.py`
+- **Done:** Marches/Millhaven open at evil ≥ SPREADING **or** Awareness ≥ 25; one-shot milestone cutscenes (stirring, assistant reveal, consuming horizon) on the phase-shift budget.
+
+**Deferred:** Echo system / permadeath, full Convergence arc, live ComfyUI rendering.
 
 ---
 

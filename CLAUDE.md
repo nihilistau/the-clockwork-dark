@@ -22,7 +22,7 @@ Local-first AI RPG: deterministic hard engine + two autonomous agents (Storytell
 
 ## Implementation order
 
-Follow the PR plan in DESIGN.md § PR Plan. **PR1–PR11 complete.** Next: **PR12** (Vertical Slice Playtest).
+Follow the PR plan in DESIGN.md § PR Plan. **PR1–PR12 complete; v0.2 PR13–PR15 landed** (grounded combat, crafting/professions, Millhaven march arc + cutscene milestones). The design system is integrated and local-first (see [docs/AUDIT.md](docs/AUDIT.md)). Next candidates: Echo system / permadeath, full convergence arc, ComfyUI live rendering.
 
 ## First-session prompt
 
