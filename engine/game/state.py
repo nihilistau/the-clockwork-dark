@@ -109,6 +109,7 @@ class GameState:
     stats: PlayerStats = field(default_factory=PlayerStats)
     location_id: str = "forest_clearing"
     awareness: float = 0.0
+    engagement: float = 0.0  # how much the player has pushed back against the Dark (holds it)
     evil_phase: EvilPhase = EvilPhase.DORMANT
     evil_progress: float = 0.0
     plot_involvement: float = 0.0
@@ -123,6 +124,7 @@ class GameState:
     flags: dict[str, bool] = field(default_factory=dict)
     world_events: list[dict[str, Any]] = field(default_factory=list)
     rumors: list[str] = field(default_factory=list)
+    doom_beats_seen: list[str] = field(default_factory=list)  # crossed Doom Clock beats
     last_sim_tick_at: float = 0.0
     media_cache: dict[str, str] = field(default_factory=dict)
     media_cutscenes_shown: list[str] = field(default_factory=list)
@@ -150,6 +152,8 @@ class GameState:
             "flags": dict(self.flags),
             "world_events": list(self.world_events),
             "rumors": list(self.rumors),
+            "engagement": self.engagement,
+            "doom_beats_seen": list(self.doom_beats_seen),
             "last_sim_tick_at": self.last_sim_tick_at,
             "media_cache": dict(self.media_cache),
             "media_cutscenes_shown": list(self.media_cutscenes_shown),
@@ -206,6 +210,8 @@ class GameState:
             flags=dict(data.get("flags", {})),
             world_events=list(data.get("world_events", [])),
             rumors=list(data.get("rumors", [])),
+            engagement=float(data.get("engagement", 0.0)),
+            doom_beats_seen=list(data.get("doom_beats_seen", [])),
             last_sim_tick_at=float(data.get("last_sim_tick_at", 0.0)),
             media_cache=dict(data.get("media_cache", {})),
             media_cutscenes_shown=list(data.get("media_cutscenes_shown", [])),

@@ -151,6 +151,26 @@ def query_evil_state() -> str:
 @skill(
     pack="clockwork",
     description=(
+        "Register that the player meaningfully pushed back against the Clockwork "
+        "Dark (investigated a harvester, cleared vines, sealed a seam, resisted). "
+        "Raises engagement, which holds the Doom Clock back."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def confront_darkness(intensity: int = 5) -> str:
+    """Player engagement against the Dark (engine-authoritative)."""
+    from engine.game.doom_clock import DoomClock
+
+    engine = get_active_engine()
+    amount = float(max(1, min(20, int(intensity))))
+    value = DoomClock.register_engagement(engine.state, amount, "confront")
+    return json.dumps({"success": True, "engagement": round(value, 1)})
+
+
+@skill(
+    pack="clockwork",
+    description=(
         "Resolve one combat action against a foe. MUST call before narrating any "
         "fight outcome. action in {attack, defend, flee, use_item, sympathy}; pass "
         "target_id (enemy id) to begin an encounter, item_id for use_item."

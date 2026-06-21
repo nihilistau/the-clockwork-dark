@@ -448,6 +448,11 @@ def _finish(
 
     if victory and loot:
         _add_item(state, loot.get("id", ""), loot.get("name", ""))
+    if victory and "clockwork" in (combat.get("enemy", {}) or {}).get("tags", []):
+        # Beating back the Dark holds it: raise engagement (slows the Doom Clock).
+        from engine.game.doom_clock import DoomClock
+
+        DoomClock.register_engagement(state, 8.0, "defeated clockwork foe")
     if defeat:
         cfg = _combat_cfg()
         state.location_id = cfg["defeat_respawn_location"]

@@ -75,9 +75,21 @@ class EvilTicker:
         """
         multiplier = evil_multiplier_for(state.location_id)
         inaction_bonus = 1.0 + max(0, state.world_day - state.turn_number) * 0.001
-        delta = EvilTicker.base_rate_per_day() * days_elapsed * multiplier * inaction_bonus
+        # Engagement holds the Dark back: up to 40% slower when the player keeps
+        # pushing. Default engagement 0.0 -> factor 1.0 (no change).
+        engagement_factor = 1.0 - min(0.6, max(0.0, state.engagement) / 100.0) * 0.6
+        delta = (
+            EvilTicker.base_rate_per_day()
+            * days_elapsed
+            * multiplier
+            * inaction_bonus
+            * engagement_factor
+        )
         state.evil_progress = min(1.0, state.evil_progress + delta)
         state.evil_phase = phase_from_progress(state.evil_progress)
+        # Engagement decays so the player must keep confronting the Dark.
+        if state.engagement > 0.0:
+            state.engagement = max(0.0, state.engagement - 0.5 * days_elapsed)
         return state.evil_progress
 
     @staticmethod

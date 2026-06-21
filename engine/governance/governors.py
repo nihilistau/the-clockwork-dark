@@ -40,6 +40,27 @@ class EvilPhaseTone:
         return f"{system_prompt}\n\n{line}" if line else system_prompt
 
 
+@interceptor("pre", priority=15)
+class DoomBeatInterceptor:
+    """PRE: surface the Doom Clock's arc + latest world-sign so the Narrator lets
+    the Dark advance as slow dread the player may notice or ignore."""
+
+    def run_pre(self, state, system_prompt, *, player_action="", **_):
+        from engine.game.doom_clock import DoomClock
+
+        arc = DoomClock.arc(state)
+        latest = DoomClock.latest_beat(state)
+        lines = [f"WORLD STATE: doom arc = {arc}."]
+        if latest is not None:
+            lines.append(f"The Dark has already reached: {latest.text}")
+        lines.append(
+            "Let the corruption advance in the background as slow dread — present "
+            "signs the player may notice or ignore. Do not resolve it for them; "
+            "this is a world to experience, not a quest thrust upon them."
+        )
+        return f"{system_prompt}\n\n" + "\n".join(lines)
+
+
 @interceptor("pre", priority=30)
 class StorytellerMind:
     """PRE: translate the Storyteller agency knobs into GM directives."""
