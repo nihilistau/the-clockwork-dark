@@ -70,6 +70,8 @@ governance:
   infer_backoff_seconds: 0.4   # exponential backoff base between attempts
   max_tokens_per_turn: 0       # per-turn approx-token ceiling (chars/4); 0 = unlimited
   max_seconds_per_turn: 0      # per-turn wall-clock ceiling across retries; 0 = unlimited
+  post:                        # POST audit interceptors (priority-ordered)
+    - RulesGovernor            # wires SceneRulesEngine R001-R005 into every turn
 
 paths:
   saves: "data/saves"
@@ -86,6 +88,8 @@ paths:
   world_content: "data/world/content.yaml"
 
 comms:
-  interceptors:
-    - LoreInjectInterceptor
-    - AwarenessGateInterceptor
+  interceptors:                 # PRE prompt-shapers, run in priority order
+    - LoreInjectInterceptor     # priority 6  — inject canonical RAG lore
+    - EvilPhaseTone             # priority 20 — phase-appropriate tone
+    - StorytellerMind           # priority 30 — agency knobs -> GM directives
+    - AwarenessGateInterceptor  # priority 40 — strip spoilers below threshold (last)

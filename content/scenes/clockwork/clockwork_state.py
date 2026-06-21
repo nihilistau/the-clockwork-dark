@@ -201,6 +201,7 @@ def run_turn(
         "tool_receipts": storyteller_result.tool_receipts,
         "evaluation": storyteller_result.evaluation.to_dict(),
         "media": storyteller_result.media,
+        "governance": storyteller_result.governance,
         "assistant": assistant_result.to_dict(),
         "scene": _scene_payload(state, scene_meta, scene_image, loc_meta),
     }

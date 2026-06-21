@@ -26,8 +26,8 @@ from engine.agents.tool_dispatcher import (
 from engine.config import get_config
 from engine.game.engine import GameEngine
 from engine.game.plot import PlotFormula
+from engine.governance import TurnContext, get_governance
 from engine.lmstudio.speculative import speculative_stream
-from engine.lore.interceptors import run_pre_interceptors
 from engine.lore.manager import get_lore_manager
 from engine.media.pipeline import MediaPipeline
 
@@ -48,6 +48,7 @@ class StorytellerTurnResult:
     media: dict[str, Any] = field(default_factory=dict)
     retries: int = 0
     raw_llm: str = ""
+    governance: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -60,6 +61,7 @@ class StorytellerTurnResult:
             "processed_tags": self.processed_tags,
             "media": self.media,
             "retries": self.retries,
+            "governance": self.governance,
         }
 
 
@@ -168,7 +170,7 @@ class StorytellerAgent:
         PlotFormula.update_story_pressure(state)
         evil = self.engine.get_evil_snapshot()
         system = storyteller_system_prompt(state, evil)
-        system = run_pre_interceptors(
+        system = get_governance().run_pre(
             state,
             system,
             player_action=player_action,
@@ -224,6 +226,7 @@ class StorytellerAgent:
             max_tokens=self._budget_max_tokens,
             max_seconds=self._budget_max_seconds,
         )
+        evil_before = self.engine.state.evil_progress
 
         while retries <= self.MAX_RETRIES:
             messages = self._build_messages(
@@ -291,6 +294,18 @@ class StorytellerAgent:
             self.engine.state.storyteller_mind.patience - 1.0,
         )
 
+        # POST governance: audit the resolved turn against the rules engine.
+        gov_ctx = TurnContext(
+            state=self.engine.state,
+            player_action=player_action,
+            parsed=parsed,
+            narration=parsed.get("narration", raw),
+            tool_receipts=tool_receipts,
+            processed_tags=processed_tags,
+            metadata={"evil_before": evil_before},
+        )
+        get_governance().run_post(gov_ctx)
+
         media_result = self._media.process_storyteller_turn(
             self.engine.state,
             narration=parsed.get("narration", raw),
@@ -308,4 +323,5 @@ class StorytellerAgent:
             media=media_result.to_dict(),
             retries=retries,
             raw_llm=raw,
+            governance=gov_ctx.violations,
         )
