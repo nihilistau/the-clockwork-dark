@@ -13,6 +13,17 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — behavioural smoke + CI
+- **jsdom dialog tests** — the a11y dialog manager is extracted to
+  `clockwork-dialogs.js` (a `create(doc)` factory) and behaviourally tested under
+  jsdom: open/focus-in, Escape-to-close + focus-restore, stacking, Tab focus-trap
+  (7 tests). `clockwork.js` consumes it via `window.ClockworkDialogs`.
+- **Playwright e2e smoke** — `frontend-tests/e2e/` has Playwright boot the Flask
+  server itself (no LLM) and smoke the real page: helper/dialog modules wired,
+  zero console errors, a dialog opens and Escape dismisses it.
+- **CI** — `.github/workflows/ci.yml` runs three jobs on every push/PR: pytest
+  (359), vitest + jsdom (18), and the Playwright chromium smoke.
+
 ## 2026-06-22 — audit follow-ups (a11y · frontend harness · test gaps)
 The deferred items from the review, plus a real bug the new tests surfaced:
 - **Accessibility** — all four `role="dialog"` overlays now have Escape-to-close,

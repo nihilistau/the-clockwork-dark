@@ -75,51 +75,17 @@
     options: [], answerRequired: false, step: 0, total: 0, meta: "",
   }));
 
-  // --- a11y: modal dialog focus management -----------------------------
-  // Open dialogs are stacked; Escape closes the topmost, Tab is trapped within
-  // it, focus moves in on open and is restored to the opener on close.
-  const _openDialogs = [];
-  function _focusables(el) {
-    return Array.from(
-      el.querySelectorAll(
-        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-      )
-    ).filter((n) => !n.hasAttribute("disabled") && n.offsetParent !== null);
-  }
-  function openDialog(el) {
-    if (!el) return;
-    el.classList.remove("hidden");
-    if (_openDialogs.some((e) => e.el === el)) return; // already open: don't re-stack/steal focus
-    const opener = document.activeElement;
-    _openDialogs.push({ el, opener });
-    const f = _focusables(el);
-    try { (f[0] || el).focus({ preventScroll: true }); } catch (e) {}
-  }
-  function closeDialog(el) {
-    if (!el) return;
-    el.classList.add("hidden");
-    const idx = _openDialogs.map((e) => e.el).lastIndexOf(el);
-    if (idx === -1) return;
-    const entry = _openDialogs.splice(idx, 1)[0];
-    const opener = entry && entry.opener;
-    if (opener && typeof opener.focus === "function") {
-      try { opener.focus({ preventScroll: true }); } catch (e) {}
-    }
-  }
-  document.addEventListener("keydown", (ev) => {
-    if (!_openDialogs.length) return;
-    const top = _openDialogs[_openDialogs.length - 1].el;
-    if (ev.key === "Escape") {
-      ev.preventDefault();
-      closeDialog(top);
-    } else if (ev.key === "Tab") {
-      const f = _focusables(top);
-      if (!f.length) { ev.preventDefault(); try { top.focus(); } catch (e) {} return; }
-      const first = f[0], last = f[f.length - 1];
-      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
-      else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
-    }
-  });
+  // a11y modal focus management lives in clockwork-dialogs.js (loaded first) so
+  // it can be unit-tested under jsdom. Stubs keep the UI alive if it failed to load.
+  const _dialogs =
+    (typeof window !== "undefined" && window.ClockworkDialogs &&
+      window.ClockworkDialogs.create(document)) || {
+      openDialog: (el) => el && el.classList.remove("hidden"),
+      closeDialog: (el) => el && el.classList.add("hidden"),
+    };
+  const openDialog = _dialogs.openDialog;
+  const closeDialog = _dialogs.closeDialog;
+  if (typeof window !== "undefined") window.__clockworkDialogs = _dialogs; // e2e test seam
   const doomEndClose = document.getElementById("doom-end-close");
   if (doomEndClose) doomEndClose.addEventListener("click", () => closeDialog(doomEnd));
 

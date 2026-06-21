@@ -46,7 +46,9 @@ All locked by `tests/test_audit_tighten.py` (9 tests); suite **327 passing**.
 > `tool_dispatcher.execute_tool` was laundering a rejected required action (an
 > illegal `move_to`) into a `success: True` receipt, so the Evaluator's
 > failed-required-tool gate never fired; now fixed (dice resolvers excluded). Suite
-> **359 passing** (+32). A jsdom/Playwright behavioural smoke is the remaining nice-to-have.
+> **359 passing** (+32). The jsdom + Playwright behavioural smoke and a **CI
+> pipeline** (pytest · vitest+jsdom · Playwright) are now in place too — every
+> item from this section is done.
 
 Higher-effort items surfaced by the review, for a follow-up:
 - **Frontend a11y** — the four `role="dialog"` overlays have no Escape/focus-trap,

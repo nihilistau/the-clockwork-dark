@@ -15,6 +15,7 @@ from pathlib import Path
 _SCENE = Path(__file__).resolve().parents[1] / "content" / "scenes" / "clockwork"
 _JS = (_SCENE / "static" / "js" / "clockwork.js").read_text(encoding="utf-8")
 _HELPERS = (_SCENE / "static" / "js" / "clockwork-helpers.js").read_text(encoding="utf-8")
+_DIALOGS = (_SCENE / "static" / "js" / "clockwork-dialogs.js").read_text(encoding="utf-8")
 _CSS = (_SCENE / "static" / "css" / "clockwork.css").read_text(encoding="utf-8")
 _HTML = (_SCENE / "templates" / "clockwork.html").read_text(encoding="utf-8")
 
@@ -35,17 +36,22 @@ def test_overlay_model_text_is_escaped():
     assert "escapeHtml(typeof r ===" in _JS
 
 
-def test_pure_helpers_extracted_and_loaded_first():
-    assert "module.exports" in _HELPERS
-    assert "ClockworkHelpers" in _HELPERS
-    # The helpers script must load before the main bundle that consumes it.
-    assert _HTML.index("clockwork-helpers.js") < _HTML.index('js/clockwork.js"')
+def test_pure_modules_extracted_and_loaded_first():
+    # Both extracted modules are dual-mode and load before the bundle that uses them.
+    assert "module.exports" in _HELPERS and "ClockworkHelpers" in _HELPERS
+    assert "module.exports" in _DIALOGS and "ClockworkDialogs" in _DIALOGS
+    main = _HTML.index('js/clockwork.js"')
+    assert _HTML.index("clockwork-helpers.js") < main
+    assert _HTML.index("clockwork-dialogs.js") < main
+    # The bundle consumes the dialog manager.
+    assert "ClockworkDialogs.create" in _JS
 
 
 def test_dialogs_have_keyboard_dismissal_and_focus_trap():
-    assert "function openDialog" in _JS and "function closeDialog" in _JS
-    assert 'ev.key === "Escape"' in _JS
-    assert 'ev.key === "Tab"' in _JS
+    # The behaviour lives in the extracted, unit-tested dialog manager.
+    assert 'ev.key === "Escape"' in _DIALOGS
+    assert 'ev.key === "Tab"' in _DIALOGS  # focus trap
+    assert "function openDialog" in _DIALOGS and "function closeDialog" in _DIALOGS
     # Every role=dialog overlay is focus-targetable (tabindex=-1).
     assert _HTML.count('role="dialog"') == _HTML.count('tabindex="-1"')
     assert _HTML.count('role="dialog"') >= 4
