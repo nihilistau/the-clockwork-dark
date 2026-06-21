@@ -97,14 +97,32 @@ def phase_meets_minimum(current: str, required: str) -> bool:
         return True
 
 
+def _gate_ok(
+    evil_phase: str,
+    min_phase: str,
+    awareness: float,
+    min_awareness: Optional[Any],
+) -> bool:
+    """A gate opens on phase OR awareness (March/Convergence arcs, DESIGN §1).
+
+    ``min_awareness`` is an *alternative* unlock: e.g. the Marches open at
+    evil >= SPREADING **or** Awareness >= 25, whichever comes first.
+    """
+    phase_ok = phase_meets_minimum(evil_phase, min_phase)
+    if min_awareness is None:
+        return phase_ok
+    return phase_ok or awareness >= float(min_awareness)
+
+
 def location_accessible(
     location_id: str,
     *,
     evil_phase: str,
+    awareness: float = 0.0,
     discoveries: Optional[set[str]] = None,
 ) -> tuple[bool, str]:
     """
-    Check phase and discovery gates for a location.
+    Check phase/awareness and discovery gates for a location.
 
     Returns:
         (accessible, reason)
@@ -114,7 +132,10 @@ def location_accessible(
         return False, f"Unknown location: {location_id}"
 
     min_phase = str(place.get("min_phase", "dormant"))
-    if not phase_meets_minimum(evil_phase, min_phase):
+    min_awareness = place.get("min_awareness")
+    if not _gate_ok(evil_phase, min_phase, awareness, min_awareness):
+        if min_awareness is not None:
+            return False, f"Locked until {min_phase} phase or awareness {min_awareness}"
         return False, f"Location locked until {min_phase} phase"
 
     if place.get("requires_discovery"):
@@ -136,9 +157,10 @@ def travel_edge_allowed(
     to_id: str,
     *,
     evil_phase: str,
+    awareness: float = 0.0,
     discoveries: Optional[set[str]] = None,
 ) -> tuple[bool, str]:
-    """Validate a travel edge including gates on the edge itself."""
+    """Validate a travel edge including phase/awareness gates on the edge itself."""
     graph = load_world_content().get("scene_graph", {})
     edges = graph.get(from_id, [])
     edge = next((e for e in edges if e.get("to") == to_id), None)
@@ -146,14 +168,19 @@ def travel_edge_allowed(
         return False, f"No route from {from_id} to {to_id}"
 
     min_phase = str(edge.get("min_phase", "dormant"))
-    if not phase_meets_minimum(evil_phase, min_phase):
+    min_awareness = edge.get("min_awareness")
+    if not _gate_ok(evil_phase, min_phase, awareness, min_awareness):
+        if min_awareness is not None:
+            return False, f"Route locked until {min_phase} phase or awareness {min_awareness}"
         return False, f"Route locked until {min_phase} phase"
 
     req = edge.get("requires_discovery")
     if req and (discoveries is None or req not in discoveries):
         return False, f"Requires discovery: {req}"
 
-    ok, reason = location_accessible(to_id, evil_phase=evil_phase, discoveries=discoveries)
+    ok, reason = location_accessible(
+        to_id, evil_phase=evil_phase, awareness=awareness, discoveries=discoveries
+    )
     if not ok:
         return False, reason
     return True, "ok"

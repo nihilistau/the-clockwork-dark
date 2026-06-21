@@ -93,6 +93,7 @@ class GameEngine:
             current,
             location_id,
             evil_phase=self.state.evil_phase.value,
+            awareness=self.state.awareness,
             discoveries=self._discoveries(self.state),
         )
         if not allowed:
