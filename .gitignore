@@ -34,6 +34,15 @@ Design_files/*.zip
 Design_files/**/*.zip
 Design_files/assets/art-min/
 
+# ---- Local dev/run artifacts (never commit) ----
+/_server.out
+/_server.err
+/_server.*.out
+/_server.*.err
+.playwright-mcp/
+/cw-start-screen*.png
+/cw-*.png
+
 # ---- OS / editor cruft ----
 .DS_Store
 Thumbs.db
