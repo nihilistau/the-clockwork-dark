@@ -92,6 +92,13 @@ class ClockworkScene(FlaskScene):
         def api_asset_manifest() -> Any:
             return jsonify(manifest_for_client())
 
+        @app.get("/api/metrics")
+        def api_metrics() -> Any:
+            from engine.observability import get_oracle
+
+            oracle = get_oracle()
+            return jsonify({"metrics": oracle.metrics(), "recent": oracle.recent(20)})
+
         @app.get("/api/assets/place/<location_id>")
         def api_place(location_id: str) -> Any:
             return jsonify(place_metadata(location_id))
