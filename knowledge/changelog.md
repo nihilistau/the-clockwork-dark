@@ -13,6 +13,14 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the world map
+A new **"known reaches"** overlay (the 🗺 button in the footer): the hand-painted
+overview map (`World-Over-View-Location-Icons`) above a list of every known
+location — the **current one lit**, **visited** ones marked, the rest shown by
+their caption. Reads `lastLocation` + a visited set from the turn payload;
+frontend-only (`clockwork.js` + `clockwork.css` + `clockwork.html`). Tests in
+`tests/test_frontend_contract.py`.
+
 ## 2026-06-22 — media polish: cutscenes + dice faces
 - **Cutscene wiring** — the `tunnels_open` beat now plays the dedicated
   tunnel-entrance **reveal** video; new cutscenes for the tunnel descent, arriving

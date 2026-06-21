@@ -89,6 +89,8 @@
   if (typeof window !== "undefined") window.__clockworkDialogs = _dialogs; // e2e test seam
   const doomEndClose = document.getElementById("doom-end-close");
   if (doomEndClose) doomEndClose.addEventListener("click", () => closeDialog(doomEnd));
+  const mapBtn = document.getElementById("map-btn");
+  if (mapBtn) mapBtn.addEventListener("click", () => renderOverlay("worldmap", {}));
 
   const PHASES = ["dormant", "stirring", "spreading", "consuming"];
   const WEATHER = ["Overcast", "Mist", "Clear", "Rain"];
@@ -105,7 +107,18 @@
   let assetManifest = null;
   let worldContent = null;
   let lastFlags = {};   // latest world flags (for the reactive notice board)
+  let lastLocation = "";
+  const visited = new Set();   // locations the traveler has reached (for the world map)
   let activeOverlay = "";
+
+  const WORLD_MAP_ART =
+    "assets/images/World-Over-View-Location-Icons/grok-9ae449db-a912-418a-adc3-1e695bb974cd.jpg";
+  // The known reaches, roughly outermost-in (matches the painted road).
+  const WORLD_MAP_ORDER = [
+    "forest_clearing", "forest_forage", "resting_camp", "hollow_hill", "ruins_temple",
+    "edgewood_square", "edgewood_bakery", "edgewood_forge", "edgewood_shrine",
+    "tinker_caravan", "marches_road", "millhaven_gate", "corruption_border", "clockwork_tower",
+  ];
 
   // Notice-board postings the Dark itself pins up — shown when their beat-flag is
   // set (mirrors the contracts' requires_flag gates; see the-reactive-world).
@@ -439,6 +452,7 @@
       shrine: "Shrine of Unnamed Saints",
       militia: "Millhaven gate",
       combat: "Combat",
+      worldmap: "The known reaches",
       challenge: scene?.challenge?.title || "A reckoning of skill",
     };
     overlayTitle.textContent = titles[overlayKey] || scene?.name || "Scene";
@@ -530,6 +544,25 @@
         ${postersHtml}
         <p class="overlay-kicker">Village chatter</p>
         <ul class="notice-chatter">${rumors.map((r) => `<li>${escapeHtml(typeof r === "string" ? r : r.text || "")}</li>`).join("")}</ul>`;
+    } else if (overlayKey === "worldmap") {
+      const places = assetManifest?.places || {};
+      const known = WORLD_MAP_ORDER.filter((id) => places[id]);
+      const rows = known.map((id) => {
+        const p = places[id];
+        const here = id === lastLocation;
+        const seen = visited.has(id);
+        const note = here ? "you are here" : (seen ? "visited" : (p.caption || ""));
+        const cls = "worldmap-node" + (here ? " worldmap-node--here" : seen ? " worldmap-node--seen" : "");
+        return `<li class="${cls}">
+          <span class="worldmap-dot"></span>
+          <span class="worldmap-name">${escapeHtml(p.name || id)}</span>
+          <span class="worldmap-note">${escapeHtml(note)}</span>
+        </li>`;
+      }).join("");
+      overlayBody.innerHTML = `
+        <div class="worldmap-visual"><img src="${escapeHtml("/design/" + WORLD_MAP_ART)}" alt="The known reaches" loading="lazy" /></div>
+        <ul class="worldmap-list">${rows}</ul>
+        <p class="worldmap-foot">The map is not to scale. The road is longer leaving than returning.</p>`;
     } else if (overlayKey === "shrine") {
       const frag = scene?.mural_fragment || "a saint with clock-hands where eyes should be";
       overlayBody.innerHTML = `
@@ -687,6 +720,10 @@
     renderChoices(payload.choices);
     updateStats(payload.state);
     if (payload.state && payload.state.flags) lastFlags = payload.state.flags;
+    if (payload.state && payload.state.location_id) {
+      lastLocation = payload.state.location_id;
+      visited.add(lastLocation);
+    }
     renderContracts(payload.state);
     if (payload.scene) applySceneVisual(payload.scene);
     if (payload.doom) renderDoom(payload.doom);

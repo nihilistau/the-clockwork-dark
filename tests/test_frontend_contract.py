@@ -74,6 +74,13 @@ def test_reduced_motion_and_focus_visible_present():
     assert ":focus-visible" in _CSS
 
 
+def test_world_map_overlay():
+    assert 'id="map-btn"' in _HTML
+    assert 'overlayKey === "worldmap"' in _JS
+    assert "WORLD_MAP_ART" in _JS
+    assert ".worldmap-visual" in _CSS
+
+
 def test_dice_toast_shows_the_rolled_face():
     assert 'id="dice-face"' in _HTML
     assert "diceFace" in _JS
