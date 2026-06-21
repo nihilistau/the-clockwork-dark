@@ -57,23 +57,22 @@ class LoreInjectInterceptor:
         limit: int = 3,
     ) -> str:
         """
-        Append lore context block when DB has chunks.
+        Append a lore context block from the knowledge cascade.
 
-        No-op if lore store is empty.
+        On the default gameplay path the cascade blends game-lore FTS with
+        OKFS game-typed concepts; with an injected manager it stays FTS-only.
+        No-op when nothing relevant is found.
         """
-        if self.manager.count() == 0:
-            return system_prompt
+        from engine.okfs.cascade import get_cascade
 
         query = f"{state.location_id} {player_action} {state.archetype}"
-        chunks = self.manager.search(query, limit=limit)
-        if not chunks:
+        hits = get_cascade().query(query, limit=limit, lore_manager=self._manager)
+        if not hits:
             return system_prompt
 
-        lines = [f"- [{c.title}] {c.text}" for c in chunks]
+        lines = [f"- [{h.title}] {h.text}" for h in hits]
         block = "LORE CONTEXT (canonical — do not contradict):\n" + "\n".join(lines)
-        logger.debug(
-            "[lore] Injected chunks (operation=run_pre, count=%s)", len(chunks)
-        )
+        logger.debug("[lore] Injected (operation=run_pre, count=%s)", len(hits))
         return f"{system_prompt}\n\n{block}"
 
 
