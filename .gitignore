@@ -42,6 +42,8 @@ config/local.yaml
 /_server.err
 /_live_smoke.py
 /_live_smoke.json
+/_struct_check.py
+/_struct_check.json
 /_server.*.out
 /_server.*.err
 .playwright-mcp/
