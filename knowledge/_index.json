@@ -1,0 +1,556 @@
+{
+  "bundle_hash": "918321d475fcf791",
+  "concepts": [
+    {
+      "hash": "721116161510acb6",
+      "links": [
+        "clockwork-architecture",
+        "doom-arcs",
+        "ephemeral-challenges",
+        "install-comfyui",
+        "install-voxtral",
+        "lmstudio-structured-output",
+        "okfs-conventions",
+        "okfs-spec",
+        "run-on-the-beast",
+        "the-harvest",
+        "the-notice-board",
+        "the-two-powers",
+        "turn-metrics"
+      ],
+      "slug": "changelog",
+      "tags": [
+        "log",
+        "changelog",
+        "okfs",
+        "history"
+      ],
+      "title": "Changelog \u2014 The Clockwork Engine",
+      "type": "Log"
+    },
+    {
+      "hash": "8cff1702ca11c8b0",
+      "links": [
+        "llm-migration-plan",
+        "lmstudio-integration-overview",
+        "okfs-spec"
+      ],
+      "slug": "clockwork-architecture",
+      "tags": [
+        "architecture",
+        "clockwork",
+        "agents",
+        "engine",
+        "governance"
+      ],
+      "title": "The Clockwork Dark \u2014 System Architecture",
+      "type": "Architecture"
+    },
+    {
+      "hash": "7633463755a733f1",
+      "links": [
+        "the-harvest",
+        "the-two-powers",
+        "turn-metrics"
+      ],
+      "slug": "doom-arcs",
+      "tags": [
+        "lore",
+        "doom",
+        "pacing",
+        "arcs",
+        "engagement",
+        "mechanics"
+      ],
+      "title": "The Doom Clock \u2014 Arcs & Engagement",
+      "type": "Lore"
+    },
+    {
+      "hash": "993f042495fa5b52",
+      "links": [
+        "clockwork-architecture",
+        "doom-arcs"
+      ],
+      "slug": "ephemeral-challenges",
+      "tags": [
+        "challenges",
+        "mechanics",
+        "tools",
+        "engine",
+        "ai"
+      ],
+      "title": "Ephemeral Structured Challenges",
+      "type": "Reference"
+    },
+    {
+      "hash": "a52d5860b286183c",
+      "links": [
+        "the-clockwork-dark"
+      ],
+      "slug": "evil-phases",
+      "tags": [
+        "lore",
+        "phases",
+        "corruption",
+        "pacing"
+      ],
+      "title": "The Four Evil Phases",
+      "type": "Lore"
+    },
+    {
+      "hash": "c4540a3cec333190",
+      "links": [
+        "clockwork-architecture",
+        "evil-phases",
+        "install-comfyui",
+        "install-voxtral",
+        "llm-migration-plan",
+        "lmstudio-act-agentic-loop",
+        "lmstudio-cancelling-predictions",
+        "lmstudio-chat-completion",
+        "lmstudio-integration-overview",
+        "lmstudio-mcp-host",
+        "lmstudio-python-agent-tools",
+        "lmstudio-repl",
+        "lmstudio-responses-api",
+        "lmstudio-stateful-chats",
+        "lmstudio-streaming-events",
+        "lmstudio-structured-output",
+        "lmstudio-structured-response",
+        "lmstudio-tool-use",
+        "maris-hearth",
+        "okfs-conventions",
+        "okfs-spec",
+        "run-on-the-beast",
+        "the-clockwork-dark"
+      ],
+      "slug": "index",
+      "tags": [
+        "index",
+        "okfs",
+        "clockwork"
+      ],
+      "title": "The Clockwork Dark \u2014 Knowledge Index",
+      "type": "Architecture"
+    },
+    {
+      "hash": "2bc46a4d3da6682d",
+      "links": [
+        "clockwork-architecture",
+        "install-voxtral",
+        "run-on-the-beast"
+      ],
+      "slug": "install-comfyui",
+      "tags": [
+        "runbook",
+        "comfyui",
+        "media",
+        "setup"
+      ],
+      "title": "Install & Run ComfyUI (image generation)",
+      "type": "Runbook"
+    },
+    {
+      "hash": "8ee6c370bcd87fad",
+      "links": [
+        "install-comfyui",
+        "lmstudio-integration-overview",
+        "run-on-the-beast"
+      ],
+      "slug": "install-voxtral",
+      "tags": [
+        "runbook",
+        "voxtral",
+        "voice",
+        "tts",
+        "asr",
+        "setup"
+      ],
+      "title": "Install & Run Voxtral (TTS/ASR voice)",
+      "type": "Runbook"
+    },
+    {
+      "hash": "8fcdc2018ca95c0c",
+      "links": [
+        "lmstudio-act-agentic-loop",
+        "lmstudio-cancelling-predictions",
+        "lmstudio-mcp-host",
+        "lmstudio-stateful-chats",
+        "lmstudio-streaming-events",
+        "lmstudio-structured-output",
+        "lmstudio-structured-response",
+        "lmstudio-tool-use"
+      ],
+      "slug": "llm-migration-plan",
+      "tags": [
+        "architecture",
+        "llm",
+        "decision",
+        "tools",
+        "structured-output"
+      ],
+      "title": "LLM Layer Migration Plan",
+      "type": "Decision"
+    },
+    {
+      "hash": "5e8431171ae4e9c8",
+      "links": [
+        "lmstudio-mcp-host",
+        "lmstudio-python-agent-tools"
+      ],
+      "slug": "lmstudio-act-agentic-loop",
+      "tags": [
+        "lmstudio",
+        "python-sdk",
+        "agent",
+        "tool-calling"
+      ],
+      "title": "The .act() Agentic Run-Until-Done Loop",
+      "type": "Reference"
+    },
+    {
+      "hash": "eead52de76f6f80f",
+      "links": [
+        "lmstudio-chat-completion"
+      ],
+      "slug": "lmstudio-cancelling-predictions",
+      "tags": [
+        "lmstudio",
+        "python",
+        "cancellation",
+        "streaming"
+      ],
+      "title": "LM Studio Cancelling Predictions (Python SDK)",
+      "type": "Reference"
+    },
+    {
+      "hash": "f71fefd4f24d33e7",
+      "links": [
+        "lmstudio-structured-response"
+      ],
+      "slug": "lmstudio-chat-completion",
+      "tags": [
+        "lmstudio",
+        "python",
+        "chat",
+        "streaming"
+      ],
+      "title": "LM Studio Chat Completions (Python SDK)",
+      "type": "Reference"
+    },
+    {
+      "hash": "004dbda427c8639d",
+      "links": [
+        "llm-migration-plan",
+        "lmstudio-cancelling-predictions",
+        "lmstudio-mcp-host",
+        "lmstudio-stateful-chats",
+        "lmstudio-streaming-events",
+        "lmstudio-structured-output",
+        "lmstudio-tool-use",
+        "okfs-spec"
+      ],
+      "slug": "lmstudio-integration-overview",
+      "tags": [
+        "lmstudio",
+        "rest",
+        "architecture",
+        "llm"
+      ],
+      "title": "LM Studio Integration Overview",
+      "type": "Architecture"
+    },
+    {
+      "hash": "ff1bb6e2f269540c",
+      "links": [
+        "lmstudio-act-agentic-loop",
+        "lmstudio-python-agent-tools"
+      ],
+      "slug": "lmstudio-mcp-host",
+      "tags": [
+        "lmstudio",
+        "mcp",
+        "tool-calling",
+        "rest-api"
+      ],
+      "title": "LM Studio as MCP Host",
+      "type": "Reference"
+    },
+    {
+      "hash": "af25169c5d120030",
+      "links": [
+        "lmstudio-act-agentic-loop",
+        "lmstudio-mcp-host"
+      ],
+      "slug": "lmstudio-python-agent-tools",
+      "tags": [
+        "lmstudio",
+        "python-sdk",
+        "tool-definition",
+        "agent"
+      ],
+      "title": "Defining Tools for the LM Studio Python Agent",
+      "type": "Reference"
+    },
+    {
+      "hash": "97541e16d9de695b",
+      "links": [
+        "lmstudio-chat-completion"
+      ],
+      "slug": "lmstudio-repl",
+      "tags": [
+        "lmstudio",
+        "python",
+        "repl",
+        "getting-started"
+      ],
+      "title": "LM Studio Python REPL / Getting Started",
+      "type": "Reference"
+    },
+    {
+      "hash": "2b918583b9365ee2",
+      "links": [
+        "lmstudio-structured-output",
+        "lmstudio-tool-use"
+      ],
+      "slug": "lmstudio-responses-api",
+      "tags": [
+        "lmstudio",
+        "openai-compat",
+        "responses",
+        "reasoning"
+      ],
+      "title": "LM Studio Responses API (/v1/responses)",
+      "type": "API Endpoint"
+    },
+    {
+      "hash": "1f00234e50d765bb",
+      "links": [
+        "lmstudio-integration-overview",
+        "lmstudio-streaming-events"
+      ],
+      "slug": "lmstudio-stateful-chats",
+      "tags": [
+        "lmstudio",
+        "rest",
+        "state",
+        "memory"
+      ],
+      "title": "LM Studio Stateful Chats",
+      "type": "API Endpoint"
+    },
+    {
+      "hash": "90fb442aad7e69bf",
+      "links": [
+        "lmstudio-integration-overview",
+        "lmstudio-stateful-chats"
+      ],
+      "slug": "lmstudio-streaming-events",
+      "tags": [
+        "lmstudio",
+        "rest",
+        "streaming",
+        "sse"
+      ],
+      "title": "LM Studio Streaming Events",
+      "type": "API Endpoint"
+    },
+    {
+      "hash": "25facbd07879bddf",
+      "links": [
+        "lmstudio-tool-use"
+      ],
+      "slug": "lmstudio-structured-output",
+      "tags": [
+        "lmstudio",
+        "openai-compat",
+        "structured-output",
+        "json-schema"
+      ],
+      "title": "LM Studio Structured Output (response_format json_schema)",
+      "type": "API Endpoint"
+    },
+    {
+      "hash": "a66d212c6c7441f1",
+      "links": [
+        "lmstudio-chat-completion"
+      ],
+      "slug": "lmstudio-structured-response",
+      "tags": [
+        "lmstudio",
+        "python",
+        "structured-output",
+        "json-schema"
+      ],
+      "title": "LM Studio Structured Response (Python SDK)",
+      "type": "Reference"
+    },
+    {
+      "hash": "c1866f4e494d4d00",
+      "links": [
+        "lmstudio-responses-api",
+        "lmstudio-structured-output"
+      ],
+      "slug": "lmstudio-tool-use",
+      "tags": [
+        "lmstudio",
+        "openai-compat",
+        "tools",
+        "function-calling"
+      ],
+      "title": "LM Studio Tool Use (tools / tool_calls)",
+      "type": "API Endpoint"
+    },
+    {
+      "hash": "30ae1c7d522757ba",
+      "links": [
+        "evil-phases",
+        "the-clockwork-dark"
+      ],
+      "slug": "maris-hearth",
+      "tags": [
+        "npc",
+        "edgewood",
+        "baker",
+        "hearth"
+      ],
+      "title": "Maris Hearth (npc_maris)",
+      "type": "NPC"
+    },
+    {
+      "hash": "9663a83c3ceab8cc",
+      "links": [
+        "okfs-spec"
+      ],
+      "slug": "okfs-conventions",
+      "tags": [
+        "okfs",
+        "convention",
+        "decision",
+        "agents",
+        "docs"
+      ],
+      "title": "OKFS Everywhere \u2014 Convention",
+      "type": "Decision"
+    },
+    {
+      "hash": "215f872a2375122a",
+      "links": [
+        "clockwork-architecture"
+      ],
+      "slug": "okfs-spec",
+      "tags": [
+        "okfs",
+        "spec",
+        "knowledge",
+        "format"
+      ],
+      "title": "OKFS \u2014 Our Open Knowledge Format",
+      "type": "Reference"
+    },
+    {
+      "hash": "6727e8bf230a2a77",
+      "links": [
+        "clockwork-architecture",
+        "install-comfyui",
+        "install-voxtral"
+      ],
+      "slug": "run-on-the-beast",
+      "tags": [
+        "runbook",
+        "remote",
+        "config",
+        "beast",
+        "setup"
+      ],
+      "title": "Run on the Beast (remote endpoints)",
+      "type": "Runbook"
+    },
+    {
+      "hash": "cc25b7d33330769e",
+      "links": [
+        "evil-phases",
+        "maris-hearth"
+      ],
+      "slug": "the-clockwork-dark",
+      "tags": [
+        "lore",
+        "corruption",
+        "antagonist",
+        "clockwork"
+      ],
+      "title": "The Clockwork Dark",
+      "type": "Lore"
+    },
+    {
+      "hash": "6aa32ac8300662d8",
+      "links": [
+        "doom-arcs",
+        "the-clockwork-dark"
+      ],
+      "slug": "the-harvest",
+      "tags": [
+        "lore",
+        "corruption",
+        "imagery",
+        "harvest",
+        "tunnels"
+      ],
+      "title": "The Harvest \u2014 Signs of the Clockwork Dark",
+      "type": "Lore"
+    },
+    {
+      "hash": "48a46bba6a3b5045",
+      "links": [
+        "doom-arcs",
+        "ephemeral-challenges",
+        "maris-hearth"
+      ],
+      "slug": "the-notice-board",
+      "tags": [
+        "lore",
+        "contracts",
+        "noticeboard",
+        "quests",
+        "baker"
+      ],
+      "title": "The Notice Board & Contracts",
+      "type": "Lore"
+    },
+    {
+      "hash": "52fa32ac1f62c430",
+      "links": [
+        "clockwork-architecture",
+        "doom-arcs",
+        "the-clockwork-dark",
+        "the-harvest"
+      ],
+      "slug": "the-two-powers",
+      "tags": [
+        "lore",
+        "narrator",
+        "assistant",
+        "gods",
+        "tone"
+      ],
+      "title": "The Two Powers \u2014 Narrator and Assistant",
+      "type": "Lore"
+    },
+    {
+      "hash": "a423264f52a37215",
+      "links": [
+        "clockwork-architecture"
+      ],
+      "slug": "turn-metrics",
+      "tags": [
+        "metric",
+        "observability",
+        "oracle",
+        "telemetry"
+      ],
+      "title": "Turn Metrics (Oracle)",
+      "type": "Metric"
+    }
+  ],
+  "count": 31
+}
