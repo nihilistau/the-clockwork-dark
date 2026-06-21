@@ -26,6 +26,9 @@
   const assistantForm = document.getElementById("assistant-form");
   const assistantPortrait = document.getElementById("assistant-portrait");
   const assistantWhisper = document.getElementById("assistant-whisper");
+  const assistantIntent = document.getElementById("assistant-intent");
+  const assistantGift = document.getElementById("assistant-gift");
+  const assistantUnreliable = document.getElementById("assistant-unreliable");
   const sceneImage = document.getElementById("scene-image");
   const scenePlaceholder = document.getElementById("scene-placeholder");
   const sceneCaption = document.getElementById("scene-caption");
@@ -45,6 +48,22 @@
   const overlayTitle = document.getElementById("overlay-title");
   const overlayClose = document.getElementById("overlay-close");
   const overlayBackdrop = document.getElementById("overlay-backdrop");
+  const doomGauge = document.getElementById("doom-gauge");
+  const doomArc = document.getElementById("doom-arc");
+  const doomEvilFill = document.getElementById("doom-evil-fill");
+  const doomEvilLabel = document.getElementById("doom-evil-label");
+  const doomEngagementFill = document.getElementById("doom-engagement-fill");
+  const doomEngagementLabel = document.getElementById("doom-engagement-label");
+  const doomBeatLatest = document.getElementById("doom-beat-latest");
+  const doomToast = document.getElementById("doom-toast");
+  const doomToastKicker = document.getElementById("doom-toast-kicker");
+  const doomToastText = document.getElementById("doom-toast-text");
+  const doomEnd = document.getElementById("doom-end");
+  const doomEndGlyph = document.getElementById("doom-end-glyph");
+  const doomEndTitle = document.getElementById("doom-end-title");
+  const doomEndText = document.getElementById("doom-end-text");
+  const contractSlate = document.getElementById("contract-slate");
+  const contractList = document.getElementById("contract-list");
 
   const PHASES = ["dormant", "stirring", "spreading", "consuming"];
   const WEATHER = ["Overcast", "Mist", "Clear", "Rain"];
@@ -65,6 +84,26 @@
   let cutsceneTimer = null;
   let captionIndex = 0;
   let captionInterval = null;
+  let doomToastTimer = null;
+  let doomEndShown = false;
+
+  const DOOM_ARC_LABELS = {
+    quiet_life: "quiet life",
+    whisper: "a whisper",
+    march: "the march",
+    convergence: "convergence",
+    consumed: "consumed",
+  };
+
+  const ASSISTANT_INTENT_LABELS = {
+    quip: "",
+    silent: "",
+    hint: "a hint",
+    gift: "a gift",
+    warn: "a warning",
+    comfort: "comfort",
+    lore: "lore",
+  };
 
   const socket = io();
 
@@ -98,6 +137,152 @@
       phaseChipsEl.appendChild(chip);
     });
     document.body.setAttribute("data-phase", activePhase || "dormant");
+  }
+
+  function clamp01(n) {
+    return Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
+  }
+
+  // The Clockwork Dark, made legible: rust at first, bleeding to corruption-green.
+  function evilTint(progress) {
+    const t = clamp01(progress);
+    const from = [139, 69, 19]; // --rust-clock
+    const to = [122, 158, 79]; // --status-corruption
+    const mix = from.map((c, i) => Math.round(c + (to[i] - c) * t));
+    return `rgb(${mix[0]}, ${mix[1]}, ${mix[2]})`;
+  }
+
+  function renderDoom(doom) {
+    if (!doomGauge) return;
+    if (!doom) {
+      doomGauge.classList.add("hidden");
+      return;
+    }
+    doomGauge.classList.remove("hidden");
+
+    const arc = String(doom.arc || "quiet_life");
+    if (doomArc) doomArc.textContent = DOOM_ARC_LABELS[arc] || arc.replace(/_/g, " ");
+
+    const evil = clamp01(doom.evil_progress);
+    if (doomEvilFill) {
+      doomEvilFill.style.width = `${Math.round(evil * 100)}%`;
+      // Tint rises with corruption — a single inline override on the gradient base.
+      doomEvilFill.style.backgroundImage = "none";
+      doomEvilFill.style.backgroundColor = evilTint(evil);
+    }
+    if (doomEvilLabel) doomEvilLabel.textContent = `${Math.round(evil * 100)}%`;
+
+    const engagement = Math.max(0, Math.min(100, Number(doom.engagement) || 0));
+    if (doomEngagementFill) doomEngagementFill.style.width = `${engagement}%`;
+    if (doomEngagementLabel) doomEngagementLabel.textContent = String(Math.round(engagement));
+
+    if (doomBeatLatest) {
+      const beatId = doom.latest_beat || "";
+      doomBeatLatest.textContent = beatId ? beatId.replace(/_/g, " ") : "";
+    }
+
+    const conv = doom.convergence || {};
+    doomGauge.classList.toggle("doom-gauge--convergence", !!conv.open && !doom.consumed);
+    doomGauge.classList.toggle("doom-gauge--consumed", !!doom.consumed);
+
+    maybeShowDoomEnd(doom);
+  }
+
+  function maybeShowDoomEnd(doom) {
+    if (!doomEnd || doomEndShown) return;
+    const conv = doom.convergence || {};
+    const outcome = conv.outcome || "";
+    let title = "";
+    let text = "";
+    let mod = "";
+
+    if (doom.consumed) {
+      title = "The last clock-stroke falls";
+      text =
+        "Edgewood folds into mechanism — bread, hearth, and name alike — and the " +
+        "Clockwork Dark finishes what it always meant to.";
+      if (doomEndGlyph) doomEndGlyph.textContent = "☉";
+    } else if (conv.resolved && outcome === "held") {
+      title = "The line held";
+      text = "The clock keeps its hour, but Edgewood is not in it. It is not victory. It is enough.";
+      mod = "doom-end--held";
+      if (doomEndGlyph) doomEndGlyph.textContent = "✶";
+    } else if (conv.resolved && outcome === "walked_away") {
+      title = "You walked home the long way";
+      text = "The clock finishes without you in it. The bread, at least, is still warm.";
+      mod = "doom-end--walked";
+      if (doomEndGlyph) doomEndGlyph.textContent = "❧";
+    } else {
+      return;
+    }
+
+    doomEndShown = true;
+    if (doomEndTitle) doomEndTitle.textContent = title;
+    if (doomEndText) doomEndText.textContent = text;
+    doomEnd.className = "doom-end" + (mod ? " " + mod : "");
+    doomEnd.classList.remove("hidden");
+  }
+
+  function showDoomToast(beats) {
+    if (!doomToast || !Array.isArray(beats) || beats.length === 0) return;
+    // The most advanced new sign leads; ignore the silent 'consumed' (the end-state owns it).
+    const visible = beats.filter((b) => b && b.id !== "consumed" && b.text);
+    const beat = visible[visible.length - 1];
+    if (!beat) return;
+
+    if (doomToastText) doomToastText.textContent = beat.text;
+    if (doomToastKicker) {
+      doomToastKicker.textContent =
+        beat.id === "tower_assembles" ? "The horizon answers" : "A world sign";
+    }
+    doomToast.classList.remove("hidden");
+    // Allow the element to lay out before triggering the transition.
+    requestAnimationFrame(() => doomToast.classList.add("doom-toast--show"));
+
+    clearTimeout(doomToastTimer);
+    doomToastTimer = setTimeout(() => {
+      doomToast.classList.remove("doom-toast--show");
+      setTimeout(() => doomToast.classList.add("hidden"), 500);
+    }, 6500);
+  }
+
+  function renderContracts(state) {
+    if (!contractSlate || !contractList) return;
+    const contracts = (state && state.contracts) || [];
+    if (!contracts.length) {
+      contractSlate.classList.add("hidden");
+      contractList.innerHTML = "";
+      return;
+    }
+    contractSlate.classList.remove("hidden");
+    contractList.innerHTML = "";
+    contracts.forEach((c) => {
+      const kind = String(c.kind || "mundane");
+      const status = String(c.status || "accepted");
+      const li = document.createElement("li");
+      li.className =
+        "contract-item contract-item--" + kind +
+        (status === "complete" ? " contract-item--complete" : "");
+
+      const title = document.createElement("span");
+      title.className = "contract-title";
+      title.textContent = c.title || c.id || "Contract";
+
+      const badges = document.createElement("span");
+      badges.className = "contract-badges";
+      const kindBadge = document.createElement("span");
+      kindBadge.className = "contract-badge contract-badge--kind-" + kind;
+      kindBadge.textContent = kind.replace(/_/g, " ");
+      const statusBadge = document.createElement("span");
+      statusBadge.className = "contract-badge contract-badge--status-" + status;
+      statusBadge.textContent = status;
+      badges.appendChild(kindBadge);
+      badges.appendChild(statusBadge);
+
+      li.appendChild(title);
+      li.appendChild(badges);
+      contractList.appendChild(li);
+    });
   }
 
   function renderArchetypes(archetypes) {
@@ -214,9 +399,16 @@
       shrine: "Shrine of Unnamed Saints",
       militia: "Millhaven gate",
       combat: "Combat",
+      challenge: scene?.challenge?.title || "A reckoning of skill",
     };
     overlayTitle.textContent = titles[overlayKey] || scene?.name || "Scene";
     overlayBody.innerHTML = "";
+
+    if (overlayKey === "challenge") {
+      renderChallengeBody(scene?.challenge);
+      overlayPanel.classList.remove("hidden");
+      return;
+    }
 
     if (overlayKey === "bakery") {
       overlayBody.innerHTML = `
@@ -307,6 +499,101 @@
     overlayPanel.classList.remove("hidden");
   }
 
+  function escapeHtml(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // Derive a read-only display from the active challenge dict (internal shape from
+  // start_challenge, or the ChallengeResult.to_dict shape). Never throws on a partial.
+  function challengeView(ch) {
+    const kind = String(ch.kind || "challenge");
+    let text = ch.text || "";
+    let options = Array.isArray(ch.options) ? ch.options.slice() : [];
+    let answerRequired = !!ch.answer_required;
+    let step = Number.isFinite(ch.step) ? ch.step : 0;
+    let total =
+      Number.isFinite(ch.total_steps) ? ch.total_steps :
+      Array.isArray(ch.steps) ? ch.steps.length : 0;
+    let meta = ch.message || "";
+
+    if (kind === "skill_gauntlet" && Array.isArray(ch.steps) && ch.steps.length) {
+      const cur = ch.steps[Math.min(step, ch.steps.length - 1)] || {};
+      if (!text) text = cur.text || "";
+      if (!meta && (cur.skill || cur.dc != null)) {
+        meta = `${cur.skill || "?"} · DC ${cur.dc != null ? cur.dc : "?"}`;
+      }
+      if (!options.length) options = [{ id: "attempt", text: "Attempt it" }];
+    } else if (kind === "decision_tree" && ch.nodes && ch.current) {
+      const node = ch.nodes[ch.current] || {};
+      if (!text) text = node.text || "";
+      if (!options.length) {
+        options = (node.options || []).map((o) => ({ id: o.id, text: o.text }));
+      }
+    } else if (kind === "puzzle") {
+      answerRequired = true;
+      if (!text) text = ch.prompt || ch.title || "";
+      if (!meta && ch.attempts_left != null) meta = `${ch.attempts_left} attempts left`;
+    } else if (kind === "dice_table") {
+      if (!text) text = ch.prompt || ch.title || "";
+      if (!options.length) options = [{ id: "roll", text: "Roll" }];
+    }
+
+    return { kind, text, options, answerRequired, step, total, meta };
+  }
+
+  function renderChallengeBody(ch) {
+    if (!overlayBody) return;
+    if (!ch) {
+      overlayBody.innerHTML = "";
+      return;
+    }
+    const v = challengeView(ch);
+    let pips = "";
+    if (v.total > 0) {
+      for (let i = 0; i < v.total; i += 1) {
+        const cls =
+          i < v.step ? "challenge-pip challenge-pip--done" :
+          i === v.step ? "challenge-pip challenge-pip--current" :
+          "challenge-pip";
+        pips += `<span class="${cls}"></span>`;
+      }
+    }
+    const progressHtml = v.total > 0
+      ? `<div class="challenge-progress">
+           <div class="challenge-pips">${pips}</div>
+           <span class="challenge-step-label">Step ${Math.min(v.step + 1, v.total)} / ${v.total}</span>
+         </div>`
+      : "";
+    const metaHtml = v.meta ? `<p class="challenge-meta">${escapeHtml(v.meta)}</p>` : "";
+
+    let bodyHtml = "";
+    if (v.answerRequired) {
+      bodyHtml = `<div class="challenge-answer">An answer is required — speak it in the action line below.</div>`;
+    } else if (v.options.length) {
+      bodyHtml =
+        `<div class="challenge-chips">` +
+        v.options.map((o) => `<span class="challenge-chip">${escapeHtml(o.text || o.id)}</span>`).join("") +
+        `</div>`;
+    }
+
+    overlayBody.innerHTML = `
+      <div class="challenge-frame">
+        <div class="challenge-head">
+          <span class="overlay-kicker" style="margin:0">${escapeHtml((v.kind || "").replace(/_/g, " "))}</span>
+          <span class="challenge-kind">challenge</span>
+        </div>
+        ${v.text ? `<p class="challenge-prompt">${escapeHtml(v.text)}</p>` : ""}
+        ${progressHtml}
+        ${metaHtml}
+        ${bodyHtml}
+        <p class="challenge-hint">The engine adjudicates this. Choose below or type your action — the outcome is rolled, not narrated away.</p>
+      </div>`;
+  }
+
   function applySceneVisual(scene) {
     if (!scene) return;
     if (scene.name) sceneTitle.textContent = scene.name;
@@ -321,6 +608,9 @@
     }
     if (scene.overlay && scene.overlay !== activeOverlay) {
       renderOverlay(scene.overlay, scene);
+    } else if (scene.overlay === "challenge" && scene.challenge) {
+      // Same overlay, but the gauntlet advanced — refresh the read-only body in place.
+      renderChallengeBody(scene.challenge);
     } else if (!scene.overlay) {
       hideOverlay();
     }
@@ -366,7 +656,12 @@
     streamedThisTurn = false;
     renderChoices(payload.choices);
     updateStats(payload.state);
+    renderContracts(payload.state);
     if (payload.scene) applySceneVisual(payload.scene);
+    if (payload.doom) renderDoom(payload.doom);
+    if (payload.doom_beats && payload.doom_beats.length) {
+      showDoomToast(payload.doom_beats);
+    }
     if (payload.assistant && payload.assistant.spoke) {
       showAssistant(payload.assistant);
     }
@@ -384,6 +679,41 @@
       assistantPortrait.hidden = false;
     } else if (assistantPortrait) {
       assistantPortrait.hidden = true;
+    }
+
+    // Intent badge — only when it carries meaning (not a plain quip/silent).
+    if (assistantIntent) {
+      const intent = String(asst.intent || "");
+      const label = ASSISTANT_INTENT_LABELS[intent];
+      if (label) {
+        assistantIntent.textContent = label;
+        assistantIntent.className =
+          "assistant-intent" + (intent === "gift" ? " assistant-intent--gift" : "");
+        assistantIntent.classList.remove("hidden");
+      } else {
+        assistantIntent.classList.add("hidden");
+      }
+    }
+
+    // Gift flourish — "received: <item>".
+    if (assistantGift) {
+      const gift = asst.gift;
+      const giftName = gift && (gift.name || gift.id);
+      if (giftName) {
+        assistantGift.textContent = `received: ${giftName}`;
+        assistantGift.classList.remove("hidden");
+      } else {
+        assistantGift.classList.add("hidden");
+      }
+    }
+
+    // A subtle cue when the voice cannot be wholly trusted this turn.
+    if (assistantUnreliable) {
+      if (asst.reliable === false) {
+        assistantUnreliable.classList.remove("hidden");
+      } else {
+        assistantUnreliable.classList.add("hidden");
+      }
     }
   }
 
