@@ -15,6 +15,8 @@ from typing import Any, Optional
 from flask import Flask, jsonify
 from flask_socketio import SocketIO
 
+from engine.config import get_config
+
 
 class FlaskScene:
     """
@@ -40,9 +42,16 @@ class FlaskScene:
             template_folder=str(template_folder),
         )
         self.app.config["TESTING"] = testing
+        cfg = get_config()
+        cors_origins = cfg.get(
+            "security.cors_origins",
+            ["http://localhost:5573", "http://127.0.0.1:5573"],
+        )
+        max_mb = float(cfg.get("security.max_upload_mb", 8) or 8)
+        self.app.config["MAX_CONTENT_LENGTH"] = int(max_mb * 1024 * 1024)
         self.socketio = SocketIO(
             self.app,
-            cors_allowed_origins="*",
+            cors_allowed_origins=cors_origins,
             async_mode="threading",
         )
         self._register_health()
@@ -59,7 +68,7 @@ class FlaskScene:
     def run(
         self,
         *,
-        host: str = "0.0.0.0",
+        host: str = "127.0.0.1",
         port: int = 5573,
         debug: bool = False,
     ) -> None:

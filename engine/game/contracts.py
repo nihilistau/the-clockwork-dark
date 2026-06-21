@@ -22,7 +22,8 @@ import yaml
 
 from engine.config import get_config
 from engine.game.evil_ticker import phase_index
-from engine.game.state import GameState, InventoryItem
+from engine.game.inventory import add_item
+from engine.game.state import GameState
 
 _ROOT = Path(__file__).resolve().parents[2]
 _CACHE: Optional[dict[str, Any]] = None
@@ -149,10 +150,4 @@ class ContractBoard:
 
 
 def _add_item(state: GameState, item_id: str, name: str) -> None:
-    if not item_id:
-        return
-    for entry in state.inventory:
-        if entry.id == item_id:
-            entry.qty += 1
-            return
-    state.inventory.append(InventoryItem(id=item_id, name=name or item_id, qty=1, tags=["contract"]))
+    add_item(state, item_id, name, tags=["contract"])

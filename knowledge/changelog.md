@@ -13,6 +13,24 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — review & audit tighten
+A full five-dimension review (correctness · security · architecture · tests ·
+docs), every finding verified in code. No critical defects; the fixes are
+tightenings (full report in `docs/AUDIT.md`):
+- **Security** — default bind is now `127.0.0.1` (was `0.0.0.0`), Socket.IO CORS
+  is a localhost allow-list (was `*`), and a `MAX_CONTENT_LENGTH` upload cap —
+  all under a new `security:` config block; LAN exposure is now opt-in.
+- **Robust Assistant parsing** — the Assistant shares the Storyteller's
+  balanced-brace extractor (`engine/agents/parsing.py`) instead of a brittle
+  regex that truncated nested objects.
+- **Frontend XSS** — model-controlled strings (item names, rumors, foe text) now
+  pass through `escapeHtml`.
+- **Save symmetry** — `to_dict`/`from_dict` round-trip the agent minds via an
+  explicit `include_minds` flag (default payload stays client-safe).
+- **Hardening + DRY** — AI challenge specs are size-bounded; `_add_item` is
+  unified in `engine/game/inventory.py`; README test count refreshed (318).
+- Locked by `tests/test_audit_tighten.py`; **327 tests passing.**
+
 ## 2026-06-22 — the four-stream fleet
 A documentation/feature fleet shipped four streams in parallel, merged in sequence:
 - **Prove the engine** — *The Drowned Carillon*, a second story under `games/drowned-carillon/`

@@ -273,14 +273,6 @@ def grant_discovery(state: GameState, encounter: Encounter) -> dict[str, Any]:
 
 
 def _add_item(state: GameState, item_id: str, name: str, qty: int = 1) -> None:
-    from engine.game.state import InventoryItem
+    from engine.game.inventory import add_item
 
-    if not item_id:
-        return
-    for entry in state.inventory:
-        if entry.id == item_id:
-            entry.qty += qty
-            return
-    state.inventory.append(
-        InventoryItem(id=item_id, name=name or item_id, qty=qty, tags=["found"])
-    )
+    add_item(state, item_id, name, qty, tags=["found"])

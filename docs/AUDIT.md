@@ -1,5 +1,62 @@
 # Review & Audit — The Clockwork Dark
 
+> **Latest: 2026-06-22 — full-codebase review/audit (v0.7).** Five-dimension review
+> (correctness · security · architecture · tests · docs) over the whole engine,
+> every finding verified against the code. Suite: **327 passing**. The prior
+> 2026-06-21 audit (PR1–11 baseline) is retained below.
+
+## 2026-06-22 — Full review & audit (v0.7)
+
+**Verdict:** healthy and coherent. No critical defects — the
+engine-resolves-mechanics boundary, secret hygiene, and config discipline all
+hold. The findings were *tightenings*, not breakage; the high-value ones are
+fixed in this pass.
+
+### What's solid (verified, not assumed)
+- **Secret hygiene** — `config/local.yaml` (holds the API key) is gitignored and
+  was *never committed* (`git log -S` across all branches is clean); the key is
+  never logged or returned in a payload; `/api/metrics` exposes only aggregates.
+- **No dangerous primitives** — zero `eval`/`exec`/`pickle`/`os.system`; every YAML
+  load is `safe_load`; the one `subprocess` call is an arg-list (no shell).
+- **No path traversal** — `/design/<path>` uses `send_from_directory` (Werkzeug
+  safe-join); no raw user-controlled file reads.
+- **LLM is constrained** — tool dispatch rejects any name not in the `@skill`
+  registry; outbound URLs come from config, never model text (no SSRF); Flask
+  debug is off; challenge resolution is bounded (dice clamped, one step per call).
+- **Save/load is complete** — `save_game` persists hidden + agent-mind state and
+  round-trips through disk.
+
+### Fixed in this pass (`feat/audit-tighten`)
+| # | Severity | Finding | Fix |
+|---|----------|---------|-----|
+| 1 | Med · security | Server bound `0.0.0.0` + Socket.IO `cors="*"` by default — LAN exposure for a local-first app | Default `host: 127.0.0.1`; `security.cors_origins` localhost allow-list; `0.0.0.0` is now opt-in |
+| 2 | Med · robustness | `/api/voice/transcribe` read uploads unbounded | `MAX_CONTENT_LENGTH` from `security.max_upload_mb` (8 MB) |
+| 3 | Med · tech-debt | Assistant used a brittle non-greedy regex parser (the bug PR16 fixed for the Storyteller) — truncated on nested objects, broke on trailing commas | Assistant now shares `parsing.extract_json_object` + `normalize_tool_calls` |
+| 4 | Med · frontend | `item.name` (model-controlled) rendered via raw `innerHTML` — XSS sink; rumor/foe text too | Routed through the existing `escapeHtml` |
+| 5 | Low · correctness | `to_dict`/`from_dict` asymmetric — minds only persisted via `save_game`'s manual patch | Explicit `include_minds` flag; default payload stays client-safe |
+| 6 | Low · security | AI-supplied challenge spec unbounded (state/save bloat) | Cap steps/nodes/outcomes; clamp puzzle attempts |
+| 7 | Low · tech-debt | `_add_item` duplicated across four modules | One `engine/game/inventory.add_item`; thin provenance wrappers |
+| 8 | Low · docs | README test badge/count stale (263) | → 318; status → PR1–37 |
+
+All locked by `tests/test_audit_tighten.py` (9 tests); suite **327 passing**.
+
+### Recommended next (not in this pass)
+Higher-effort items surfaced by the review, for a follow-up:
+- **Frontend a11y** — the four `role="dialog"` overlays have no Escape/focus-trap,
+  and the doom-end modal can't be dismissed. Add keyboard handling + `:focus-visible`
+  + a `prefers-reduced-motion` block.
+- **Highest-value test gaps** — governance through the real route/socket (an R003
+  violation reaching the payload); `chat_stream` HTTP-error/`ReadTimeout` → fallback;
+  the "consumed" finale terminal; the contract double-complete guard; socket
+  `narration_delta` + `error` paths; decision-tree branch/failure paths.
+- **No automated frontend check** — add a jsdom unit test of the pure render helpers
+  + a Playwright smoke (start → choice → overlay open/Escape).
+- **Dead control** — the push-to-talk mic button has no handler; wire to STT or hide.
+
+---
+
+## 2026-06-21 — Prior audit (PR1–11 baseline)
+
 _Date: 2026-06-21 · Scope: full codebase + design-asset integration · Baseline: PR1–PR11 complete._
 
 ## Summary

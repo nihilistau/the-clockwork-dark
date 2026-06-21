@@ -29,7 +29,8 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 
 from engine.game.dice import roll_dice
-from engine.game.state import GameState, InventoryItem
+from engine.game.inventory import add_item
+from engine.game.state import GameState
 
 KINDS = ("skill_gauntlet", "decision_tree", "puzzle", "dice_table")
 
@@ -89,6 +90,14 @@ def _norm(s: Any) -> str:
 
 # --- lifecycle -----------------------------------------------------------
 
+# Bounds on AI-supplied challenge specs — keep a runaway/oversized spec from
+# bloating state, saves, and every turn payload.
+_MAX_STEPS = 24
+_MAX_NODES = 48
+_MAX_OUTCOMES = 24
+_MAX_ATTEMPTS = 12
+
+
 def start_challenge(
     state: GameState,
     spec: dict[str, Any],
@@ -108,6 +117,8 @@ def start_challenge(
         steps = spec.get("steps")
         if not isinstance(steps, list) or not steps:
             return _err("skill_gauntlet needs a non-empty 'steps' list.", kind)
+        if len(steps) > _MAX_STEPS:
+            return _err(f"skill_gauntlet 'steps' exceeds {_MAX_STEPS}.", kind)
         state.challenge = {
             "id": cid, "kind": kind, "title": title,
             "steps": steps, "step": 0,
@@ -126,6 +137,8 @@ def start_challenge(
         start = str(spec.get("start", "start"))
         if not isinstance(nodes, dict) or start not in nodes:
             return _err("decision_tree needs 'nodes' and a valid 'start'.", kind)
+        if len(nodes) > _MAX_NODES:
+            return _err(f"decision_tree 'nodes' exceeds {_MAX_NODES}.", kind)
         state.challenge = {"id": cid, "kind": kind, "title": title, "nodes": nodes, "current": start}
         node = nodes[start]
         return ChallengeResult(
@@ -138,7 +151,7 @@ def start_challenge(
     if kind == "puzzle":
         if "answer" not in spec:
             return _err("puzzle needs an 'answer'.", kind)
-        attempts = int(spec.get("attempts", 3))
+        attempts = max(1, min(int(spec.get("attempts", 3)), _MAX_ATTEMPTS))
         state.challenge = {
             "id": cid, "kind": kind, "title": title,
             "answer": _norm(spec["answer"]), "attempts_left": attempts,
@@ -153,6 +166,8 @@ def start_challenge(
     outcomes = spec.get("outcomes")
     if not isinstance(outcomes, list) or not outcomes:
         return _err("dice_table needs an 'outcomes' list.", kind)
+    if len(outcomes) > _MAX_OUTCOMES:
+        return _err(f"dice_table 'outcomes' exceeds {_MAX_OUTCOMES}.", kind)
     state.challenge = {
         "id": cid, "kind": kind, "title": title,
         "die": int(spec.get("die", 6)), "outcomes": outcomes,
@@ -319,10 +334,4 @@ def _apply_effects(state: GameState, effects: dict[str, Any]) -> dict[str, Any]:
 
 
 def _add_item(state: GameState, item_id: str, name: str) -> None:
-    if not item_id:
-        return
-    for entry in state.inventory:
-        if entry.id == item_id:
-            entry.qty += 1
-            return
-    state.inventory.append(InventoryItem(id=item_id, name=name or item_id, qty=1, tags=["challenge"]))
+    add_item(state, item_id, name, tags=["challenge"])

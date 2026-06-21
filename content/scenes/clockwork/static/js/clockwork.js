@@ -294,7 +294,7 @@
         "archetype-btn" + (id === selectedArchetype ? " archetype-btn--active" : "");
       btn.setAttribute("role", "radio");
       btn.setAttribute("aria-checked", id === selectedArchetype ? "true" : "false");
-      btn.innerHTML = `<strong>${arch.name}</strong><span>${arch.note}</span>`;
+      btn.innerHTML = `<strong>${escapeHtml(arch.name)}</strong><span>${escapeHtml(arch.note)}</span>`;
       btn.addEventListener("click", () => {
         selectedArchetype = id;
         renderArchetypes(archetypes);
@@ -467,14 +467,14 @@
       const rumors = (scene?.rumors || worldContent?.rumors || []).slice(0, 5);
       overlayBody.innerHTML = `
         <p class="overlay-kicker">Village chatter</p>
-        <ul>${rumors.map((r) => `<li>${typeof r === "string" ? r : r.text || ""}</li>`).join("")}</ul>
+        <ul>${rumors.map((r) => `<li>${escapeHtml(typeof r === "string" ? r : r.text || "")}</li>`).join("")}</ul>
         <p class="overlay-kicker">Militia</p>
         <p>Fresh nails on the recruitment board — someone expects volunteers.</p>`;
     } else if (overlayKey === "shrine") {
       const frag = scene?.mural_fragment || "a saint with clock-hands where eyes should be";
       overlayBody.innerHTML = `
         <p class="overlay-kicker">The unfinished mural</p>
-        <div class="overlay-mural">${frag}</div>
+        <div class="overlay-mural">${escapeHtml(frag)}</div>
         <p style="margin-top:14px;color:var(--text-muted)">Greta Moss tends the candles and refuses to finish the wall.</p>`;
     } else if (overlayKey === "militia") {
       overlayBody.innerHTML = `
@@ -488,9 +488,9 @@
       const enemies = assetManifest?.enemies || {};
       const foe = enemies.wolf || enemies.scarecrow || {};
       overlayBody.innerHTML = `
-        <p class="overlay-kicker">${foe.name || "Threat"}</p>
-        ${foe.image_url ? `<img src="${foe.image_url}" alt="" style="width:100%;max-height:200px;object-fit:cover;border-radius:3px" />` : ""}
-        <p style="margin-top:12px">${foe.blurb || "Lean and rain-wet. Flee is a real option."}</p>`;
+        <p class="overlay-kicker">${escapeHtml(foe.name || "Threat")}</p>
+        ${foe.image_url ? `<img src="${escapeHtml(foe.image_url)}" alt="" style="width:100%;max-height:200px;object-fit:cover;border-radius:3px" />` : ""}
+        <p style="margin-top:12px">${escapeHtml(foe.blurb || "Lean and rain-wet. Flee is a real option.")}</p>`;
     }
 
     overlayBody.querySelectorAll("[data-overlay-action='close']").forEach((btn) => {
@@ -636,7 +636,7 @@
       const li = document.createElement("li");
       const icon = itemIconUrl(item.name);
       if (icon) {
-        li.innerHTML = `<span class="inventory-chip"><img src="${icon}" alt="" />${item.name} ×${item.qty}</span>`;
+        li.innerHTML = `<span class="inventory-chip"><img src="${escapeHtml(icon)}" alt="" />${escapeHtml(item.name)} ×${escapeHtml(item.qty)}</span>`;
       } else {
         li.textContent = `${item.name} ×${item.qty}`;
       }
