@@ -98,4 +98,16 @@ def apply_beat_effects(state: GameState, beat_id: str) -> list[dict[str, str]]:
         seen_events.add(key)
         applied.append({"type": "world_event", "value": str(ev.get("id", ""))})
 
+    # NPCs move with the Dark: relocate named villagers as the world turns, so the
+    # square fills and the margins empty (npcs_at reflects it for narration/UI).
+    for npc_id, dest in (eff.get("npc_moves", {}) or {}).items():
+        npc = state.procgen.npc_by_id(npc_id)
+        if npc is None:
+            npc = {"id": npc_id, "name": npc_id}
+            state.procgen.npcs.append(npc)
+        if npc.get("location_id") != dest:
+            applied.append({"type": "npc_move", "value": f"{npc_id}->{dest}"})
+        npc["location_id"] = str(dest)
+        npc["displaced"] = True
+
     return applied

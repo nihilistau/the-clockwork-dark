@@ -13,6 +13,17 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the village empties (NPCs move with the Dark)
+The `world_events` flavor is now real movement ([[the-village-empties]]):
+- **`npc_moves` world-effect** (`engine/game/world_effects.py` +
+  `data/world/doom_effects.yaml`) — crossing a beat relocates named villagers, and
+  `npcs_at` reflects it. The vines breach → **Aldric** abandons the forest margin
+  (`forest_forage` → `edgewood_square`); the tunnels open → **Greta** leaves the
+  shrine for the square; the tower assembles → the gate thins (`gate_thinning`).
+  Displaced villagers are marked and wear road-worn faces (`Design_files/assets/
+  NPC-Move-Dark/`). **Maris does not move** — the baker keeps her oven to the last.
+- Tests in `tests/test_npc_moves.py`; bundle at 47 concepts.
+
 ## 2026-06-22 — Hollow Hill, the Mage-Ruins & the older name
 The tunnels now lead somewhere that matters at the end ([[the-first-warden]]):
 - **`warden_barrow` set-piece** (`data/set_pieces.yaml`) — reachable once the
