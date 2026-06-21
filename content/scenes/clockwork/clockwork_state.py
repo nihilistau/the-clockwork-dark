@@ -120,6 +120,7 @@ def _scene_payload(
     from engine.game.combat import combat_snapshot
 
     in_combat = state.combat is not None
+    in_challenge = state.challenge is not None
     return {
         "location_id": state.location_id,
         "name": place.get("name", state.location_id),
@@ -127,7 +128,12 @@ def _scene_payload(
         "image_url": image_url,
         "kind": meta.get("kind", place.get("kind", "")),
         "combat": combat_snapshot(state) if in_combat else None,
-        "overlay": "combat" if in_combat else (meta.get("overlay") or overlay_for_location(state.location_id)),
+        "challenge": dict(state.challenge) if in_challenge else None,
+        "overlay": (
+            "combat" if in_combat
+            else "challenge" if in_challenge
+            else (meta.get("overlay") or overlay_for_location(state.location_id))
+        ),
         "cutscene_id": meta.get("cutscene_id", ""),
         "npcs": merge_npcs_at_location(state, state.location_id),
         "mural_fragment": mural_fragment_for_phase(state.evil_phase.value),

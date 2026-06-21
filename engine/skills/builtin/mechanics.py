@@ -171,6 +171,47 @@ def confront_darkness(intensity: int = 5) -> str:
 @skill(
     pack="clockwork",
     description=(
+        "Compose an ephemeral, engine-resolved challenge. Pass a 'spec' object with "
+        "kind in {skill_gauntlet, decision_tree, puzzle, dice_table}. The engine "
+        "validates the schema and adjudicates (rolls dice, walks the tree, checks the "
+        "answer) — you supply structure, not the outcome."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def start_challenge(spec: Any = None) -> str:
+    """Begin an ephemeral structured challenge."""
+    from engine.game.challenges import start_challenge as _start
+
+    engine = get_active_engine()
+    if isinstance(spec, str):
+        try:
+            spec = json.loads(spec)
+        except Exception:
+            spec = {}
+    return json.dumps(_start(engine.state, spec or {}).to_dict())
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Advance the active challenge: pass 'choice' (decision_tree) or 'answer' "
+        "(puzzle); skill_gauntlet and dice_table just attempt/roll. Engine resolves."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def resolve_challenge(choice: str = "", answer: str = "") -> str:
+    """Advance the active challenge one step."""
+    from engine.game.challenges import resolve_challenge as _resolve
+
+    engine = get_active_engine()
+    return json.dumps(_resolve(engine.state, choice=choice, answer=answer).to_dict())
+
+
+@skill(
+    pack="clockwork",
+    description=(
         "Resolve one combat action against a foe. MUST call before narrating any "
         "fight outcome. action in {attack, defend, flee, use_item, sympathy}; pass "
         "target_id (enemy id) to begin an encounter, item_id for use_item."
