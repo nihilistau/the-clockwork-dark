@@ -107,6 +107,7 @@ places:
   corrupted: true
   image: assets/art/scenes/wheatfield-forest-edge.jpg
   min_phase: spreading
+  min_awareness: 25   # March arc opens early once the player is aware enough
   requires_discovery: false
   note: Milestones tick instead of measuring. The road is longer leaving than returning.
 - id: resting_camp

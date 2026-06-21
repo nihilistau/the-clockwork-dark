@@ -176,6 +176,15 @@ def run_turn(
     storyteller_result = session.storyteller.run_turn(player_action)
     assistant_result = session.assistant.run_turn(storyteller_result.narration)
 
+    # Fire a story-milestone cutscene if one is due (phase-shift budgeted).
+    from engine.media.milestones import CutsceneMilestones
+
+    milestone_job = CutsceneMilestones.trigger(state)
+    if milestone_job is not None:
+        storyteller_result.media.setdefault("cutscenes", []).append(
+            {"url": milestone_job.url, "payload": milestone_job.payload}
+        )
+
     scene_meta = place_metadata(state.location_id)
     loc_meta = location_metadata(state.location_id)
     scene_image = scene_meta.get("image_url", "") or resolve_location_image(state.location_id) or ""
