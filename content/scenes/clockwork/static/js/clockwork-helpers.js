@@ -38,10 +38,13 @@
       Number.isFinite(ch.total_steps) ? ch.total_steps :
       Array.isArray(ch.steps) ? ch.steps.length : 0;
     let meta = ch.message || "";
+    let image = ch.image || "";        // optional scene art (set-pieces)
+    let riddle = ch.riddle || "";      // optional parchment clue
 
     if (kind === "skill_gauntlet" && Array.isArray(ch.steps) && ch.steps.length) {
       const cur = ch.steps[Math.min(step, ch.steps.length - 1)] || {};
       if (!text) text = cur.text || "";
+      if (!image) image = cur.image || "";
       if (!meta && (cur.skill || cur.dc != null)) {
         meta = `${cur.skill || "?"} · DC ${cur.dc != null ? cur.dc : "?"}`;
       }
@@ -49,6 +52,8 @@
     } else if (kind === "decision_tree" && ch.nodes && ch.current) {
       const node = ch.nodes[ch.current] || {};
       if (!text) text = node.text || "";
+      if (!image) image = node.image || "";
+      if (!riddle) riddle = node.riddle || node.clue || "";
       if (!options.length) {
         options = (node.options || []).map((o) => ({ id: o.id, text: o.text }));
       }
@@ -61,7 +66,7 @@
       if (!options.length) options = [{ id: "roll", text: "Roll" }];
     }
 
-    return { kind, text, options, answerRequired, step, total, meta };
+    return { kind, text, options, answerRequired, step, total, meta, image, riddle };
   }
 
   return { escapeHtml, challengeView };

@@ -212,6 +212,25 @@ def resolve_challenge(choice: str = "", answer: str = "") -> str:
 @skill(
     pack="clockwork",
     description=(
+        "Begin an authored set-piece challenge by id (e.g. 'tunnel_mouth') — a "
+        "discoverable, engine-adjudicated encounter. Opens only once the world has "
+        "reached it (flag/discovery gated, e.g. after the tunnels open). Then drive "
+        "it with resolve_challenge like any challenge."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def start_set_piece(set_piece_id: str = "") -> str:
+    """Present an authored set-piece as an active challenge, if the world reached it."""
+    from engine.game.set_pieces import start_set_piece as _start
+
+    engine = get_active_engine()
+    return json.dumps(_start(engine.state, set_piece_id).to_dict())
+
+
+@skill(
+    pack="clockwork",
+    description=(
         "Resolve one combat action against a foe. MUST call before narrating any "
         "fight outcome. action in {attack, defend, flee, use_item, sympathy}; pass "
         "target_id (enemy id) to begin an encounter, item_id for use_item."
