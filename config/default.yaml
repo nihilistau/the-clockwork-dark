@@ -53,6 +53,18 @@ combat:                       # v0.2 grounded combat tunables (engine-authoritat
   defeat_respawn_location: edgewood_square
   defeat_stamina_penalty: 40
 
+doom:                         # Doom Clock convergence finale tunables
+  reckoning_base_dc: 12       # base DC for the player's last engine-resolved choice at the tower
+
+encounters:                   # chance encounters on travel arrival (engine-authoritative)
+  enabled: true               # master switch; false -> the road is always calm
+  base_chance: 0.18           # base chance any encounter fires before danger/phase scaling
+  danger_weight: 0.02         # added chance per point of edge danger_dc above the floor
+  danger_floor: 8             # below this danger_dc the road is always calm (towns, interiors)
+  max_chance: 0.6             # hard ceiling so travel never becomes a slog
+  phase_chance_mult: [0.5, 1.0, 1.4, 1.8]   # dormant..consuming chance multiplier
+  discovery_share: [0.85, 0.7, 0.5, 0.35]   # of fired encounters, share that are harmless finds
+
 awareness:
   reveal_threshold: 20
   reflection_form_min: 40
@@ -87,6 +99,7 @@ paths:
   bestiary: "data/bestiary.yaml"
   recipes: "data/recipes"
   contracts: "data/contracts.yaml"
+  encounters: "data/encounters.yaml"
   knowledge: "knowledge"        # OKFS knowledge bundle root
   procgen_templates: "data/procgen_templates/edgewood.yaml"
   world_schedules: "data/world/schedules.yaml"

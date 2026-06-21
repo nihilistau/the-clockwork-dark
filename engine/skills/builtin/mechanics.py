@@ -262,3 +262,72 @@ def list_recipes() -> str:
     """Recipe list for the crafting UI."""
     engine = get_active_engine()
     return json.dumps(engine.list_recipes())
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Storyteller-only: snapshot of the Doom Clock convergence finale — whether the "
+        "tower-era reckoning is open, its DC, which approach beats have fired, and any "
+        "resolved outcome. Use to pace the endgame; it never advances evil itself."
+    ),
+    category="NARRATIVE",
+    trigger="optional",
+)
+def query_convergence() -> str:
+    """Convergence finale snapshot (approach beats + reckoning state)."""
+    from engine.game.doom_clock import Convergence
+
+    engine = get_active_engine()
+    snap = Convergence.snapshot(engine.state)
+    snap["pending_beats"] = [
+        {"id": b.id, "text": b.text, "cutscene_id": b.cutscene_id}
+        for b in Convergence.pending_reckoning_beats(engine.state)
+    ]
+    return json.dumps(snap)
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Resolve the player's last engine-resolved choice at the clockwork tower. "
+        "choice in {stand, unmake, walk_away}: 'walk_away' always succeeds (the quiet "
+        "life carried to its end); 'stand'/'unmake' roll d20 + engagement vs the "
+        "reckoning DC — success holds the line and ends the game un-consumed, failure "
+        "leaves the clock to finish on its own. Only valid once convergence is open."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def resolve_reckoning(choice: str) -> str:
+    """Adjudicate the convergence finale's last choice (engine-authoritative)."""
+    from engine.game.doom_clock import Convergence
+
+    engine = get_active_engine()
+    return json.dumps(Convergence.resolve_reckoning(engine.state, choice).to_dict())
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "List the clockwork foes a road ambush may name at the current evil phase, "
+        "for narrating an arrival's 'something is on the road'. Read-only: the engine "
+        "decides whether an ambush actually fired (it rides on move_to's result); this "
+        "just tells you which foes are in play so you can describe them, then call "
+        "resolve_combat(action='attack', target_id=<id>) if the player engages."
+    ),
+    category="NARRATIVE",
+    trigger="optional",
+)
+def query_encounter_foes() -> str:
+    """Clockwork foes an ambush may field at the player's current evil phase."""
+    from engine.game.encounters import _enemy_name, _foes_for_phase
+    from engine.game.evil_ticker import phase_index
+
+    engine = get_active_engine()
+    phase = engine.state.evil_phase.value
+    foes = _foes_for_phase(phase_index(phase))
+    return json.dumps({
+        "evil_phase": phase,
+        "foes": [{"id": fid, "name": _enemy_name(fid)} for fid in foes],
+    })

@@ -19,7 +19,7 @@ player notice, or not. It narrates the [[the-harvest]]; it never lectures.
 
 **The Assistant (`clockwork_assistant`)** is fond of this small world and of the
 player in particular, the way a god might be fond of a single candle. It appears
-in guises — cat, grey wanderer, child, **tinker**, a reflection — and warns,
+in guises — cat, grey wanderer, child, **tinker** ([[the-tinkers]]), a reflection — and warns,
 nudges, and at the right moment presses the right thing into your hand. But it is
 not yours. It has grander concerns on other planes, its own quests; it grows
 indifferent, vanishes for stretches, and its advice is not always reliable. Think

@@ -23,7 +23,13 @@ from engine.world.world_sim import WorldSim
 
 @dataclass
 class MoveResult:
-    """Travel outcome."""
+    """Travel outcome.
+
+    ``encounter`` is the optional chance-encounter computed on a successful move
+    (None when nothing happened, when travel was a no-op, or when the move failed).
+    It is advisory: an ``ambush`` *offers* a foe the Storyteller may fight; a
+    ``discovery`` carries a small reward the engine has already granted.
+    """
 
     success: bool
     from_id: str
@@ -32,9 +38,10 @@ class MoveResult:
     stamina_cost: int
     message: str
     awareness_delta: float = 0.0
+    encounter: Optional[dict[str, Any]] = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        data: dict[str, Any] = {
             "success": self.success,
             "from_id": self.from_id,
             "to_id": self.to_id,
@@ -43,6 +50,9 @@ class MoveResult:
             "message": self.message,
             "awareness_delta": self.awareness_delta,
         }
+        if self.encounter is not None:
+            data["encounter"] = self.encounter
+        return data
 
 
 class GameEngine:
@@ -138,6 +148,8 @@ class GameEngine:
         self.state.awareness = min(100.0, self.state.awareness + awareness_delta)
         PlotFormula.update_story_pressure(self.state)
 
+        encounter = self._roll_arrival_encounter(edge)
+
         return MoveResult(
             success=True,
             from_id=current,
@@ -146,7 +158,27 @@ class GameEngine:
             stamina_cost=stamina_cost,
             message=f"Arrived at {location_id}.",
             awareness_delta=awareness_delta,
+            encounter=encounter,
         )
+
+    def _roll_arrival_encounter(
+        self, edge: dict[str, Any], *, rng: Optional[Any] = None
+    ) -> Optional[dict[str, Any]]:
+        """Chance-encounter hook: roll once on arrival from the edge's danger_dc
+        and the current evil phase. ``none`` attaches nothing; ``discovery`` grants
+        its small reward here (engine-authoritative); ``ambush`` only names a foe
+        for the Storyteller to (optionally) start combat against. Returns the
+        encounter dict, or None when nothing happened — so existing callers that
+        ignore ``encounter`` see no behavior change."""
+        from engine.game.encounters import KIND_NONE, grant_discovery, roll_encounter
+
+        danger_dc = int(edge.get("danger_dc", 0))
+        enc = roll_encounter(danger_dc, self.state.evil_phase.value, rng=rng)
+        if enc.kind == KIND_NONE:
+            return None
+        if enc.is_discovery:
+            grant_discovery(self.state, enc)
+        return enc.to_dict()
 
     def roll(self, sides: int = 20, modifier: int = 0, reason: str = "") -> DiceResult:
         """Roll dice and attach to state audit log via flags."""

@@ -13,6 +13,28 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-21 — world expansion
+- **Chance encounters on travel** — a new seeded, deterministic `engine/game/encounters.py`
+  rolls once on arrival from the destination edge's `danger_dc` and the evil phase,
+  yielding `none` (calm by default), a harmless `discovery` (engine-granted reward),
+  or an `ambush` that names a `clockwork`-tagged foe the Storyteller may fight. One
+  backward-compatible hook in `GameEngine.move_to` (`MoveResult.encounter`, default
+  None); tunables under config `encounters:` and `data/encounters.yaml`; read-only
+  skill `query_encounter_foes`.
+- **The convergence finale** — the Doom Clock gains a `Convergence` layer: the
+  approach to the clockwork tower as ordered reckoning beats (reusing `cutscene_tower`
+  / `cutscene_consuming_horizon`) and the player's **last engine-resolved choice**
+  (`stand` / `unmake` / `walk_away`), adjudicated on d20 + engagement vs a
+  progress-scaled DC. Holding the line ends the game un-consumed; the `consumed`
+  terminal is untouched. Skills `query_convergence`, `resolve_reckoning`. New lore
+  [[the-convergence]].
+- **The Tinker's Reckoning** — a four-step Ilya-the-tinker (the Assistant's face)
+  contract chain appended to `data/contracts.yaml`, gated by awareness/phase, with
+  engine-granted rewards ending in a sympathy lamp + engagement. New lore
+  [[the-tinkers-questline]], [[the-tinkers]].
+- **Deeper lore** — [[the-heartlands]], [[beneath-the-tunnels]], [[sympathy-and-naming]]
+  join the above; existing concepts cross-linked; the index's lore section regrouped.
+
 ## 2026-06-21
 - **Self-improvement plumbing** — a `DataCollector` (`engine/training/`) captures each
   resolved turn to JSONL for future fine-tuning (gated by `training.collect`, off by

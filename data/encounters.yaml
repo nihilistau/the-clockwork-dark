@@ -1,0 +1,42 @@
+# Chance-encounter tables (PR-more-world). Optional content for
+# engine/game/encounters.py — if this file is absent the engine falls back to
+# baked-in defaults. Engine-authoritative: the Storyteller narrates an ambush or
+# a discovery but never invents which foe or what reward.
+#
+#   foes_by_phase  — clockwork-tagged bestiary ids an ambush may name, by evil
+#                    phase. Each id MUST exist in data/bestiary.yaml and carry the
+#                    "clockwork" tag (so sympathy "unmaking" applies in combat).
+#   discoveries    — the harmless-find table: {id, name, note}. id should resolve
+#                    to a real item; the engine grants it on a discovery.
+
+foes_by_phase:
+  dormant:
+    - scarecrow_brass
+  stirring:
+    - scarecrow_brass
+  spreading:
+    - scarecrow_brass
+    - clockwork_beast
+  consuming:
+    - clockwork_beast
+    - husk
+
+discoveries:
+  - id: wild_herbs
+    name: Wild Herbs
+    note: "A clump of yarrow and feverfew nods by the path — worth gathering."
+  - id: wild_mushroom
+    name: Wild Mushroom
+    note: "A ring of pale caps, edible, half-hidden in the moss off the road."
+  - id: resin
+    name: Resin
+    note: "Amber sap beads on a wounded birch; a tinker would want it."
+  - id: brass_filings
+    name: Brass Filings
+    note: "Curls of brass glint in the wheel-ruts, swept from something that passed in the night."
+  - id: old_clock_part
+    name: Old Clock Part
+    note: "A toothed cog, half-buried, that ticks once — faintly — when you lift it."
+  - id: saint_candle
+    name: Saint's Candle
+    note: "A guttered votive left at a wayshrine, still good for one more night's light."
