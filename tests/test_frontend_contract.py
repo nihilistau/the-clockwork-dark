@@ -74,6 +74,16 @@ def test_reduced_motion_and_focus_visible_present():
     assert ":focus-visible" in _CSS
 
 
+def test_reactive_notice_board():
+    # The board reacts to the world flags and pins the Dark's own bounties.
+    assert "NOTICE_POSTERS" in _JS
+    assert "notice-board-tunnel-revealed" in _JS
+    assert "lastFlags" in _JS
+    # poster title/text routed through escapeHtml
+    assert "escapeHtml(p.title)" in _JS
+    assert ".notice-posting" in _CSS
+
+
 def test_ambient_doom_toast_is_polite():
     tag = _HTML[_HTML.index('id="doom-toast"'):]
     tag = tag[: tag.index(">")]

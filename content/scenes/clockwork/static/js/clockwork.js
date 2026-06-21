@@ -103,7 +103,22 @@
   let selectedArchetype = "wayfarer";
   let assetManifest = null;
   let worldContent = null;
+  let lastFlags = {};   // latest world flags (for the reactive notice board)
   let activeOverlay = "";
+
+  // Notice-board postings the Dark itself pins up — shown when their beat-flag is
+  // set (mirrors the contracts' requires_flag gates; see the-reactive-world).
+  const NOTICE_POSTERS = [
+    { flag: "tunnels_open", title: "Seal the Tunnel", kind: "anti_dark",
+      art: "assets/Scare-Crow-Notice-Board-Other/notice-board-contract-tunnels.jpg",
+      text: "The tunnels under Edgewood have opened, breathing oil and old time. Go down the hidden path and shut the seam — or learn why it cannot be shut." },
+    { flag: "scarecrow_awake", title: "Watch: The Walking Scarecrow", kind: "bounty",
+      art: "assets/Scare-Crow-Notice-Board-Other/scare-crow-warning-sign-post.jpg",
+      text: "The brass scarecrow has left its post and walks the east field. Track where it goes and put it down before it reaches the road." },
+    { flag: "vines_breached", title: "Tend the Forest Margin", kind: "anti_dark",
+      art: "assets/Scare-Crow-Notice-Board-Other/clockwork-forrest-vine-warning-signpost.jpg",
+      text: "Clockwork-vines have reached the forest margin. Cut the filigree back and ward the trees so the village still has firewood for winter." },
+  ];
   let diceToastTimer = null;
   let cutsceneTimer = null;
   let captionIndex = 0;
@@ -489,11 +504,31 @@
         </div>`;
     } else if (overlayKey === "notice") {
       const rumors = (scene?.rumors || worldContent?.rumors || []).slice(0, 5);
+      // The board reacts: its face changes once the tunnels are posted, and the
+      // Dark's own bounties pin themselves up as their world-signs fall.
+      const boardArt = lastFlags.tunnels_open
+        ? "assets/Scare-Crow-Notice-Board-Other/notice-board-tunnel-revealed.jpg"
+        : "assets/art/scenes/noticeboard.jpg";
+      const posters = NOTICE_POSTERS.filter((p) => lastFlags[p.flag]);
+      const postersHtml = posters.length
+        ? `<p class="overlay-kicker">Pinned this season</p>
+           <div class="notice-postings">` +
+          posters.map((p) => `
+            <div class="notice-posting">
+              <img class="notice-posting-art" src="${escapeHtml("/design/" + p.art)}" alt="" loading="lazy" />
+              <div class="notice-posting-body">
+                <span class="contract-kind contract-kind--${escapeHtml(p.kind)}">${escapeHtml(p.kind.replace("_", "-"))}</span>
+                <strong>${escapeHtml(p.title)}</strong>
+                <p>${escapeHtml(p.text)}</p>
+              </div>
+            </div>`).join("") +
+          `</div>`
+        : `<p class="notice-empty">A few faded notices and a militia recruitment bill — nothing that wasn't here last season.</p>`;
       overlayBody.innerHTML = `
+        <div class="notice-board-visual"><img src="${escapeHtml("/design/" + boardArt)}" alt="" loading="lazy" /></div>
+        ${postersHtml}
         <p class="overlay-kicker">Village chatter</p>
-        <ul>${rumors.map((r) => `<li>${escapeHtml(typeof r === "string" ? r : r.text || "")}</li>`).join("")}</ul>
-        <p class="overlay-kicker">Militia</p>
-        <p>Fresh nails on the recruitment board — someone expects volunteers.</p>`;
+        <ul class="notice-chatter">${rumors.map((r) => `<li>${escapeHtml(typeof r === "string" ? r : r.text || "")}</li>`).join("")}</ul>`;
     } else if (overlayKey === "shrine") {
       const frag = scene?.mural_fragment || "a saint with clock-hands where eyes should be";
       overlayBody.innerHTML = `
@@ -650,6 +685,7 @@
     streamedThisTurn = false;
     renderChoices(payload.choices);
     updateStats(payload.state);
+    if (payload.state && payload.state.flags) lastFlags = payload.state.flags;
     renderContracts(payload.state);
     if (payload.scene) applySceneVisual(payload.scene);
     if (payload.doom) renderDoom(payload.doom);
