@@ -39,6 +39,7 @@
   const diceToast = document.getElementById("dice-toast");
   const diceLine = document.getElementById("dice-line");
   const diceVideo = document.getElementById("dice-video");
+  const diceFace = document.getElementById("dice-face");
   const cutsceneOverlay = document.getElementById("cutscene-overlay");
   const cutsceneVideo = document.getElementById("cutscene-video");
   const cutsceneCaption = document.getElementById("cutscene-caption");
@@ -760,30 +761,35 @@
 
     const videos = assetManifest?.dice_videos || {};
     const faces = assetManifest?.dice_faces || {};
-    const rollVal = (dice.rolls && dice.rolls[0]) || dice.total;
-    const faceSrc = rollVal && faces[String(rollVal)];
-    const videoSrc =
-      faceSrc ||
-      (dice.critical && videos.critical) ||
-      (dice.fumble && videos.fumble) ||
-      videos.roll ||
-      videos.roll_0;
-    if (videoSrc && diceVideo) {
-      diceVideo.src = videoSrc;
-      diceVideo.hidden = false;
-      diceVideo.play().catch(() => {});
-    } else if (diceVideo) {
-      diceVideo.hidden = true;
+    const rollVal = (dice.rolls && dice.rolls[0]) != null ? dice.rolls[0] : dice.total;
+    const faceSrc = rollVal != null ? faces[String(rollVal)] : "";
+    if (faceSrc && diceFace) {
+      // The exact rolled face, as a still.
+      diceFace.src = faceSrc;
+      diceFace.classList.remove("hidden");
+      if (diceVideo) { diceVideo.pause(); diceVideo.classList.add("hidden"); }
+    } else {
+      if (diceFace) diceFace.classList.add("hidden");
+      const videoSrc =
+        (dice.critical && videos.critical) ||
+        (dice.fumble && videos.fumble) ||
+        videos.roll ||
+        videos.roll_0;
+      if (videoSrc && diceVideo) {
+        diceVideo.src = videoSrc;
+        diceVideo.classList.remove("hidden");
+        diceVideo.play().catch(() => {});
+      } else if (diceVideo) {
+        diceVideo.classList.add("hidden");
+      }
     }
 
     diceToast.classList.remove("hidden");
     clearTimeout(diceToastTimer);
     diceToastTimer = setTimeout(() => {
       diceToast.classList.add("hidden");
-      if (diceVideo) {
-        diceVideo.pause();
-        diceVideo.hidden = true;
-      }
+      if (diceVideo) { diceVideo.pause(); diceVideo.classList.add("hidden"); }
+      if (diceFace) diceFace.classList.add("hidden");
     }, 3200);
   }
 

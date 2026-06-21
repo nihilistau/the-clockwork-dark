@@ -74,6 +74,13 @@ def test_reduced_motion_and_focus_visible_present():
     assert ":focus-visible" in _CSS
 
 
+def test_dice_toast_shows_the_rolled_face():
+    assert 'id="dice-face"' in _HTML
+    assert "diceFace" in _JS
+    assert "dice_faces" in _JS
+    assert ".dice-face" in _CSS
+
+
 def test_reactive_notice_board():
     # The board reacts to the world flags and pins the Dark's own bounties.
     assert "NOTICE_POSTERS" in _JS

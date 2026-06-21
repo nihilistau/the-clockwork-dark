@@ -171,9 +171,22 @@ cutscenes:
     captions:
     - Whoever raised it knew the Clockwork Dark by an older name.
   cutscene_hidden_tunnel:
-    video: assets/video/forrest-hidden-tunnels-cutscene.mp4
+    video: assets/Tunnels/tunnel-entrance-reveal-video.mp4
     captions:
-    - A door best left shut — for now.
+    - Beneath the old stump, a ring of worked brass — and the dark it rings.
+    - A door best left shut. It is open now.
+  cutscene_tunnel_descent:
+    video: assets/Tunnels/tunnel-stairs-video.mp4
+    captions:
+    - Down, and with the water.
+  cutscene_hollow_hill:
+    video: assets/Hollow-Hill-Mage-Ruins/Hollow-Hill-Video-Arrive.mp4
+    captions:
+    - Older than the village, older than the road. The First Warden sleeps here.
+  cutscene_forge:
+    video: assets/Forge/Blacksmith-video.mp4
+    captions:
+    - The fire is honest work. The rest, Brann keeps to himself.
   cutscene_clockwork_vines:
     video: assets/video/forrest-clockwork-vines-cutscene-720p.mp4
     captions:
@@ -318,7 +331,7 @@ items:
   wooden shield:
     image: assets/art/things/wooden-shield.jpg
 dice_videos:
-  roll: assets/video/dice/grok-20d10c2a-a15d-44fa-8ed5-da1ff13996a9 (1).mp4
+  roll: assets/video/dice/grok-20d10c2a-a15d-44fa-8ed5-da1ff13996a9.mp4
   critical: assets/video/dice/grok-c6ac329a-1991-47a4-9cef-8e30d34b9d0b.mp4
   fumble: assets/video/dice/grok-7f3e8a49-b167-489d-98bc-a2d9e15bc541.mp4
   roll_2: assets/video/dice/grok-20d10c2a-a15d-44fa-8ed5-da1ff13996a9.mp4
@@ -333,6 +346,24 @@ dice_videos:
   roll_11: assets/video/dice/grok-b9e8802f-5783-4d17-8eb3-5970cc637c3e.mp4
   roll_12: assets/video/dice/grok-c1601973-3c57-45e7-8d1f-f74ba45168dc.mp4
   roll_13: assets/video/dice/grok-c6ac329a-1991-47a4-9cef-8e30d34b9d0b.mp4
+# d20 face stills — shown for the exact rolled value (engine/design/assets.py
+# resolves these to /design/ URLs; the dice toast prefers the face, else the roll video).
+dice_faces:
+  "1": assets/images/dice/dice-1.jpg
+  "2": assets/images/dice/dice-2.jpg
+  "3": assets/images/dice/dice-3.jpg
+  "4": assets/images/dice/dice-4.jpg
+  "5": assets/images/dice/dice-5.jpg
+  "7": assets/images/dice/dice-7.jpg
+  "9": assets/images/dice/dice-9-small.jpg
+  "10": assets/images/dice/dice-10.jpg
+  "12": assets/images/dice/dice-12.jpg
+  "13": assets/images/dice/dice-13.jpg
+  "14": assets/images/dice/dice-14.jpg
+  "15": assets/images/dice/dice-15-small.jpg
+  "17": assets/images/dice/dice-17.jpg
+  "19": assets/images/dice/dice-19.jpg
+  "20": assets/images/dice/dice-d20-20.jpg
 phases:
 - dormant
 - stirring

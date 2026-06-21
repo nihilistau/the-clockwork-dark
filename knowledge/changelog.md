@@ -13,6 +13,16 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — media polish: cutscenes + dice faces
+- **Cutscene wiring** — the `tunnels_open` beat now plays the dedicated
+  tunnel-entrance **reveal** video; new cutscenes for the tunnel descent, arriving
+  at **Hollow Hill**, and the **forge** are wired into the manifest + `cutscene_map`
+  (videos from `Design_files/assets/Tunnels|Hollow-Hill-Mage-Ruins|Forge/`).
+- **Dice faces** — the dice toast now shows the **exact rolled d20 face** as a still
+  (`dice_faces` in the manifest + a new `#dice-face` element), falling back to the
+  rolling-dice video; fixed the roll-video URL (a space/paren filename broke it).
+- Tests in `tests/test_media_polish.py`.
+
 ## 2026-06-22 — the reactive notice board (visual pass)
 The notice board now *looks* as reactive as it behaves ([[the-notice-board]],
 [[the-reactive-world]]):
