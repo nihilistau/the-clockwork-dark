@@ -1496,3 +1496,45 @@ body {
 [data-phase="consuming"] .challenge-visual img {
   filter: saturate(0.8) contrast(1.05) hue-rotate(-8deg);
 }
+
+/* --- The reactive notice board --------------------------------------- */
+.notice-board-visual {
+  margin: 0 0 16px;
+  border: 1px solid rgba(214, 178, 108, 0.28);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #0b0b0a;
+}
+.notice-board-visual img {
+  display: block;
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+}
+.notice-postings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 6px 0 16px;
+}
+.notice-posting {
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+  background: linear-gradient(180deg, rgba(40, 33, 22, 0.5), rgba(28, 24, 18, 0.65));
+  border: 1px solid rgba(214, 178, 108, 0.22);
+  border-radius: 3px;
+}
+.notice-posting-art {
+  width: 74px;
+  min-width: 74px;
+  height: 92px;
+  object-fit: cover;
+  border-radius: 2px;
+  filter: saturate(0.9) contrast(1.03);
+}
+.notice-posting-body { display: flex; flex-direction: column; gap: 4px; }
+.notice-posting-body strong { color: var(--accent-candle, #d6b26c); letter-spacing: 0.02em; }
+.notice-posting-body p { margin: 0; font-size: 0.92em; line-height: 1.45; color: #cabfa6; }
+.notice-empty { font-style: italic; color: var(--text-muted, #9a9484); margin: 0 0 14px; }
+.notice-chatter { margin: 4px 0 0; }

@@ -13,6 +13,18 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the reactive notice board (visual pass)
+The notice board now *looks* as reactive as it behaves ([[the-notice-board]],
+[[the-reactive-world]]):
+- The board's face changes once the tunnels are posted
+  (`notice-board-tunnel-revealed`), and the Dark's own bounties **pin themselves
+  up** as their beat-flags fire — *Seal the Tunnel* (`tunnels_open`), *Watch: The
+  Walking Scarecrow* (`scarecrow_awake`), *Tend the Forest Margin*
+  (`vines_breached`) — each with its signpost poster art and a kind badge.
+- Frontend-only (`clockwork.js` reads the world flags from the turn payload +
+  `clockwork.css`); art from `Design_files/assets/Scare-Crow-Notice-Board-Other/`.
+  Guarded by `tests/test_frontend_contract.py`.
+
 ## 2026-06-22 — the Forge
 A new village location + NPC + crafting station ([[the-forge]]):
 - **`edgewood_forge`** off the square (scene graph + `locations.py` meta +
