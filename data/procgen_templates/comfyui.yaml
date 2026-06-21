@@ -1,0 +1,119 @@
+# ComfyUI prompt templates — append style_suffix to all prompts
+
+style_suffix: >-
+  oil-painted fantasy illustration, grounded realism, muted earth palette,
+  soft atmospheric lighting, detailed textures, frontier village aesthetic,
+  no modern elements, no text, no watermark
+
+negative_prompt: >-
+  cartoon, anime, neon, sci-fi, cyberpunk, modern clothing, cars, guns,
+  text, watermark, logo, blurry, low quality, oversaturated, heroic pose,
+  glowing magic effects, floating UI
+
+corruption_suffix: >-
+  subtle brass clockwork motifs in organic matter, sick green undertone,
+  uncanny wrongness, melancholy dread
+
+time_variants:
+  - dawn
+  - noon
+  - dusk
+  - night
+
+locations:
+  forest_clearing:
+    dawn: misty birch forest clearing, distant village smoke, mushrooms, ferns
+    noon: sun-dappled birch clearing, worn path toward village smoke
+    dusk: blue hour forest edge, long shadows, distant hearth glow
+  edgewood_square:
+    dawn: quiet frontier village square, timber houses, communal stone oven, mist
+    noon: busy village square, chickens, timber frames, market stalls
+    dusk: village square at evening, lantern light, communal oven smoke
+  edgewood_bakery:
+    dawn: small bakery interior, brick oven warming, flour sacks, warm light
+    night: empty bakery at night, embers in oven, flour dust in moonlight
+  tinker_caravan:
+    dusk: colorful tinker tent, brass charms, maps, wagon wheels at sunset
+  millhaven_gate:
+    dawn: wooden palisade gate, militia banners, mud road, cold morning
+  corruption_border:
+    dawn: wheat field with brass gear growths, sick sky, wrong perspective
+  edgewood_shrine:
+    dusk: village shrine wall, incomplete mural, votive candles, faceless saints
+  hollow_hill:
+    dawn: ancient turf-covered barrow mound, standing stones, dark stone doorway, mist
+  marches_road:
+    dusk: frontier road winding toward distant wound of light, straight wheat rows, sick sky
+  resting_camp:
+    night: roadside travelers camp at night, bedroll, banked campfire, kettle, dark treeline
+  ruins_temple:
+    dawn: ruined temple colonnade, mossy broken columns, robed figures, grey storm light
+  clockwork_tower:
+    dusk: vast clockwork tower of brass gears and black stone, ticking wheat plain, bruised sky
+
+cutscenes:
+  cutscene_stirring_phase:
+    placeholder: cutscene-misty-forest.mp4
+    captions:
+      - "The village clock stopped at a hour that never was."
+      - "Crows gather on the mill roof, perfectly still."
+  cutscene_assistant_reveal:
+    placeholder: forrest-mushroom-ring-cutscene-720p.mp4
+    captions:
+      - "Cat eyes reflect a map of the Heartlands."
+  cutscene_consuming_horizon:
+    placeholder: cutscene-wheatfield.mp4
+    captions:
+      - "Wheat rows tick like a metronome toward the horizon."
+  cutscene_notice_board:
+    placeholder: cutscene-notice-board.mp4
+    captions:
+      - "Fresh nails on the recruitment board — someone expects volunteers."
+  cutscene_closing_gates:
+    placeholder: cutscene-closing-gates.mp4
+    captions:
+      - "Millhaven shuts the gate against the road."
+  cutscene_golden_ring_bread:
+    placeholder: cutscene-golden-ring-bread.mp4
+    captions:
+      - "Bread that rings when it cracks."
+  cutscene_tower:
+    placeholder: cutscene-tower.mp4
+    captions:
+      - "Where the road has been counting toward."
+  cutscene_bakery:
+    placeholder: city-bakery-cutscene-outdoors-720p.mp4
+    captions:
+      - "Maris hums on the off-beat now. As if answering something."
+  cutscene_tinker_map:
+    placeholder: tent-base-map-cutscene-720p.mp4
+    captions:
+      - "Roads that shift when the wheat turns wrong."
+  cutscene_ruins:
+    placeholder: ruins-temple-mages-cutscene-720p.mp4
+    captions:
+      - "Whoever raised it knew the Clockwork Dark by an older name."
+  cutscene_hidden_tunnel:
+    placeholder: forrest-hidden-tunnels-cutscene.mp4
+    captions:
+      - "A door best left shut — for now."
+  cutscene_clockwork_vines:
+    placeholder: forrest-clockwork-vines-cutscene-720p.mp4
+    captions:
+      - "Brass threads the birch where brass should not be."
+  cutscene_poison_fog:
+    placeholder: forrest-clockwork-mushroom-poison-fog-720p.mp4
+    captions:
+      - "The mist tastes of metal and wrong math."
+  cutscene_wizard_fight:
+    placeholder: wizard-vs-clockwork-enemy-cutscene-720p.mp4
+    captions:
+      - "It does not hunger. It only continues."
+  cutscene_blueprint:
+    placeholder: clockwork-blueprint-warning-fly-in-720p.mp4
+    captions:
+      - "A quiet friend showed her how."
+  cutscene_spider_wheat:
+    placeholder: clockwork-spinerfex-wheatfield-cutscene-720p.mp4
+    captions:
+      - "The wheat ticks like a metronome toward the horizon."

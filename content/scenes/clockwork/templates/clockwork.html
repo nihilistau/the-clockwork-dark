@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ scene.display_name }}</title>
+  {% if design_enabled %}
+  <link rel="stylesheet" href="/design/styles.css" />
+  {% else %}
+  <link rel="stylesheet" href="/static/css/design_tokens.css" />
+  {% endif %}
+  <link rel="stylesheet" href="/static/css/clockwork.css" />
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+</head>
+<body data-phase="dormant">
+  <div class="start-screen" id="start-screen">
+    <div class="start-bg" id="start-bg"></div>
+    <div class="start-overlay"></div>
+    <div class="start-panel">
+      <img class="start-wordmark" id="start-wordmark" src="/design/assets/wordmark.svg" alt="The Clockwork Dark" />
+      <p class="start-tagline">
+        You wake at the margin of an old forest, the last comfortable village a smudge of smoke to the west.
+        The roads have begun to change when no one is watching. Choose how you came to be here.
+      </p>
+      <p class="panel-label">Traveler</p>
+      <div class="archetype-list" id="archetype-list" role="radiogroup" aria-label="Choose archetype"></div>
+      <div class="start-actions">
+        <button type="button" class="btn-primary btn-lg" id="start-btn">Step into the clearing</button>
+        <button type="button" class="btn-secondary btn-lg" id="intro-btn">Watch the intro</button>
+      </div>
+      <span class="connection-status start-status" id="start-status">Loading assets…</span>
+    </div>
+  </div>
+
+  <div class="intro-overlay hidden" id="intro-overlay" role="dialog" aria-modal="true">
+    <video id="intro-video" controls playsinline></video>
+    <button type="button" class="intro-skip" id="intro-skip">Skip</button>
+  </div>
+
+  <div class="cw-scene hidden" id="game-screen">
+    <header class="scene-header">
+      <div class="header-brand">
+        <img class="gear-motif" id="gear-motif" src="/design/assets/gear-motif.svg" alt="" hidden />
+        <h1 id="scene-title">{{ scene.display_name }}</h1>
+      </div>
+      <div class="world-clock" id="world-clock" aria-live="polite">Day 1 · 08:00</div>
+    </header>
+
+    <main class="scene-grid">
+      <aside class="assistant-panel" id="assistant-panel" aria-live="polite">
+        <p class="panel-label">Assistant</p>
+        <div class="assistant-bubble hidden" id="assistant-bubble">
+          <img class="assistant-portrait hidden" id="assistant-portrait" alt="" />
+          <span class="assistant-form" id="assistant-form">cat</span>
+          <p id="assistant-text"></p>
+        </div>
+        <p class="assistant-whisper" id="assistant-whisper"></p>
+      </aside>
+
+      <section class="narrative-panel">
+        <div class="scene-visual" id="scene-visual">
+          <img id="scene-image" alt="" hidden />
+          <div class="scene-visual-overlay"></div>
+          <span class="scene-visual-badge">Scene still</span>
+          <div class="scene-placeholder" id="scene-placeholder">Forest edge · dawn mist</div>
+          <span class="scene-caption" id="scene-caption"></span>
+        </div>
+        <div class="narrative-log" id="narrative-log" aria-live="polite"></div>
+        <div class="choices" id="choices" role="group" aria-label="Choices"></div>
+        <form class="input-row" id="custom-form">
+          <input type="text" id="custom-text" placeholder="Or type an action…" autocomplete="off" />
+          <button type="submit" class="btn-primary" id="send-btn">Send</button>
+        </form>
+      </section>
+
+      <aside class="stats-panel">
+        <p class="panel-label">Traveler</p>
+        <dl class="stats-sheet" id="stats-sheet">
+          <div class="stat-line"><dt>HP</dt><dd id="stat-hp">—</dd></div>
+          <div class="stat-line"><dt>Stamina</dt><dd id="stat-stamina">—</dd></div>
+          <div class="stat-line"><dt>Gold</dt><dd id="stat-gold">—</dd></div>
+          <div class="stat-line"><dt>Location</dt><dd id="stat-location">—</dd></div>
+        </dl>
+        <p class="panel-label panel-label--spaced">Inventory</p>
+        <ul class="inventory" id="inventory"></ul>
+      </aside>
+    </main>
+
+    <footer class="scene-footer">
+      <span class="footer-meta" id="footer-meta">Day 1 · Morning · Overcast</span>
+      <span class="footer-spacer"></span>
+      <span class="phase-label">Evil phase</span>
+      <div class="phase-chips" id="phase-chips" role="group" aria-label="Evil phase (display only)"></div>
+      <button type="button" class="mic-btn" id="mic-btn" title="Push to talk (stub)">🎤</button>
+      <span class="connection-status" id="connection-status">Connecting…</span>
+    </footer>
+  </div>
+
+  <div class="dice-toast hidden" id="dice-toast" aria-live="assertive">
+    <video class="dice-video hidden" id="dice-video" muted playsinline></video>
+    <p class="dice-line" id="dice-line"></p>
+  </div>
+
+  <div class="overlay-panel hidden" id="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div class="overlay-backdrop" id="overlay-backdrop"></div>
+    <div class="overlay-sheet" id="overlay-sheet">
+      <header class="overlay-header">
+        <h2 class="overlay-title" id="overlay-title">Scene</h2>
+        <button type="button" class="overlay-close" id="overlay-close" aria-label="Close overlay">×</button>
+      </header>
+      <div class="overlay-body" id="overlay-body"></div>
+    </div>
+  </div>
+
+  <div class="cutscene-overlay hidden" id="cutscene-overlay" role="dialog" aria-modal="true">
+    <div class="cutscene-letterbox">
+      <video id="cutscene-video" muted playsinline></video>
+      <div class="cutscene-bars cutscene-bars--top"></div>
+      <div class="cutscene-bars cutscene-bars--bottom">
+        <p class="cutscene-caption" id="cutscene-caption"></p>
+      </div>
+      <button type="button" class="cutscene-skip" id="cutscene-skip">Skip</button>
+    </div>
+  </div>
+
+  <script>
+    window.CLOCKWORK_DESIGN_ENABLED = {{ "true" if design_enabled else "false" }};
+  </script>
+  <script src="/static/js/clockwork.js"></script>
+</body>
+</html>

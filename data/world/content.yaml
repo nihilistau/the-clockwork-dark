@@ -1,0 +1,891 @@
+version: 1
+source: C:\Projects\clockwork-dark\Design_files\ui_kits\clockwork-world\data.js
+places:
+- id: forest_clearing
+  name: The Forest Clearing
+  kind: Wilds
+  caption: Birch margin · dawn mist
+  blurb: Where travelers wake. Birch and fern, mushroom circles, game trails that
+    double back when watched. Smoke from Edgewood drifts west even when the wind blows
+    south.
+  corrupted: false
+  image: assets/art/scenes/forest-mushroom-ring.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: No minimap. Things watch from stillness without moving.
+- id: edgewood_square
+  name: Edgewood Square
+  kind: Village
+  caption: Communal oven · evening
+  blurb: Timber frames lean together around the communal stone oven. A shrine to unnamed
+    saints never lacks a candle — though nobody can name the saints.
+  corrupted: false
+  image: assets/art/scenes/town-scene.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: NPC markers subtle — name on hover, never gamey icons.
+- id: edgewood_bakery
+  name: The Hearth Bakery
+  kind: Interior
+  caption: Brick oven · morning prep
+  blurb: Maris Hearth runs it with flour on her sleeves and a hum in her throat. Villagers
+    say she hums to keep the gears quiet. Loaves that taste of honest hunger, not
+    prophecy.
+  corrupted: false
+  image: assets/art/scenes/bakery.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Domestic UI (recipes, oven timer) must look as polished as adventure UI.
+- id: tinker_caravan
+  name: The Tinker Caravan
+  kind: Caravan
+  caption: Nine-pin tent · arrival sunset
+  blurb: 'Ilya''s wagon: tools, maps, hanging charms, chalk symbols, suspicious sympathy
+    lamps. Maps of roads that shift when the wheat turns wrong.'
+  corrupted: false
+  image: assets/art/scenes/tinker-cart.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Trade UI is a barter list — not gold coins floating.
+- id: millhaven_gate
+  name: Millhaven Gate
+  kind: Frontier
+  caption: Palisade · cold rain
+  blurb: A wooden palisade gate, militia banners, mud road, refugees. Sergeant Sera
+    holds the line — duty-heavy, not a villain.
+  corrupted: false
+  image: assets/art/scenes/closing-town-gates.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Rain variant; wrong_rain (falls upward) only STIRRING+.
+- id: corruption_border
+  name: The Corruption Border
+  kind: Wrongness
+  caption: Brass in the wheat · SPREADING
+  blurb: A wheat field with brass gear growths, sick sky, wrong perspective. The wheat
+    ticks like a metronome toward the horizon.
+  corrupted: true
+  image: assets/art/scenes/clockwork-wheatfield.jpg
+  min_phase: spreading
+  requires_discovery: false
+  note: 'Append corruption suffix: brass clockwork motifs in organic matter, sick
+    green undertone.'
+- id: edgewood_shrine
+  name: Shrine of Unnamed Saints
+  kind: Sacred
+  caption: Candle wall · the unfinished mural
+  blurb: A shrine to saints nobody can name never lacks a candle. Its wall bears an
+    incomplete mural — saints with missing faces, wheat threaded with brass, a road
+    winding inward. Old women say finishing it would invite the road to arrive.
+  corrupted: false
+  image: ''
+  min_phase: dormant
+  requires_discovery: false
+  note: The mural gains a fragment each phase — corruption told through the wall,
+    not the HUD.
+- id: hollow_hill
+  name: Hollow Hill
+  kind: Barrow
+  caption: Standing stones · a door best left shut
+  blurb: A hidden path off the game trails leads to barrows older than the village.
+    Turf-roofed stone, a lintel worn smooth, dark beneath. Best left unopened until
+    nerve and need align — the First Warden sleeps here, and not alone.
+  corrupted: false
+  image: assets/art/scenes/forest-hidden-tunnel.jpg
+  min_phase: dormant
+  requires_discovery: true
+  note: Reachable only via a discovered hidden_path. Wrong-green seeps from the door
+    at SPREADING+.
+- id: marches_road
+  name: The Marches Road
+  kind: Wrongness
+  caption: The road winding inward · SPREADING
+  blurb: The track that leaves Edgewood for the Heartlands. It took Odran an extra
+    hour though the sun said otherwise. Milestones count down to a number that is
+    not a distance. Walk it long enough and the wheat begins to stand in rows too
+    straight for wind.
+  corrupted: true
+  image: assets/art/scenes/wheatfield-forest-edge.jpg
+  min_phase: spreading
+  requires_discovery: false
+  note: Milestones tick instead of measuring. The road is longer leaving than returning.
+- id: resting_camp
+  name: The Roadside Camp
+  kind: Wilds
+  caption: Banked fire · a night between roads
+  blurb: A bedroll, a banked fire, a kettle going cold. Travelers rest here between
+    the clearing and the gate — no inn, no walls, only the fire and whatever the dark
+    brings to its edge. Stamina returns; nerve does not, always.
+  corrupted: false
+  image: assets/art/scenes/resting-camp.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Rest scene — stamina recovers. Encounters may interrupt at STIRRING+.
+- id: ruins_temple
+  name: The Mage-Ruins
+  kind: Ruins
+  caption: Broken colonnade · older than the wound
+  blurb: Toppled columns and a temple floor swallowed by root and moss. Whoever raised
+    it knew the Clockwork Dark by an older name. Robed figures are carved into the
+    stone — or were, once, standing where you stand now.
+  corrupted: false
+  image: assets/art/scenes/ruins-temple-mages.jpg
+  min_phase: dormant
+  requires_discovery: false
+  note: Lore-gate location. The carvings answer to ward pins.
+- id: clockwork_tower
+  name: The Clockwork Tower
+  kind: Wrongness
+  caption: The heart of the wound · CONSUMING
+  blurb: Where the road has been counting toward. A spire of meshed brass and blackened
+    stone rising from a field that ticks. The Clockwork Dark is not a demon you can
+    banish — it is a logic, and this is where the logic keeps its time.
+  corrupted: true
+  image: assets/art/scenes/clockwork-tower.jpg
+  min_phase: consuming
+  requires_discovery: false
+  note: End-state location. Visible on the horizon from SPREADING; reachable only
+    at CONSUMING.
+npcs:
+- id: npc_maris
+  name: Maris Hearth
+  role: The Baker
+  mood: Warmth with worry underneath
+  blurb: Woman, 40s, flour on her forearms, kind tired eyes. She hums to keep the
+    gears quiet and buys wild mushrooms from travelers.
+  voice: Soft maternal · flour in the voice
+  image: ''
+  ambiguous: false
+- id: npc_odran
+  name: Odran Cartwright
+  role: Caravan Master
+  mood: Merchant cheer masking gossip hunger
+  blurb: Man, 50s, weathered, a ledger always in hand, horse whip coiled at his belt.
+    He trades twice a season and remembers every debt.
+  voice: Merchant boom · brisk
+  image: ''
+  ambiguous: false
+- id: npc_ilya
+  name: Ilya of the Nine Pins
+  role: The Tinker
+  mood: Curious · a slightly unsettling smile
+  blurb: Androgynous, sharp eyes, nine brass pins in the scarf. Sells sympathy charms
+    and ward pins that sometimes work and sometimes merely reassure.
+  voice: Precise · careful
+  image: assets/art/souls/tinker.jpg
+  ambiguous: true
+- id: npc_sera
+  name: Sergeant Sera Venn
+  role: Militia
+  mood: Duty-heavy · not a villain
+  blurb: Woman, 30s, a scar on her cheek, practical armor. She holds Millhaven gate
+    in the rain while refugees thin the road behind her.
+  voice: Level · weary command
+  image: ''
+  ambiguous: false
+- id: npc_brindle
+  name: Brindle
+  role: Barn Cat · Assistant form
+  mood: Cute, but uncanny
+  blurb: A grey barn cat with too-knowing eyes and a curled tail. Sits at the village
+    square's edge. The Assistant's earliest, lowest-trust face.
+  voice: — optional chime instead of voice
+  image: assets/art/souls/cat-assistant.jpg
+  ambiguous: true
+- id: npc_greta
+  name: Greta Moss
+  role: The Shrine-keeper
+  mood: Piety thinned to warning
+  blurb: Woman, 70s, votive wax on her knuckles and a saint's-bell at her belt. She
+    tends the candles and refuses to finish the mural. She knew the road would change
+    before the traders did, and she will not say how.
+  voice: Dry · scripture worn to plain warning
+  image: ''
+  ambiguous: false
+- id: npc_wren
+  name: Wren
+  role: The Gear-child
+  mood: Draws what is coming
+  blurb: A village child, maybe nine, charcoal on the fingers. Draws interlocking
+    gears in the dirt of the square; by morning the drawings are gone. Says a quiet
+    friend showed her how. Overlaps the Assistant's child form — nobody is certain
+    which is which.
+  voice: Small · matter-of-fact about impossible things
+  image: assets/art/souls/child-assistant.jpg
+  ambiguous: true
+- id: npc_aldric
+  name: Aldric Thorn
+  role: The Woodcutter
+  mood: Practical · spooked by his own woods
+  blurb: Man, 40s, axe over one shoulder, sawdust in his beard. He cuts the margin
+    timber and knows which trails double back. Lately he will not work past the third
+    birch — the game trails, he says, have started watching him back.
+  voice: Blunt · fewer words after dark
+  image: ''
+  ambiguous: false
+archetypes:
+- id: wayfarer
+  name: Wayfarer
+  gear: Cloak, staff, road boots
+  look: Travel-worn, practical
+  tint: linear-gradient(160deg,#2c3a2a,#5a6a4a)
+- id: hearthkeeper
+  name: Hearthkeeper
+  gear: Apron, rolled sleeves
+  look: Flour dust, warm colors
+  tint: linear-gradient(160deg,#5a3a22,#c79a4a)
+- id: tinker
+  name: Tinker-apprentice
+  gear: Tool belt, goggles
+  look: Brass pins, chalk stains
+  tint: linear-gradient(160deg,#3a2f24,#a9683a)
+bestiary:
+- id: wolf
+  name: Forest wolf
+  threat: Hungry, not evil
+  when: Any phase · birch dusk
+  img: ../../assets/art/enemies/wolf.jpg
+  blurb: Lean and rain-wet, ribs showing. The honest danger of the margin — it wants
+    the meat in your pack, not your soul. Flee is a real option.
+- id: deserter
+  name: Militia deserter
+  threat: Desperate human
+  when: STIRRING · the wet road
+  img: ../../assets/art/souls/warrior.jpg
+  blurb: A man who left Millhaven's gate before it shut. Mud, a notched blade, eyes
+    that already lost. He is not a monster — which is the worst of it.
+- id: scarecrow
+  name: Field scarecrow
+  threat: Wrong, standing too still
+  when: STIRRING · wheat margin
+  img: ../../assets/art/enemies/scarecrow.jpg
+  blurb: It was a scarecrow yesterday. Today it faces the road, and nobody turned
+    it. The first thing the wheat-corruption wears.
+- id: scarecrow_brass
+  name: Corrupted scarecrow
+  threat: Brass nails, wrong shadow
+  when: SPREADING
+  img: ../../assets/art/enemies/scarecrow-clockwork.jpg
+  blurb: Brass driven where straw should be, a shadow that falls the wrong way. It
+    ticks. When it moves you wish it had stayed a scarecrow.
+  corrupted: true
+- id: clockwork_beast
+  name: Clockwork beast
+  threat: Gears in muscle
+  when: SPREADING · the border
+  img: ../../assets/art/enemies/clockwork-monster-vs-mage.jpg
+  blurb: Something that was an animal, rebuilt by the logic into a thing of meshed
+    brass and meat. It does not hunger. It only continues.
+  corrupted: true
+- id: husk
+  name: Clockwork husk
+  threat: A clock where the heart was
+  when: CONSUMING only
+  img: ../../assets/art/souls/clockwork-mage.jpg
+  blurb: Brass ribs, linen tear, a stopped watch where the heart should beat. Not
+    a raid boss — a person the Clockwork Dark finished with. It keeps the wrong hour.
+  corrupted: true
+assistant_forms:
+- form: cat
+  when: Early game · low trust
+  note: Brindle, or a strange stray
+  sil: cat
+  robe: '#5a6a4a'
+  img: ../../assets/art/souls/cat-assistant.jpg
+- form: wanderer
+  when: Whisper arc
+  note: Grey cloak, face in shadow
+  sil: hood
+  robe: '#6a6e6a'
+  img: ../../assets/art/souls/assistant-mage.jpg
+- form: child
+  when: STIRRING anomalies
+  note: Draws gears in the dirt
+  sil: child
+  robe: '#8a7a5a'
+  img: ../../assets/art/souls/child-assistant.jpg
+- form: tinker
+  when: Trade / knowledge
+  note: Overlaps Ilya — ambiguous
+  sil: hood
+  robe: '#a9683a'
+  img: ../../assets/art/souls/tinker.jpg
+- form: reflection
+  when: High Awareness
+  note: Player silhouette in water
+  sil: mirror
+  robe: '#4a565c'
+  img: ../../assets/art/souls/shadow-mage-assistant.jpg
+robes:
+- key: white
+  name: White Robe
+  hex: '#e9e2cd'
+  trim: '#c7b98e'
+  ink: '#3a3326'
+  reads: Mercy / the guide it pretends to be
+  phase: DORMANT
+  blurb: Linen-pale, almost saintly. The Assistant at its most reassuring — and least
+    trustworthy. Bright until the line lands wrong.
+- key: grey
+  name: Grey Robe
+  hex: '#6a6e6a'
+  trim: '#4a4e4a'
+  ink: '#e9e2cd'
+  reads: The wanderer · neutral, watching
+  phase: STIRRING
+  blurb: 'Road-dust grey, face in shadow. The whisper-arc form: dry, tired, pausing
+    mid-sentence. It knows the road changed before you did.'
+- key: red
+  name: Red Robe
+  hex: '#7a2f2a'
+  trim: '#5a201d'
+  ink: '#f2e8d5'
+  reads: Appetite / the gears beneath
+  phase: SPREADING
+  blurb: Quiet blood, not heraldry. Worn when the Assistant's interest sharpens into
+    hunger. Brass threads catch the firelight at the hem.
+- key: black
+  name: Black Robe
+  hex: '#1b1b18'
+  trim: '#3a3a30'
+  ink: '#d9b25f'
+  reads: The Clockwork Dark itself
+  phase: CONSUMING
+  blurb: Ironwood black, clockwork filigree at the cuffs. The form it wears when ambiguity
+    is over. Candlelight makes the gears move.
+items:
+- name: Loaf of bread
+  tag: Food
+  price: 2c
+  from: Maris
+  image: assets/art/things/bread.png
+  brass: false
+  corrupted: false
+- name: Festival cake
+  tag: Food
+  price: 8c
+  from: Maris
+  image: assets/art/things/steaming-bread.jpg
+  brass: false
+  corrupted: false
+- name: Wild mushroom
+  tag: Forage
+  price: 1c
+  from: Forage
+  image: assets/art/things/mushrooms.jpg
+  brass: false
+  corrupted: false
+- name: Resin
+  tag: Forage
+  price: 1c
+  from: Forage
+  image: ''
+  brass: false
+  corrupted: false
+- name: Wild herbs
+  tag: Forage
+  price: 1c
+  from: Forage
+  image: assets/art/things/herbs.jpg
+  brass: false
+  corrupted: false
+- name: River clay
+  tag: Material
+  price: 1c
+  from: Forage
+  image: ''
+  brass: false
+  corrupted: false
+- name: Whetstone
+  tag: Tool
+  price: 5c
+  from: Odran
+  image: assets/art/things/whetstone.jpg
+  brass: false
+  corrupted: false
+- name: Road map to Millhaven
+  tag: Knowledge
+  price: 15c
+  from: Odran
+  image: assets/art/things/map.jpg
+  brass: false
+  corrupted: false
+- name: Tinker knowledge map
+  tag: Knowledge
+  price: 20c
+  from: Ilya
+  image: assets/art/things/map.jpg
+  brass: false
+  corrupted: false
+- name: Sympathy charm
+  tag: Ward
+  price: 25c
+  from: Ilya
+  image: assets/art/things/talisman.jpg
+  brass: true
+  corrupted: false
+- name: Ward pin
+  tag: Ward
+  price: 6c
+  from: Ilya
+  image: assets/art/things/talisman-2.png
+  brass: true
+  corrupted: false
+- name: Sympathy lamp
+  tag: Ward
+  price: —
+  from: Ilya
+  image: ''
+  brass: true
+  corrupted: false
+- name: Tallow candle
+  tag: Light
+  price: 1c
+  from: Maris
+  image: assets/art/things/candle-stack.jpg
+  brass: false
+  corrupted: false
+- name: Travel cloak
+  tag: Apparel
+  price: 12c
+  from: Odran
+  image: ''
+  brass: false
+  corrupted: false
+- name: Iron ladle
+  tag: Tool
+  price: 3c
+  from: Maris
+  image: ''
+  brass: false
+  corrupted: false
+- name: Mushroom pottage
+  tag: Craft
+  price: —
+  from: Recipe
+  image: ''
+  brass: false
+  corrupted: false
+- name: Wax-sealed letter
+  tag: Quest
+  price: —
+  from: Notice board
+  image: ''
+  brass: false
+  corrupted: false
+- name: Brass tooth
+  tag: Wrong
+  price: —
+  from: Found
+  image: ''
+  brass: true
+  corrupted: true
+- name: Gear-threaded wheat
+  tag: Wrong
+  price: —
+  from: Border
+  image: ''
+  brass: true
+  corrupted: true
+- name: Child's gear drawing
+  tag: Wrong
+  price: —
+  from: STIRRING
+  image: ''
+  brass: false
+  corrupted: true
+- name: Wild berry
+  tag: Forage
+  price: 1c
+  from: Forage
+  image: ''
+  brass: false
+  corrupted: false
+- name: Honeycomb
+  tag: Food
+  price: 2c
+  from: Forage
+  image: ''
+  brass: false
+  corrupted: false
+- name: Goat milk
+  tag: Food
+  price: 1c
+  from: Village
+  image: ''
+  brass: false
+  corrupted: false
+- name: Saint's candle
+  tag: Light
+  price: 1c
+  from: Shrine
+  image: ''
+  brass: false
+  corrupted: false
+- name: Harvest lantern
+  tag: Light
+  price: 4c
+  from: Festival
+  image: ''
+  brass: false
+  corrupted: false
+- name: Ward bell
+  tag: Ward
+  price: 9c
+  from: Ilya
+  image: assets/art/things/rune-talisman.jpg
+  brass: true
+  corrupted: false
+- name: Brass filings
+  tag: Wrong
+  price: —
+  from: Found
+  image: ''
+  brass: true
+  corrupted: true
+- name: Ringing loaf
+  tag: Wrong
+  price: —
+  from: Bakery
+  image: assets/art/things/golden-ring-in-bread.jpg
+  brass: false
+  corrupted: true
+- name: Old clock part
+  tag: Wrong
+  price: —
+  from: Found
+  image: ''
+  brass: true
+  corrupted: true
+- name: Iron knife
+  tag: Arms
+  price: 7c
+  from: Odran
+  image: assets/art/things/iron-knife.jpg
+  brass: false
+  corrupted: false
+- name: Stone knife
+  tag: Arms
+  price: 2c
+  from: Forage
+  image: assets/art/things/stone-knife.png
+  brass: false
+  corrupted: false
+- name: Wooden buckler
+  tag: Arms
+  price: 10c
+  from: Odran
+  image: assets/art/things/wooden-shield.jpg
+  brass: false
+  corrupted: false
+- name: Banded shield
+  tag: Arms
+  price: 18c
+  from: Millhaven
+  image: assets/art/things/small-shield.png
+  brass: false
+  corrupted: false
+- name: Healing poultice
+  tag: Heal
+  price: 4c
+  from: Recipe
+  image: assets/art/things/bandage-poultice.png
+  brass: false
+  corrupted: false
+- name: Yarrow draught
+  tag: Heal
+  price: 6c
+  from: Recipe
+  image: assets/art/things/potion.jpg
+  brass: false
+  corrupted: false
+- name: Iron key
+  tag: Quest
+  price: —
+  from: Found
+  image: assets/art/things/iron-key.jpg
+  brass: false
+  corrupted: false
+- name: Copper coins
+  tag: Coin
+  price: —
+  from: Currency
+  image: assets/art/things/coins.jpg
+  brass: false
+  corrupted: false
+- name: Bone dice
+  tag: Coin
+  price: 3c
+  from: Odran
+  image: assets/art/things/dice-rune.png
+  brass: false
+  corrupted: false
+rumors:
+- text: Odran swears the road to Millhaven took an extra hour though the sun said
+    otherwise.
+  phase: stirring
+- text: A stillborn lamb was found with brass filings where its teeth should be.
+  phase: spreading
+- text: Maris burned a batch of bread that rang like a bell when it cracked.
+  phase: stirring
+- text: Tinkers are buying old clock parts at twice their weight in copper.
+  phase: stirring
+- text: The militia recruitment board has fresh nails — someone expects volunteers.
+  phase: dormant
+- text: Wheat near the corruption border stands in rows too straight for wind.
+  phase: spreading
+- text: Children in the square drew gears in the dirt; by morning the drawings were
+    gone.
+  phase: stirring
+mural:
+- frag: a saint with clock-hands where eyes should be
+  phase: dormant
+- frag: wheat stalks threaded through brass gears
+  phase: stirring
+- frag: a child offering bread to something underground
+  phase: stirring
+- frag: the Marches road winding into a wound of light
+  phase: spreading
+- frag: a village burning in perfect symmetry
+  phase: consuming
+weather:
+- key: clear
+  label: Clear
+  note: Honest light
+- key: overcast
+  label: Overcast
+  note: Default mood
+- key: mist
+  label: Mist
+  note: Forest margin
+- key: rain
+  label: Rain
+  note: Millhaven
+- key: wrong_rain
+  label: Wrong rain
+  note: Falls upward · STIRRING+
+  corrupted: true
+phases:
+- key: dormant
+  label: Dormant
+  mood: Warm linen, moss, honey light
+  ui: Clean journal; no corruption motifs
+- key: stirring
+  label: Stirring
+  mood: Brass accents; shadows too long
+  ui: Subtle tick motif in dividers
+- key: spreading
+  label: Spreading
+  mood: Desaturated greens; sickly chartreuse
+  ui: Weather widget shows wrong readings
+- key: consuming
+  label: Consuming
+  mood: High contrast; clockwork filigree
+  ui: Letterbox cutscenes; UI stutters 1 frame/min
+cutscene_map:
+  forest_clearing: cutscene_stirring_phase
+  edgewood_bakery: cutscene_bakery
+  tinker_caravan: cutscene_tinker_map
+  millhaven_gate: cutscene_closing_gates
+  corruption_border: cutscene_consuming_horizon
+  edgewood_shrine: cutscene_notice_board
+  hollow_hill: cutscene_hidden_tunnel
+  marches_road: cutscene_spider_wheat
+  ruins_temple: cutscene_ruins
+  clockwork_tower: cutscene_tower
+  forest_vines: cutscene_clockwork_vines
+  forest_poison: cutscene_poison_fog
+  notice_board: cutscene_notice_board
+  wheatfield_warning: cutscene_blueprint
+overlay_map:
+  edgewood_bakery: bakery
+  tinker_caravan: trade
+  tinker_camp: trade
+  edgewood_square: notice
+  notice_board: notice
+  edgewood_shrine: shrine
+  millhaven_gate: militia
+scene_graph:
+  forest_clearing:
+  - to: edgewood_square
+    hours: 1
+    danger_dc: 8
+    awareness_delta: 0
+  - to: forest_forage
+    hours: 1
+    danger_dc: 10
+    awareness_delta: 0
+  - to: resting_camp
+    hours: 2
+    danger_dc: 10
+    awareness_delta: 1
+  - to: hollow_hill
+    hours: 2
+    danger_dc: 14
+    awareness_delta: 2
+    requires_discovery: hidden_path
+  edgewood_square:
+  - to: forest_clearing
+    hours: 1
+    danger_dc: 8
+    awareness_delta: 0
+  - to: edgewood_bakery
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  - to: tinker_caravan
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 1
+  - to: edgewood_shrine
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  - to: notice_board
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  - to: marches_road
+    hours: 2
+    danger_dc: 12
+    awareness_delta: 2
+  edgewood_bakery:
+  - to: edgewood_square
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  tinker_caravan:
+  - to: edgewood_square
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  - to: tinker_camp
+    hours: 1
+    danger_dc: 8
+    awareness_delta: 0
+  tinker_camp:
+  - to: tinker_caravan
+    hours: 1
+    danger_dc: 8
+    awareness_delta: 0
+  notice_board:
+  - to: edgewood_square
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  edgewood_shrine:
+  - to: edgewood_square
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0
+  forest_forage:
+  - to: forest_clearing
+    hours: 1
+    danger_dc: 10
+    awareness_delta: 0
+  - to: forest_vines
+    hours: 1
+    danger_dc: 12
+    awareness_delta: 2
+    min_phase: stirring
+  - to: forest_poison
+    hours: 1
+    danger_dc: 14
+    awareness_delta: 3
+    min_phase: stirring
+  forest_vines:
+  - to: forest_forage
+    hours: 1
+    danger_dc: 12
+    awareness_delta: 1
+  forest_poison:
+  - to: forest_forage
+    hours: 1
+    danger_dc: 14
+    awareness_delta: 1
+  resting_camp:
+  - to: forest_clearing
+    hours: 2
+    danger_dc: 10
+    awareness_delta: 0
+  - to: marches_road
+    hours: 2
+    danger_dc: 12
+    awareness_delta: 2
+  marches_road:
+  - to: edgewood_square
+    hours: 2
+    danger_dc: 12
+    awareness_delta: 2
+  - to: resting_camp
+    hours: 2
+    danger_dc: 12
+    awareness_delta: 1
+  - to: millhaven_gate
+    hours: 2
+    danger_dc: 14
+    awareness_delta: 3
+  - to: corruption_border
+    hours: 3
+    danger_dc: 16
+    awareness_delta: 4
+    min_phase: spreading
+  - to: wheatfield_warning
+    hours: 1
+    danger_dc: 12
+    awareness_delta: 2
+    min_phase: stirring
+  - to: scarecrow_field
+    hours: 1
+    danger_dc: 14
+    awareness_delta: 3
+    min_phase: stirring
+  wheatfield_warning:
+  - to: marches_road
+    hours: 1
+    danger_dc: 12
+    awareness_delta: 1
+  scarecrow_field:
+  - to: marches_road
+    hours: 1
+    danger_dc: 14
+    awareness_delta: 1
+  millhaven_gate:
+  - to: marches_road
+    hours: 2
+    danger_dc: 14
+    awareness_delta: 3
+  corruption_border:
+  - to: marches_road
+    hours: 3
+    danger_dc: 16
+    awareness_delta: 4
+  - to: clockwork_tower
+    hours: 4
+    danger_dc: 18
+    awareness_delta: 6
+    min_phase: consuming
+  hollow_hill:
+  - to: forest_clearing
+    hours: 2
+    danger_dc: 14
+    awareness_delta: 2
+  - to: ruins_temple
+    hours: 3
+    danger_dc: 16
+    awareness_delta: 4
+  ruins_temple:
+  - to: hollow_hill
+    hours: 3
+    danger_dc: 16
+    awareness_delta: 4
+  clockwork_tower:
+  - to: corruption_border
+    hours: 4
+    danger_dc: 18
+    awareness_delta: 6
+  hurt_rest:
+  - to: resting_camp
+    hours: 0
+    danger_dc: 0
+    awareness_delta: 0

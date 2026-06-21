@@ -1,0 +1,22 @@
+# Normalize text line endings; keep binaries untouched.
+* text=auto eol=lf
+
+# Explicit binary asset types (never normalize / diff).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.gif  binary
+*.mp4  binary
+*.webm binary
+*.mov  binary
+*.zip  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.pdf   binary
+*.pptx  binary
+*.db    binary
+*.sqlite binary

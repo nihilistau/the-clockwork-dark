@@ -1,0 +1,126 @@
+<!-- @dsCard group="Clockwork World" viewport="1280x820" name="The Clockwork Dark — World & Interface" subtitle="Interactive bible: places, souls, the robed wizard, items, HUD & the live scene" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Clockwork Dark — World &amp; Interface</title>
+  <script>window.RES = function(p){ return (window.__resources && window.__resources[p]) || p; };</script>
+  <!-- standalone asset dependencies (compressed; videos shown as poster stills) -->
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/forest-mushroom-ring.jpg" data-resource-id="../../assets/art/scenes/forest-mushroom-ring.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/town-scene.jpg" data-resource-id="../../assets/art/scenes/town-scene.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/bakery.jpg" data-resource-id="../../assets/art/scenes/bakery.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/tinker-cart.jpg" data-resource-id="../../assets/art/scenes/tinker-cart.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/closing-town-gates.jpg" data-resource-id="../../assets/art/scenes/closing-town-gates.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/clockwork-wheatfield.jpg" data-resource-id="../../assets/art/scenes/clockwork-wheatfield.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/forest-hidden-tunnel.jpg" data-resource-id="../../assets/art/scenes/forest-hidden-tunnel.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/wheatfield-forest-edge.jpg" data-resource-id="../../assets/art/scenes/wheatfield-forest-edge.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/resting-camp.jpg" data-resource-id="../../assets/art/scenes/resting-camp.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/ruins-temple-mages.jpg" data-resource-id="../../assets/art/scenes/ruins-temple-mages.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/scenes/clockwork-tower.jpg" data-resource-id="../../assets/art/scenes/clockwork-tower.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/tinker.jpg" data-resource-id="../../assets/art/souls/tinker.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/cat-assistant.jpg" data-resource-id="../../assets/art/souls/cat-assistant.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/child-assistant.jpg" data-resource-id="../../assets/art/souls/child-assistant.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/assistant-mage.jpg" data-resource-id="../../assets/art/souls/assistant-mage.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/shadow-mage-assistant.jpg" data-resource-id="../../assets/art/souls/shadow-mage-assistant.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/warrior.jpg" data-resource-id="../../assets/art/souls/warrior.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/souls/clockwork-mage.jpg" data-resource-id="../../assets/art/souls/clockwork-mage.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/enemies/wolf.jpg" data-resource-id="../../assets/art/enemies/wolf.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/enemies/scarecrow.jpg" data-resource-id="../../assets/art/enemies/scarecrow.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/enemies/scarecrow-clockwork.jpg" data-resource-id="../../assets/art/enemies/scarecrow-clockwork.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/enemies/clockwork-monster-vs-mage.jpg" data-resource-id="../../assets/art/enemies/clockwork-monster-vs-mage.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/bread.png" data-resource-id="../../assets/art/things/bread.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/steaming-bread.jpg" data-resource-id="../../assets/art/things/steaming-bread.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/mushrooms.jpg" data-resource-id="../../assets/art/things/mushrooms.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/herbs.jpg" data-resource-id="../../assets/art/things/herbs.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/whetstone.jpg" data-resource-id="../../assets/art/things/whetstone.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/map.jpg" data-resource-id="../../assets/art/things/map.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/talisman.jpg" data-resource-id="../../assets/art/things/talisman.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/talisman-2.png" data-resource-id="../../assets/art/things/talisman-2.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/candle-stack.jpg" data-resource-id="../../assets/art/things/candle-stack.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/rune-talisman.jpg" data-resource-id="../../assets/art/things/rune-talisman.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/golden-ring-in-bread.jpg" data-resource-id="../../assets/art/things/golden-ring-in-bread.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/iron-knife.jpg" data-resource-id="../../assets/art/things/iron-knife.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/stone-knife.png" data-resource-id="../../assets/art/things/stone-knife.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/wooden-shield.jpg" data-resource-id="../../assets/art/things/wooden-shield.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/small-shield.png" data-resource-id="../../assets/art/things/small-shield.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/bandage-poultice.png" data-resource-id="../../assets/art/things/bandage-poultice.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/potion.jpg" data-resource-id="../../assets/art/things/potion.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/iron-key.jpg" data-resource-id="../../assets/art/things/iron-key.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/coins.jpg" data-resource-id="../../assets/art/things/coins.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/things/dice-rune.png" data-resource-id="../../assets/art/things/dice-rune.png" />
+  <meta name="ext-resource-dependency" content="../../assets/art-min/menu-screen.jpg" data-resource-id="../../assets/art/menu-screen.jpg" />
+  <meta name="ext-resource-dependency" content="../../assets/wordmark.svg" data-resource-id="../../assets/wordmark.svg" />
+  <meta name="ext-resource-dependency" content="../../assets/gear-motif.svg" data-resource-id="../../assets/gear-motif.svg" />
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; background: #060908; }
+    #root { height: 100vh; }
+    *::-webkit-scrollbar { width: 10px; height: 10px; }
+    *::-webkit-scrollbar-track { background: rgba(0,0,0,.3); }
+    *::-webkit-scrollbar-thumb { background: rgba(190,134,63,.45); border-radius: 6px; border: 2px solid transparent; background-clip: padding-box; }
+    *::-webkit-scrollbar-thumb:hover { background: rgba(214,178,108,.65); background-clip: padding-box; }
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes cwFlicker { 0%,100%{opacity:1} 45%{opacity:.86} 70%{opacity:.95} }
+      @keyframes cwTurn { to { transform: rotate(360deg) } }
+      @keyframes cwToast { from { opacity:0; transform: translateY(8px) scale(.96) } to { opacity:1; transform:none } }
+      @keyframes cwCross { from { opacity:0 } to { opacity:1 } }
+      .cw-flicker { animation: cwFlicker 5.5s var(--ease-quiet) infinite; }
+      .cw-turn { animation: cwTurn 60s linear infinite; }
+      .cw-toast { animation: cwToast var(--dur-base) var(--ease-settle); }
+      .cw-cross { animation: cwCross 420ms var(--ease-quiet); }
+    }
+    .cw-log::-webkit-scrollbar-thumb { background: rgba(190,134,63,.5); }
+  </style>
+</head>
+<body data-phase="stirring">
+  <template id="__bundler_thumbnail" data-bg-color="#0a0d0b">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#0a0d0b"/>
+      <g opacity="0.95"><rect x="728.0" y="378.0" width="44" height="44" rx="6" fill="#be863f" transform="rotate(0 750.0 400.0)"/><rect x="699.4" y="466.2" width="44" height="44" rx="6" fill="#be863f" transform="rotate(36 721.4 488.2)"/><rect x="624.4" y="520.7" width="44" height="44" rx="6" fill="#be863f" transform="rotate(72 646.4 542.7)"/><rect x="531.6" y="520.7" width="44" height="44" rx="6" fill="#be863f" transform="rotate(108 553.6 542.7)"/><rect x="456.6" y="466.2" width="44" height="44" rx="6" fill="#be863f" transform="rotate(144 478.6 488.2)"/><rect x="428.0" y="378.0" width="44" height="44" rx="6" fill="#be863f" transform="rotate(180 450.0 400.0)"/><rect x="456.6" y="289.8" width="44" height="44" rx="6" fill="#be863f" transform="rotate(216 478.6 311.8)"/><rect x="531.6" y="235.3" width="44" height="44" rx="6" fill="#be863f" transform="rotate(252 553.6 257.3)"/><rect x="624.4" y="235.3" width="44" height="44" rx="6" fill="#be863f" transform="rotate(288 646.4 257.3)"/><rect x="699.4" y="289.8" width="44" height="44" rx="6" fill="#be863f" transform="rotate(324 721.4 311.8)"/>
+        <circle cx="600" cy="400" r="120" fill="none" stroke="#be863f" stroke-width="26"/>
+        <circle cx="600" cy="400" r="44" fill="#1a1d16" stroke="#7c5e34" stroke-width="8"/>
+      </g>
+      <circle cx="600" cy="400" r="14" fill="#e8c47a"/>
+      <circle cx="600" cy="400" r="34" fill="none" stroke="#e8c47a" stroke-width="2" opacity="0.5"/>
+      <text x="600" y="690" text-anchor="middle" font-family="Georgia,serif" font-size="58" fill="#e2dcc9" letter-spacing="2">The Clockwork Dark</text>
+    </svg>
+  </template>
+  <div id="root"></div>
+  <script src="data.js"></script>
+  <script type="text/babel" src="PaintFrame.jsx"></script>
+  <script type="text/babel" src="WorldKit.jsx"></script>
+  <script type="text/babel" src="Atlas.jsx"></script>
+  <script type="text/babel" src="Souls.jsx"></script>
+  <script type="text/babel" src="Things.jsx"></script>
+  <script type="text/babel" src="Interface.jsx"></script>
+  <script type="text/babel" src="Screens.jsx"></script>
+  <script type="text/babel" src="../clockwork-scene/GameScene.jsx"></script>
+  <script type="text/babel" src="App.jsx"></script>
+  <script type="text/babel">
+    function PlaySection() {
+      const Game = window.GameScene;
+      return (
+        <div style={{ height: "100vh", display: "flex", flexDirection: "column", minHeight: 0 }}>
+          <div style={{ padding: "10px 16px", borderBottom: "1px solid rgba(214,178,108,.14)",
+            background: "linear-gradient(180deg,#0a0d0e,#070908)", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "var(--text-xs)", fontWeight: 700,
+              textTransform: "uppercase", letterSpacing: "var(--tracking-label)", color: "var(--accent-brass)" }}>The live scene</span>
+            <span style={{ fontFamily: "var(--font-narration)", fontStyle: "italic", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+              fake turn loop · choose, roll, walk the road · switch the evil phase in the footer</span>
+          </div>
+          <div style={{ flex: 1, minHeight: 0 }}><Game /></div>
+        </div>
+      );
+    }
+    window.PlaySection = PlaySection;
+    const App = window.CWApp;
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

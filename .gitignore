@@ -1,0 +1,43 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.Python
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Test / tooling caches ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+_pytest_baseline.txt
+
+# ---- Runtime / generated game data ----
+data/saves/
+data/lore/lore.db          # regenerate with: python scripts/seed_lore.py
+*.sqlite
+*.sqlite3
+
+# ---- Design system: redundant source bundles & duplicates ----
+# The extracted Design_files/ tree is committed; these are heavy redundant copies.
+Design_files/*.zip
+Design_files/**/*.zip
+Design_files/assets/art-min/
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/

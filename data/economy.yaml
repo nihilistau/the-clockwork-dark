@@ -1,0 +1,52 @@
+# Edgewood economy — prices in copper (gold field stores copper count)
+
+npc_maris:
+  sells:
+    loaf: { price: 2, name: "Loaf of bread" }
+    festival_cake: { price: 8, name: "Festival cake" }
+    tallow_candle: { price: 1, name: "Tallow candle" }
+    iron_ladle: { price: 3, name: "Iron ladle" }
+  buys:
+    wild_mushroom: { price: 1, name: "Wild mushroom" }
+    wild_herbs: { price: 1, name: "Wild herbs" }
+    wild_berry: { price: 1, name: "Wild berry" }
+    honeycomb: { price: 2, name: "Honeycomb" }
+  reputation_per_buy: 1
+
+npc_odran:
+  sells:
+    road_map: { price: 15, name: "Road map to Millhaven" }
+    whetstone: { price: 5, name: "Whetstone" }
+    iron_knife: { price: 7, name: "Iron knife" }
+    wooden_buckler: { price: 10, name: "Wooden buckler" }
+    travel_cloak: { price: 12, name: "Travel cloak" }
+    bone_dice: { price: 3, name: "Bone dice" }
+  buys:
+    wild_mushroom: { price: 1, name: "Wild mushroom" }
+    resin: { price: 1, name: "Resin" }
+    river_clay: { price: 1, name: "River clay" }
+  reputation_per_buy: 1
+
+npc_ilya:
+  sells:
+    sympathy_charm: { price: 25, name: "Sympathy charm" }
+    ward_pin: { price: 6, name: "Ward pin" }
+    tinker_map: { price: 20, name: "Tinker knowledge map" }
+    ward_bell: { price: 9, name: "Ward bell" }
+  buys:
+    wild_herbs: { price: 1, name: "Wild herbs" }
+    brass_filings: { price: 3, name: "Brass filings" }
+    old_clock_part: { price: 5, name: "Old clock part" }
+  reputation_per_buy: 2
+
+npc_greta:
+  sells:
+    saints_candle: { price: 1, name: "Saint's candle" }
+  buys:
+    wild_herbs: { price: 1, name: "Wild herbs" }
+
+npc_sera:
+  sells:
+    banded_shield: { price: 18, name: "Banded shield" }
+  buys:
+    wax_sealed_letter: { price: 5, name: "Wax-sealed letter" }

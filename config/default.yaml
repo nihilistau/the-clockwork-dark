@@ -1,0 +1,63 @@
+scene:
+  clockwork:
+    port: 5573
+    host: "0.0.0.0"
+
+lmstudio:
+  base_url: "http://localhost:1234/v1"
+  api_key: ""
+  models:
+    big: "local-model"
+    small: "local-model-small"
+    draft: "local-model-draft"
+  speculative:
+    enabled: true
+    draft_profile: "draft"
+    refine_profile: "big"
+
+comfyui:
+  base_url: "http://localhost:8188"
+  enabled: false
+  timeout_seconds: 120
+
+tts:
+  base_url: "http://localhost:8600"
+  fallback: "text"
+  timeout_seconds: 60
+
+media:
+  cutscene_skip_after_seconds: 5
+  cutscene_budget: phase_shift_only
+
+stt:
+  base_url: "http://localhost:5051"
+
+world:
+  tick_interval_seconds: 60
+  evil_base_rate_per_day: 0.01
+
+awareness:
+  reveal_threshold: 20
+  reflection_form_min: 40
+  spoiler_gate_threshold: 15
+
+assistant:
+  max_tokens: 200
+  reflection_awareness_min: 40
+
+paths:
+  saves: "data/saves"
+  lore: "data/lore"
+  lore_db: "data/lore/lore.db"
+  economy: "data/economy.yaml"
+  procgen_templates: "data/procgen_templates/edgewood.yaml"
+  world_schedules: "data/world/schedules.yaml"
+  comfyui_templates: "data/procgen_templates/comfyui.yaml"
+  design_files: "${CLOCKWORK_DESIGN_FILES}"
+  asset_manifest: "data/assets/manifest.yaml"
+  world_content: "data/world/content.yaml"
+
+comms:
+  interceptors:
+    - LoreInjectInterceptor
+    - AwarenessGateInterceptor

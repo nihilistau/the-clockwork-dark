@@ -1,0 +1,6 @@
+# Natural 20 boons (d20)
+boons:
+  - id: clean_success
+    text: "Flawless execution — +1 bonus item or +2 rep."
+  - id: lucky_find
+    text: "Notice something others missed — free clue."

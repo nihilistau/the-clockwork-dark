@@ -1,0 +1,336 @@
+start_screen:
+  background: assets/art/menu-screen.jpg
+  wordmark: assets/wordmark.svg
+  gear_motif: assets/gear-motif.svg
+  divider: assets/woodcut-divider.svg
+intro:
+  video: assets/video/intro.mp4
+  video_hd: assets/video/clockwork-dark-intro-720p.mp4
+archetypes:
+  wayfarer:
+    name: Wayfarer
+    note: Cloak, staff, road boots
+  hearthkeeper:
+    name: Hearthkeeper
+    note: Apron, flour, warm colors
+  tinker:
+    name: Tinker-apprentice
+    note: Tool belt, brass pins, chalk
+places:
+  forest_clearing:
+    name: The Forest Clearing
+    kind: Wilds
+    caption: Birch margin · dawn mist
+    image: assets/art/scenes/forest-mushroom-ring.jpg
+  edgewood_square:
+    name: Edgewood Square
+    kind: Village
+    caption: Communal oven · evening
+    image: assets/art/scenes/town-scene.jpg
+  edgewood_bakery:
+    name: The Hearth Bakery
+    kind: Interior
+    caption: Brick oven · morning prep
+    image: assets/art/scenes/bakery.jpg
+  tinker_caravan:
+    name: The Tinker Caravan
+    kind: Caravan
+    caption: Nine-pin tent · arrival sunset
+    image: assets/art/scenes/tinker-cart.jpg
+  tinker_camp:
+    name: Tinker Camp
+    kind: Caravan
+    caption: Rainy pack-up · maps drying
+    image: assets/art/scenes/tinker-camping.jpg
+  millhaven_gate:
+    name: Millhaven Gate
+    kind: Frontier
+    caption: Palisade · cold rain
+    image: assets/art/scenes/closing-town-gates.jpg
+  corruption_border:
+    name: The Corruption Border
+    kind: Wrongness
+    caption: Brass in the wheat · SPREADING
+    image: assets/art/scenes/clockwork-wheatfield.jpg
+    corrupted: true
+  edgewood_shrine:
+    name: Shrine of Unnamed Saints
+    kind: Sacred
+    caption: Candle wall · the unfinished mural
+    image: assets/art/scenes/noticeboard.jpg
+  hollow_hill:
+    name: Hollow Hill
+    kind: Barrow
+    caption: Standing stones · a door best left shut
+    image: assets/art/scenes/forest-hidden-tunnel.jpg
+  marches_road:
+    name: The Marches Road
+    kind: Wrongness
+    caption: The road winding inward · SPREADING
+    image: assets/art/scenes/wheatfield-forest-edge.jpg
+    corrupted: true
+  resting_camp:
+    name: The Roadside Camp
+    kind: Wilds
+    caption: Banked fire · a night between roads
+    image: assets/art/scenes/resting-camp.jpg
+  ruins_temple:
+    name: The Mage-Ruins
+    kind: Ruins
+    caption: Broken colonnade · older than the wound
+    image: assets/art/scenes/ruins-temple-mages.jpg
+  clockwork_tower:
+    name: The Clockwork Tower
+    kind: Wrongness
+    caption: The heart of the wound · CONSUMING
+    image: assets/art/scenes/clockwork-tower.jpg
+    corrupted: true
+  forest_forage:
+    name: Forest Margin
+    kind: Wilds
+    caption: Stump and resin · honest forage
+    image: assets/art/scenes/forest-tree-stump.jpg
+  forest_poison:
+    name: Wrong Mist
+    kind: Wrongness
+    caption: Poison fog · STIRRING
+    image: assets/art/scenes/forest-poison-gas.jpg
+    corrupted: true
+  forest_vines:
+    name: Clockwork Vines
+    kind: Wrongness
+    caption: Brass in the birch · STIRRING
+    image: assets/art/scenes/forest-clockwork-vines.jpg
+    corrupted: true
+  wheatfield_warning:
+    name: Gear Drawing
+    kind: Wrongness
+    caption: Child's warning in the wheat · STIRRING
+    image: assets/art/scenes/wheatfield-drawing-warning.jpg
+    corrupted: true
+  scarecrow_field:
+    name: Wheatfield Scarecrow
+    kind: Wrongness
+    caption: Standing too still · STIRRING
+    image: assets/art/scenes/wheatfields-scarecrow.jpg
+  hurt_rest:
+    name: Wounded Rest
+    kind: Wilds
+    caption: Bandaged · the fire still burns
+    image: assets/art/scenes/player-hurt-resting.jpg
+  notice_board:
+    name: Notice Board
+    kind: Civic
+    caption: Fresh nails · militia wants volunteers
+    image: assets/art/scenes/noticeboard-cutscene.jpg
+cutscenes:
+  cutscene_stirring_phase:
+    video: assets/video/cutscene-misty-forest.mp4
+    captions:
+    - The village clock stopped at a hour that never was.
+    - Crows gather on the mill roof, perfectly still.
+  cutscene_assistant_reveal:
+    video: assets/video/forrest-mushroom-ring-cutscene-720p.mp4
+    captions:
+    - Cat eyes reflect a map of the Heartlands.
+  cutscene_consuming_horizon:
+    video: assets/video/cutscene-wheatfield.mp4
+    captions:
+    - Wheat rows tick like a metronome toward the horizon.
+  cutscene_notice_board:
+    video: assets/video/cutscene-notice-board.mp4
+    captions:
+    - Fresh nails on the recruitment board — someone expects volunteers.
+  cutscene_closing_gates:
+    video: assets/video/cutscene-closing-gates.mp4
+    captions:
+    - Millhaven shuts the gate against the road.
+  cutscene_golden_ring_bread:
+    video: assets/video/cutscene-golden-ring-bread.mp4
+    captions:
+    - Bread that rings when it cracks.
+  cutscene_tower:
+    video: assets/video/cutscene-tower.mp4
+    captions:
+    - Where the road has been counting toward.
+  cutscene_bakery:
+    video: assets/video/city-bakery-cutscene-outdoors-720p.mp4
+    captions:
+    - Maris hums on the off-beat now. As if answering something.
+  cutscene_tinker_map:
+    video: assets/video/tent-base-map-cutscene-720p.mp4
+    captions:
+    - Roads that shift when the wheat turns wrong.
+  cutscene_ruins:
+    video: assets/video/ruins-temple-mages-cutscene-720p.mp4
+    captions:
+    - Whoever raised it knew the Clockwork Dark by an older name.
+  cutscene_hidden_tunnel:
+    video: assets/video/forrest-hidden-tunnels-cutscene.mp4
+    captions:
+    - A door best left shut — for now.
+  cutscene_clockwork_vines:
+    video: assets/video/forrest-clockwork-vines-cutscene-720p.mp4
+    captions:
+    - Brass threads the birch where brass should not be.
+  cutscene_poison_fog:
+    video: assets/video/forrest-clockwork-mushroom-poison-fog-720p.mp4
+    captions:
+    - The mist tastes of metal and wrong math.
+  cutscene_wizard_fight:
+    video: assets/video/wizard-vs-clockwork-enemy-cutscene-720p.mp4
+    captions:
+    - It does not hunger. It only continues.
+  cutscene_blueprint:
+    video: assets/video/clockwork-blueprint-warning-fly-in-720p.mp4
+    captions:
+    - A quiet friend showed her how.
+  cutscene_spider_wheat:
+    video: assets/video/clockwork-spinerfex-wheatfield-cutscene-720p.mp4
+    captions:
+    - The wheat ticks like a metronome toward the horizon.
+assistant_forms:
+  cat:
+    image: assets/art/souls/cat-assistant.jpg
+    label: Brindle
+  wanderer:
+    image: assets/art/souls/assistant-mage.jpg
+    label: Wanderer
+  child:
+    image: assets/art/souls/child-assistant.jpg
+    label: Gear-child
+  tinker:
+    image: assets/art/souls/tinker.jpg
+    label: Tinker
+  reflection:
+    image: assets/art/souls/shadow-mage-assistant.jpg
+    label: Reflection
+npcs:
+  npc_maris:
+    image: assets/art/scenes/bakery.jpg
+  npc_odran:
+    image: assets/art/souls/warrior.jpg
+  npc_ilya:
+    image: assets/art/souls/tinker.jpg
+  npc_sera:
+    image: assets/art/souls/warrior.jpg
+  npc_brindle:
+    image: assets/art/souls/cat-assistant.jpg
+  npc_greta:
+    image: assets/art/scenes/noticeboard.jpg
+  npc_wren:
+    image: assets/art/souls/child-assistant.jpg
+  npc_aldric:
+    image: assets/art/scenes/forest-tree-stump.jpg
+enemies:
+  wolf:
+    image: assets/art/enemies/wolf.jpg
+  scarecrow:
+    image: assets/art/enemies/scarecrow.jpg
+  scarecrow_brass:
+    image: assets/art/enemies/scarecrow-clockwork.jpg
+  clockwork_beast:
+    image: assets/art/enemies/clockwork-monster-vs-mage.jpg
+  husk:
+    image: assets/art/souls/clockwork-mage.jpg
+  deserter:
+    image: assets/art/souls/warrior.jpg
+  clockwork_enemy_vs_mage:
+    image: assets/art/enemies/clockwork-enemy-vs-mage.jpg
+items:
+  loaf of bread:
+    image: assets/art/things/bread.png
+  festival cake:
+    image: assets/art/things/steaming-bread.jpg
+  wild mushroom:
+    image: assets/art/things/mushrooms.jpg
+  wild herbs:
+    image: assets/art/things/herbs.jpg
+  whetstone:
+    image: assets/art/things/whetstone.jpg
+  road map to millhaven:
+    image: assets/art/things/map.jpg
+  sympathy charm:
+    image: assets/art/things/talisman.jpg
+  ward pin:
+    image: assets/art/things/talisman-2.png
+  tallow candle:
+    image: assets/art/things/candle-stack.jpg
+  iron knife:
+    image: assets/art/things/iron-knife.jpg
+  stone knife:
+    image: assets/art/things/stone-knife.png
+  wooden buckler:
+    image: assets/art/things/wooden-shield.jpg
+  healing poultice:
+    image: assets/art/things/bandage-poultice.png
+  yarrow draught:
+    image: assets/art/things/potion.jpg
+  iron key:
+    image: assets/art/things/iron-key.jpg
+  copper coins:
+    image: assets/art/things/coins.jpg
+  bone dice:
+    image: assets/art/things/dice-rune.png
+  ringing loaf:
+    image: assets/art/things/golden-ring-in-bread.jpg
+  ward bell:
+    image: assets/art/things/rune-talisman.jpg
+  bandage poultice:
+    image: assets/art/things/bandage-poultice.png
+  bread:
+    image: assets/art/things/bread.png
+  candle stack:
+    image: assets/art/things/candle-stack.jpg
+  coins:
+    image: assets/art/things/coins.jpg
+  dice rune:
+    image: assets/art/things/dice-rune.png
+  golden ring in bread:
+    image: assets/art/things/golden-ring-in-bread.jpg
+  herbs:
+    image: assets/art/things/herbs.jpg
+  loaf split:
+    image: assets/art/things/loaf-split.jpg
+  map:
+    image: assets/art/things/map.jpg
+  mushrooms 2:
+    image: assets/art/things/mushrooms-2.png
+  mushrooms:
+    image: assets/art/things/mushrooms.jpg
+  potion:
+    image: assets/art/things/potion.jpg
+  rune talisman:
+    image: assets/art/things/rune-talisman.jpg
+  small shield:
+    image: assets/art/things/small-shield.png
+  steaming bread:
+    image: assets/art/things/steaming-bread.jpg
+  talisman 2:
+    image: assets/art/things/talisman-2.png
+  talisman:
+    image: assets/art/things/talisman.jpg
+  wooden shield:
+    image: assets/art/things/wooden-shield.jpg
+dice_videos:
+  roll: assets/video/dice/grok-20d10c2a-a15d-44fa-8ed5-da1ff13996a9 (1).mp4
+  critical: assets/video/dice/grok-c6ac329a-1991-47a4-9cef-8e30d34b9d0b.mp4
+  fumble: assets/video/dice/grok-7f3e8a49-b167-489d-98bc-a2d9e15bc541.mp4
+  roll_2: assets/video/dice/grok-20d10c2a-a15d-44fa-8ed5-da1ff13996a9.mp4
+  roll_3: assets/video/dice/grok-3a8c8b61-2586-4053-93db-95c3976fc9b7.mp4
+  roll_4: assets/video/dice/grok-59e77be4-75ff-4566-a3c7-e7640dcd008d.mp4
+  roll_5: assets/video/dice/grok-59ed5569-393e-43c5-bdc0-49d8e732f45f.mp4
+  roll_6: assets/video/dice/grok-6d6e1eb7-1ffc-4fda-aea8-637942ee7aed.mp4
+  roll_7: assets/video/dice/grok-7f3e8a49-b167-489d-98bc-a2d9e15bc541.mp4
+  roll_8: assets/video/dice/grok-8f684aa0-d40d-4333-871c-10cb096c37e3.mp4
+  roll_9: assets/video/dice/grok-a5693e00-8fd0-4731-9701-35a984cebde3.mp4
+  roll_10: assets/video/dice/grok-b077980b-4cca-4123-9e1c-c2156ab0be62.mp4
+  roll_11: assets/video/dice/grok-b9e8802f-5783-4d17-8eb3-5970cc637c3e.mp4
+  roll_12: assets/video/dice/grok-c1601973-3c57-45e7-8d1f-f74ba45168dc.mp4
+  roll_13: assets/video/dice/grok-c6ac329a-1991-47a4-9cef-8e30d34b9d0b.mp4
+phases:
+- dormant
+- stirring
+- spreading
+- consuming
+generated_by: build_asset_manifest.py

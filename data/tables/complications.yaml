@@ -1,0 +1,8 @@
+# Natural 1 complications (d20) — engine picks one; LLM narrates result only
+complications:
+  - id: slip
+    text: "You slip — lose next action stamina."
+  - id: break_tool
+    text: "Tool snags — craft check +2 DC next attempt."
+  - id: alert_npc
+    text: "NPC notices something off — reputation -1 local."

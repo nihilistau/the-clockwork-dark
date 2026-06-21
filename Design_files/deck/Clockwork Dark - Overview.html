@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Clockwork Dark — Overview</title>
+<link rel="stylesheet" href="../styles.css" />
+<script src="deck-stage.js"></script>
+<style>
+  html, body { margin: 0; background: #060806; }
+  /* deck-local design language (Ash & Thorn) */
+  :root{
+    --ink:#e9e2cd; --body:#d6cfbd; --body2:rgba(226,220,201,.74);
+    --brass:#be863f; --candle:#e8c47a; --candle2:#d6b26c;
+    --muted:rgba(214,206,184,.52); --line:rgba(214,178,108,.18);
+    --panel: linear-gradient(180deg,#0e1311,#0a0d0b);
+  }
+  .s{ position:relative; width:1920px; height:1080px; overflow:hidden;
+      background:radial-gradient(120% 100% at 50% 0%, #10161a, #07090a 72%);
+      color:var(--ink); font-family:"Source Sans 3",system-ui,sans-serif; }
+  .pad{ position:absolute; inset:0; padding:96px 112px; box-sizing:border-box; display:flex; flex-direction:column; }
+  .kick{ font-family:"Source Sans 3",sans-serif; font-size:24px; font-weight:700; letter-spacing:.28em;
+         text-transform:uppercase; color:var(--brass); margin:0 0 22px; display:flex; align-items:center; gap:14px; }
+  .kick img{ width:26px; filter:brightness(1.4) drop-shadow(0 0 10px rgba(190,118,58,.5)); }
+  h1{ font-family:"EB Garamond",Georgia,serif; font-weight:500; font-size:104px; line-height:1.02;
+      letter-spacing:-.01em; margin:0; color:var(--ink); }
+  h2{ font-family:"EB Garamond",Georgia,serif; font-weight:500; font-size:74px; line-height:1.04; margin:0; color:var(--ink); }
+  .lede{ font-family:"EB Garamond",Georgia,serif; font-size:34px; line-height:1.5; color:var(--body2);
+         max-width:1180px; margin:26px 0 0; text-wrap:pretty; }
+  .body{ font-family:"EB Garamond",Georgia,serif; font-size:29px; line-height:1.55; color:var(--body2); text-wrap:pretty; }
+  .mono{ font-family:"IBM Plex Mono",monospace; }
+  .tag{ font-family:"IBM Plex Mono",monospace; font-size:19px; letter-spacing:.06em; text-transform:uppercase; color:var(--candle2); }
+  .tick{ height:0; border-top:2px dashed rgba(214,178,108,.4); margin:0; }
+  .imgbox{ position:relative; overflow:hidden; border:1px solid var(--line); background:#0c0f0d; }
+  .imgbox img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .imgbox .vig{ position:absolute; inset:0; box-shadow:inset 0 0 80px 14px rgba(6,9,6,.72); pointer-events:none; }
+  .cap{ position:absolute; left:18px; bottom:14px; font-family:"EB Garamond",serif; font-style:italic; font-size:24px;
+        color:rgba(242,232,213,.94); text-shadow:0 1px 4px #000; }
+  .foot{ position:absolute; left:112px; bottom:54px; font-family:"IBM Plex Mono",monospace; font-size:18px;
+         letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .pageno{ position:absolute; right:112px; bottom:54px; font-family:"IBM Plex Mono",monospace; font-size:18px; color:var(--muted); }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- 1 · TITLE -->
+  <section data-label="Title" data-screen-label="01" class="s">
+    <img src="../assets/art/menu-screen.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 36%, rgba(6,8,6,.32), rgba(5,7,5,.86) 96%);"></div>
+    <div class="pad" style="justify-content:center;align-items:center;text-align:center;">
+      <div class="tag" style="color:var(--brass);letter-spacing:.34em;">A local-first AI roleplaying game</div>
+      <img src="../assets/wordmark.svg" alt="The Clockwork Dark" style="width:760px;margin:30px 0 22px;filter:drop-shadow(0 4px 22px rgba(0,0,0,.7));" />
+      <div class="lede" style="font-style:italic;color:rgba(232,224,205,.86);max-width:1100px;">
+        A frontier village at the edge of an old forest, lit by tallow and mistrust — where a slow corruption of gears in wheat creeps inward, and the one who watches you may be a cat, a wanderer, or a child.
+      </div>
+      <div class="tick" style="width:300px;margin-top:40px;"></div>
+      <div class="tag" style="margin-top:26px;">Brand &amp; World Overview · v0.1</div>
+    </div>
+  </section>
+
+  <!-- 2 · PREMISE -->
+  <section data-label="Premise" data-screen-label="02" class="s">
+    <div style="position:absolute;right:0;top:0;width:760px;height:100%;">
+      <div class="imgbox" style="width:100%;height:100%;border-width:0 0 0 2px;">
+        <img src="../assets/art/scenes/forest-mushroom-ring.jpg" alt="forest clearing" />
+        <div class="vig"></div>
+      </div>
+      <div style="position:absolute;left:0;top:0;bottom:0;width:240px;background:linear-gradient(90deg,#07090a,transparent);"></div>
+    </div>
+    <div class="pad" style="width:1140px;">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The premise</div>
+      <h1>You wake where the<br />wheat turns wrong.</h1>
+      <p class="lede">
+        The player wakes in a forest clearing at the margin of Edgewood — a poor-but-proud frontier village — while an ambiguous <em>Assistant</em> watches. It is never a tutorial fairy. It begins as a barn cat and grows into something robed and certain.
+      </p>
+      <p class="body" style="max-width:1040px;margin-top:24px;">
+        The world narrates; it never instructs. Dread arrives in small concrete images, not adjectives: stillborn lambs with brass teeth, bread that rings when it cracks, clocks that tick hours that never were.
+      </p>
+    </div>
+    <div class="foot">The Clockwork Dark · Premise</div>
+    <div class="pageno">02</div>
+  </section>
+
+  <!-- 3 · THE WORLD -->
+  <section data-label="The Margin" data-screen-label="03" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The margin</div>
+      <h2>Edgewood — the last comfortable village.</h2>
+      <p class="body" style="max-width:1280px;margin-top:14px;">
+        Timber frames lean together around a communal stone oven. Traders pass twice a season; a shrine to unnamed saints never lacks a candle. Beyond the birch, the roads begin to change when no one is watching.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:38px;flex:1;">
+        <div class="imgbox"><img src="../assets/art/scenes/forest-mushroom-ring.jpg" alt="" /><div class="vig"></div><div class="cap">The Forest Clearing</div></div>
+        <div class="imgbox"><img src="../assets/art/scenes/town-scene.jpg" alt="" /><div class="vig"></div><div class="cap">Edgewood Square</div></div>
+        <div class="imgbox"><img src="../assets/art/scenes/bakery.jpg" alt="" /><div class="vig"></div><div class="cap">The Hearth Bakery</div></div>
+        <div class="imgbox"><img src="../assets/art/scenes/closing-town-gates.jpg" alt="" /><div class="vig"></div><div class="cap">Millhaven Gate</div></div>
+      </div>
+    </div>
+    <div class="pageno">03</div>
+  </section>
+
+  <!-- 4 · THE FOUR EVIL PHASES -->
+  <section data-label="Evil Phases" data-screen-label="04" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The four evil phases</div>
+      <h2>A corruption that ramps, never announces.</h2>
+      <p class="body" style="max-width:1300px;margin-top:14px;">The Clockwork Dark is not a demon you can banish — it is a metastasizing logic. The whole interface re-tints from one hidden phase, cozy to clockwork.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:34px;flex:1;">
+        <div style="display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);">
+          <div style="height:8px;background:#7c5e34;"></div>
+          <div class="imgbox" style="border:0;flex:1;"><img src="../assets/art/scenes/forest-mushroom-ring.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:20px 22px 24px;">
+            <div class="tag" style="color:#e8c47a;">Dormant</div>
+            <div class="body" style="font-size:25px;margin-top:8px;">Warm linen, moss, honey light. A clean journal — no corruption motifs.</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);">
+          <div style="height:8px;background:#be863f;"></div>
+          <div class="imgbox" style="border:0;flex:1;"><img src="../assets/art/scenes/town-scene.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:20px 22px 24px;">
+            <div class="tag" style="color:#d6b26c;">Stirring</div>
+            <div class="body" style="font-size:25px;margin-top:8px;">Brass accents; shadows too long. A tick motif enters the dividers.</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid rgba(143,174,90,.4);background:var(--panel);">
+          <div style="height:8px;background:#8fae5a;"></div>
+          <div class="imgbox" style="border:0;flex:1;"><img src="../assets/art/scenes/clockwork-wheatfield.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:20px 22px 24px;">
+            <div class="tag" style="color:#9fbf63;">Spreading</div>
+            <div class="body" style="font-size:25px;margin-top:8px;">Desaturated greens; sickly chartreuse. The weather widget reads wrong.</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid rgba(143,174,90,.5);background:var(--panel);">
+          <div style="height:8px;background:#cdd24a;"></div>
+          <div class="imgbox" style="border:0;flex:1;"><img src="../assets/art/scenes/clockwork-tower.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:20px 22px 24px;">
+            <div class="tag" style="color:#cdd24a;">Consuming</div>
+            <div class="body" style="font-size:25px;margin-top:8px;">High contrast; clockwork filigree. Letterbox cutscenes; the UI stutters.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pageno">04</div>
+  </section>
+
+  <!-- 5 · THE ASSISTANT -->
+  <section data-label="The Assistant" data-screen-label="05" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The Assistant</div>
+      <h2>Never a tutorial fairy. Five faces, one intent.</h2>
+      <p class="body" style="max-width:1320px;margin-top:14px;">It begins as a cat and grows into a hooded figure whose robe reads its intent — white mercy, grey watching, red appetite, black the Clockwork Dark itself.</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:36px;flex:1;">
+        <div style="display:flex;flex-direction:column;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/souls/cat-assistant.jpg" alt="" style="object-position:center 28%;" /><div class="vig"></div></div>
+          <div class="tag" style="margin-top:12px;color:#e8c47a;">Cat</div>
+          <div class="body" style="font-size:22px;">Early game · lowest trust</div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/souls/assistant-mage.jpg" alt="" /><div class="vig"></div></div>
+          <div class="tag" style="margin-top:12px;color:#e8c47a;">Wanderer</div>
+          <div class="body" style="font-size:22px;">Grey cloak, face in shadow</div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/souls/child-assistant.jpg" alt="" /><div class="vig"></div></div>
+          <div class="tag" style="margin-top:12px;color:#e8c47a;">Child</div>
+          <div class="body" style="font-size:22px;">Draws gears in the dirt</div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/souls/tinker.jpg" alt="" /><div class="vig"></div></div>
+          <div class="tag" style="margin-top:12px;color:#e8c47a;">Tinker</div>
+          <div class="body" style="font-size:22px;">Overlaps Ilya — ambiguous</div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/souls/shadow-mage-assistant.jpg" alt="" /><div class="vig"></div></div>
+          <div class="tag" style="margin-top:12px;color:#e8c47a;">Reflection</div>
+          <div class="body" style="font-size:22px;">High Awareness · the wrong hour</div>
+        </div>
+      </div>
+    </div>
+    <div class="pageno">05</div>
+  </section>
+
+  <!-- 6 · THE CAST -->
+  <section data-label="The Cast" data-screen-label="06" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The souls of Edgewood</div>
+      <h2>Frontier means mixed travelers — drawn with respect.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:40px;flex:1;">
+        <div style="display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);">
+          <div class="imgbox" style="border:0;height:540px;"><img src="../assets/art/souls/cat-assistant.jpg" alt="" style="object-position:center 22%;" /><div class="vig"></div></div>
+          <div style="padding:22px 24px;">
+            <h2 style="font-size:42px;">Brindle</h2>
+            <div class="tag" style="margin-top:6px;">Barn cat · the Assistant's first face</div>
+            <p class="body" style="font-size:24px;margin-top:10px;">Too-knowing eyes, a curled tail, cute but uncanny. Sits at the square's edge and counts you.</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);">
+          <div class="imgbox" style="border:0;height:540px;"><img src="../assets/art/souls/tinker.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:22px 24px;">
+            <h2 style="font-size:42px;">Ilya of the Nine Pins</h2>
+            <div class="tag" style="margin-top:6px;">The tinker · curious, unsettling</div>
+            <p class="body" style="font-size:24px;margin-top:10px;">Nine brass pins in the scarf. Sells sympathy charms and maps of roads that shift when the wheat turns wrong.</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);">
+          <div class="imgbox" style="border:0;height:540px;"><img src="../assets/art/souls/child-assistant.jpg" alt="" /><div class="vig"></div></div>
+          <div style="padding:22px 24px;">
+            <h2 style="font-size:42px;">Wren</h2>
+            <div class="tag" style="margin-top:6px;">The gear-child · draws what's coming</div>
+            <p class="body" style="font-size:24px;margin-top:10px;">Charcoal on the fingers. Draws gears in the dirt; by morning they are gone. A quiet friend showed her how.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pageno">06</div>
+  </section>
+
+  <!-- 7 · THE INTERFACE -->
+  <section data-label="Interface" data-screen-label="07" class="s">
+    <div class="pad" style="width:1060px;">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The interface</div>
+      <h2>A traveler's journal crossed with a clockmaker's ledger.</h2>
+      <div style="margin-top:30px;display:flex;flex-direction:column;gap:20px;">
+        <div class="body" style="font-size:27px;"><span class="tag" style="color:var(--brass);">Second person</span> — narration addressed to “you”, quietly, like a journal someone else keeps about you.</div>
+        <div class="body" style="font-size:27px;"><span class="tag" style="color:var(--brass);">No AI-narrator labels</span> — no “Awareness 12%”, no chosen-one language. Hidden mechanics stay hidden until discovered in-world.</div>
+        <div class="body" style="font-size:27px;"><span class="tag" style="color:var(--brass);">Diegetic chrome</span> — a world clock header, a day · time · weather footer, iron rules, a brass edge on the Assistant's bubble.</div>
+        <div class="body" style="font-size:27px;"><span class="tag" style="color:var(--brass);">Show the wrongness in objects</span> — never announce it. Beauty and dread both arrive as small concrete things.</div>
+      </div>
+    </div>
+    <div style="position:absolute;right:112px;top:150px;width:680px;height:780px;display:flex;flex-direction:column;gap:10px;">
+      <div style="flex:none;height:54px;border:1px solid var(--line);background:linear-gradient(180deg,#0c0f0d,#0a0c0a);display:flex;align-items:center;justify-content:space-between;padding:0 18px;">
+        <span class="tag" style="font-size:16px;color:var(--ink);">Edgewood Square</span><span class="mono" style="color:var(--candle2);font-size:16px;">Day 12 · Evening</span>
+      </div>
+      <div style="flex:1;display:grid;grid-template-columns:150px 1fr 168px;gap:10px;min-height:0;">
+        <div style="border:1px solid var(--line);background:linear-gradient(180deg,#141a16,#0d120f);padding:14px;"><div class="tag" style="font-size:14px;color:var(--candle2);">Assistant</div></div>
+        <div style="display:flex;flex-direction:column;gap:10px;min-height:0;">
+          <div class="imgbox" style="flex:1;"><img src="../assets/art/scenes/town-scene.jpg" alt="" /><div class="vig"></div><div class="tag" style="position:absolute;top:10px;right:12px;font-size:13px;">ComfyUI still</div></div>
+          <div style="flex:none;border:1px solid var(--line);background:linear-gradient(180deg,#1c2019,#14160f);padding:14px 16px;">
+            <div class="body" style="font-size:21px;color:#e2dcc9;margin:0;">Maris hums at the bakery door, flour on her sleeves — to keep the gears quiet.</div>
+          </div>
+          <div style="flex:none;display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-family:'IBM Plex Mono';font-size:14px;color:var(--candle2);border:1px solid var(--line);padding:6px 12px;">1 · Walk toward smoke</span>
+            <span style="font-family:'IBM Plex Mono';font-size:14px;color:var(--candle2);border:1px solid var(--line);padding:6px 12px;">2 · Listen</span>
+          </div>
+        </div>
+        <div style="border:1px solid var(--line);background:linear-gradient(180deg,#181811,#12120b);padding:14px;"><div class="tag" style="font-size:14px;color:var(--candle2);">Traveler</div><div class="mono" style="font-size:15px;color:#cbbf9a;margin-top:10px;line-height:2;">HP 14/18<br />STA 6<br />GOLD 0.42</div></div>
+      </div>
+      <div style="flex:none;height:46px;border:1px solid var(--line);background:linear-gradient(0deg,#0c0f0d,#0a0c0a);display:flex;align-items:center;padding:0 18px;"><span class="mono" style="color:var(--candle2);font-size:15px;">Day 12 · Evening · Overcast</span></div>
+    </div>
+    <div class="pageno">07</div>
+  </section>
+
+  <!-- 8 · SCREENS -->
+  <section data-label="Screens" data-screen-label="08" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />Beyond the forest turn</div>
+      <h2>Domestic UI as polished as adventure UI.</h2>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:22px;margin-top:38px;flex:1;">
+        <div class="imgbox"><img src="../assets/art/scenes/bakery.jpg" alt="" /><div class="vig"></div><div class="cap">Maris's hearth — recipes &amp; a live oven timer</div></div>
+        <div class="imgbox"><img src="../assets/art/scenes/tinker-cart.jpg" alt="" /><div class="vig"></div><div class="cap">Barter — goods, never floating coin</div></div>
+        <div class="imgbox"><img src="../assets/art/scenes/closing-town-gates.jpg" alt="" /><div class="vig"></div><div class="cap">Millhaven — the cold militia gate</div></div>
+      </div>
+      <p class="body" style="margin-top:26px;max-width:1300px;">Trade is a list of honest goods in copper. The shrine mural paints the corruption one fragment per phase. The notice board carries rumors that arrive small and concrete — the dread is in the objects.</p>
+    </div>
+    <div class="pageno">08</div>
+  </section>
+
+  <!-- 9 · DESIGN SYSTEM -->
+  <section data-label="Design System" data-screen-label="09" class="s">
+    <div class="pad">
+      <div class="kick"><img src="../assets/gear-motif.svg" alt="" />The design system</div>
+      <h2>Ash &amp; Thorn — worn, quiet, and slowly wrong.</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:40px;flex:1;">
+        <div>
+          <div class="tag" style="color:var(--brass);">Color — lit by tallow</div>
+          <div style="display:flex;gap:14px;margin-top:18px;">
+            <div style="flex:1;"><div style="height:96px;background:#0f1513;border:1px solid var(--line);"></div><div class="mono" style="font-size:16px;color:var(--muted);margin-top:8px;">Forest dark</div></div>
+            <div style="flex:1;"><div style="height:96px;background:#be863f;"></div><div class="mono" style="font-size:16px;color:var(--muted);margin-top:8px;">Tinker brass</div></div>
+            <div style="flex:1;"><div style="height:96px;background:#e8c47a;"></div><div class="mono" style="font-size:16px;color:var(--muted);margin-top:8px;">Tallow</div></div>
+            <div style="flex:1;"><div style="height:96px;background:#8fae5a;"></div><div class="mono" style="font-size:16px;color:var(--muted);margin-top:8px;">Corruption</div></div>
+            <div style="flex:1;"><div style="height:96px;background:#e9e2cd;"></div><div class="mono" style="font-size:16px;color:var(--muted);margin-top:8px;">Linen</div></div>
+          </div>
+          <div class="tag" style="color:var(--brass);margin-top:42px;">Motif — woodcut, not icon clutter</div>
+          <div style="display:flex;align-items:center;gap:28px;margin-top:18px;">
+            <img src="../assets/gear-motif.svg" alt="" style="width:96px;filter:brightness(1.3) drop-shadow(0 0 12px rgba(190,118,58,.45));" />
+            <div style="flex:1;border-top:3px dashed rgba(214,178,108,.5);"></div>
+            <div class="body" style="font-size:23px;max-width:300px;">The gear is the one true glyph; the tick divider intensifies as phases advance.</div>
+          </div>
+        </div>
+        <div>
+          <div class="tag" style="color:var(--brass);">Type — four deliberate voices</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:22px;">
+            <div style="border-bottom:1px solid var(--line);padding-bottom:18px;">
+              <div style="font-family:'EB Garamond',serif;font-size:46px;color:var(--ink);">The forest clearing is generous but not tame.</div>
+              <div class="mono" style="font-size:16px;color:var(--muted);margin-top:6px;">EB Garamond · narration</div>
+            </div>
+            <div style="border-bottom:1px solid var(--line);padding-bottom:18px;">
+              <div style="font-family:'Source Sans 3',sans-serif;font-weight:700;letter-spacing:.14em;font-size:24px;color:var(--candle2);">INVENTORY · STAMINA · HP</div>
+              <div class="mono" style="font-size:16px;color:var(--muted);margin-top:6px;">Source Sans 3 · chrome &amp; labels</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size:30px;color:var(--candle);">d20: 14 + 2 = 16 vs DC 13 — Success</div>
+              <div class="mono" style="font-size:16px;color:var(--muted);margin-top:6px;">IBM Plex Mono · stats &amp; dice</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pageno">09</div>
+  </section>
+
+  <!-- 10 · CLOSING -->
+  <section data-label="Closing" data-screen-label="10" class="s">
+    <img src="../assets/art/scenes/clockwork-tower.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 30%, rgba(6,8,6,.42), rgba(5,7,5,.9) 92%);"></div>
+    <div class="pad" style="justify-content:center;align-items:center;text-align:center;">
+      <img src="../assets/gear-motif.svg" alt="" style="width:80px;filter:brightness(1.3) drop-shadow(0 0 16px rgba(190,118,58,.5));margin-bottom:30px;" />
+      <h1 style="font-size:96px;">“Lit by tallow and mistrust.”</h1>
+      <p class="lede" style="font-style:italic;text-align:center;max-width:1080px;">Beauty in bread steam and moss. Dread in a child's drawing of gears. The road has been counting toward something — and this is where the logic keeps its time.</p>
+      <div class="tick" style="width:300px;margin-top:40px;"></div>
+      <img src="../assets/wordmark.svg" alt="The Clockwork Dark" style="width:420px;margin-top:34px;opacity:.92;" />
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>
