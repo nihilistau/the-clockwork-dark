@@ -22,6 +22,14 @@ The format itself is defined in [[okfs-spec]]. The bundle is loaded by
 - **How we talk to the LLM today + where it's going** → [[lmstudio-integration-overview]]
 - **Native-LLM migration plan** (structured output, tool-calls, MCP) → [[llm-migration-plan]]
 
+## Runbooks (setup)
+- **Run on the networked beast** → [[run-on-the-beast]]
+- **ComfyUI image generation** → [[install-comfyui]]
+- **Voxtral TTS/ASR voice** → [[install-voxtral]]
+
+## Game lore
+- [[the-clockwork-dark]] · [[evil-phases]] · [[maris-hearth]]
+
 ## LM Studio reference (provider-agnostic)
 LM Studio is our current local backend; these concepts capture its capabilities,
 each with a "how The Clockwork Dark applies this" note so nothing hard-couples us
