@@ -13,9 +13,10 @@ file, traversed by following `[[slug]]` links. Agents and humans start here and
 read only what's relevant (progressive disclosure), not 3,000 lines at once.
 
 ## How to read this
-The format itself is defined in [[okfs-spec]]. The bundle is loaded by
-`engine/okfs/` (`OKFSBundle`), validated for frontmatter + link integrity, and
-(Phase 3) queried by the agents through a confidence cascade.
+The format itself is defined in [[okfs-spec]]; the project-wide convention (all
+docs, including the root agent guides, are OKFS) is [[okfs-conventions]]. The
+bundle is loaded by `engine/okfs/` (`OKFSBundle`), validated for frontmatter +
+link integrity, and queried by the agents through a confidence cascade.
 
 ## Start points
 - **What we're building** → [[clockwork-architecture]]
