@@ -16,13 +16,15 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
+from engine.agents.assistant_director import AssistantDirector
 from engine.agents.prompts import assistant_system_prompt
 from engine.agents.stream_processor import StreamProcessor
 from engine.agents.tool_dispatcher import execute_tool_calls
 from engine.config import get_config
-from engine.game.engine import GameEngine
+from engine.game.engine import GameEngine, set_active_engine
 from engine.media.stt import STTClient, transcribe_audio
 from engine.skills.builtin.assistant import ASSISTANT_FORMS, compute_hint_tier
+from engine.skills.registry import SKILL_REGISTRY
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +52,9 @@ class AssistantTurnResult:
     tool_receipts: list[dict[str, Any]] = field(default_factory=list)
     raw_llm: str = ""
     transcript: str = ""
+    intent: str = "quip"
+    gift: Optional[dict[str, Any]] = None
+    reliable: bool = True
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -60,6 +65,9 @@ class AssistantTurnResult:
             "hint_tier": self.hint_tier,
             "tool_receipts": self.tool_receipts,
             "transcript": self.transcript,
+            "intent": self.intent,
+            "gift": self.gift,
+            "reliable": self.reliable,
         }
 
 
@@ -141,6 +149,7 @@ class AssistantAgent:
         self._client = lms_client
         self._stt = stt_client or STTClient()
         self._rng = rng or random.Random()
+        self._director = AssistantDirector()
 
     def _infer(self, messages: list[dict[str, Any]]) -> str:
         """Call small-profile LLM via injectable fn or LMSClient."""
@@ -197,12 +206,12 @@ class AssistantAgent:
         form = mind.current_form
         voice_style = FORM_VOICE_STYLES.get(form, "whisper")
 
-        if not force_speak and not should_assistant_speak(
-            mind.help_probability,
-            self._rng,
-        ):
+        decision = self._director.decide(state, context=context, rng=self._rng)
+        if not force_speak and not decision.appear:
             logger.debug(
-                "[assistant] Silent turn (operation=run_turn, form=%s)", form
+                "[assistant] Indifferent (operation=run_turn, form=%s, score=%.2f)",
+                form,
+                decision.score,
             )
             return AssistantTurnResult(
                 text="",
@@ -210,7 +219,10 @@ class AssistantAgent:
                 voice_style=voice_style,
                 spoke=False,
                 hint_tier=hint_tier,
+                intent="silent",
             )
+        # The Assistant engaged this turn — record it for the cooldown signal.
+        state.flags["_assistant_last_turn"] = int(state.turn_number)
 
         messages = self._build_messages(context)
         try:
@@ -245,6 +257,21 @@ class AssistantAgent:
         )
         clean_text = tags.clean_text or text
 
+        # Director-driven gift — the right item at the right moment, engine-granted.
+        gift: Optional[dict[str, Any]] = None
+        if decision.intent == "gift" and decision.gift_item:
+            set_active_engine(self.engine)
+            gift_raw = SKILL_REGISTRY.invoke(
+                "assistant_gift",
+                item_id=decision.gift_item["id"],
+                item_name=decision.gift_item.get("name", ""),
+            )
+            tool_receipts.append(
+                {"skill": "assistant_gift", "result": json.loads(gift_raw), "success": True}
+            )
+            state.flags["_assistant_gift_turn"] = int(state.turn_number)
+            gift = decision.gift_item
+
         return AssistantTurnResult(
             text=clean_text,
             form=form,
@@ -253,6 +280,9 @@ class AssistantAgent:
             hint_tier=hint_tier,
             tool_receipts=tool_receipts,
             raw_llm=raw,
+            intent=decision.intent,
+            gift=gift,
+            reliable=decision.reliable,
         )
 
     def process_voice_input(

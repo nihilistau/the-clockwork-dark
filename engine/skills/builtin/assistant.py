@@ -202,3 +202,19 @@ def change_form(form: str) -> str:
             "form": target,
         }
     )
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Assistant gives the player an item at the right moment. Engine grants it; "
+        "the AssistantDirector decides when, not the LLM."
+    ),
+    category="GAME",
+    trigger=TRIGGER_OPTIONAL,
+)
+def assistant_gift(item_id: str, item_name: str = "") -> str:
+    """Director-driven gift — engine-authoritative inventory grant."""
+    engine = get_active_engine()
+    engine.add_item(item_id, item_name or item_id)
+    return json.dumps({"success": True, "item_id": item_id, "name": item_name or item_id})
