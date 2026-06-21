@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "42298f5aa6c1feaf",
+  "bundle_hash": "9fc82cb169ee4468",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "59c3e1188088d81f",
+      "hash": "708a1e8fe69c152b",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
@@ -86,6 +86,7 @@
         "the-harvest",
         "the-heartlands",
         "the-notice-board",
+        "the-reactive-world",
         "the-tinkers",
         "the-tinkers-questline",
         "the-two-powers",
@@ -638,13 +639,14 @@
       "type": "Lore"
     },
     {
-      "hash": "fa3660d12dab113a",
+      "hash": "ab2c09a2e6664181",
       "links": [
         "clockwork-engine",
         "doom-arcs",
         "ephemeral-challenges",
         "extending-the-engine",
         "the-notice-board",
+        "the-reactive-world",
         "turn-metrics"
       ],
       "slug": "systems-catalog",
@@ -756,6 +758,28 @@
       "type": "Lore"
     },
     {
+      "hash": "e1e69d060e53354b",
+      "links": [
+        "beneath-the-tunnels",
+        "doom-arcs",
+        "systems-catalog",
+        "the-harvest",
+        "the-notice-board"
+      ],
+      "slug": "the-reactive-world",
+      "tags": [
+        "world",
+        "doom",
+        "beats",
+        "discoveries",
+        "contracts",
+        "reactive",
+        "mechanics"
+      ],
+      "title": "The Reactive World",
+      "type": "Reference"
+    },
+    {
       "hash": "feca6036143d2fed",
       "links": [
         "maris-hearth",
@@ -835,5 +859,5 @@
       "type": "Metric"
     }
   ],
-  "count": 43
+  "count": 44
 }

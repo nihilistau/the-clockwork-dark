@@ -100,11 +100,20 @@ class DoomClock:
 
     @staticmethod
     def pending_beats(state: GameState) -> list[Beat]:
-        """Return newly-crossed beats (marks them seen). Crossing 1.0 ends the game."""
+        """Return newly-crossed beats (marks them seen). Crossing 1.0 ends the game.
+
+        Crossing a beat also applies its declarative *world effects* (flags,
+        discoveries, rumors, world_events) so the Dark's spread is tangible —
+        the tunnels opening unseals the hidden path, the board gains postings,
+        the village chatter turns. See ``engine/game/world_effects.py``.
+        """
+        from engine.game.world_effects import apply_beat_effects
+
         out: list[Beat] = []
         for beat in DOOM_BEATS:
             if state.evil_progress >= beat.threshold and beat.id not in state.doom_beats_seen:
                 state.doom_beats_seen.append(beat.id)
+                apply_beat_effects(state, beat.id)
                 out.append(beat)
                 if beat.id == "consumed":
                     state.ended = True

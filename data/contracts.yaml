@@ -2,6 +2,8 @@
 # take none and simply bake bread, or chase bounties against the Dark.
 # Fields: title, giver, kind (anti_dark|mundane|bounty), summary, location
 # (where it can be picked up), optional min_phase / min_awareness gates,
+# optional requires_flag (a Doom Clock beat flag, e.g. tunnels_open — the board
+# reacts as the Dark spreads; see data/world/doom_effects.yaml),
 # reward (effects: gold, engagement, awareness, hp, item{id,name}, reputation{npc:amt}).
 
 still_south_harvester:
@@ -81,3 +83,35 @@ ilya_4_what_ilya_is:
   min_phase: spreading
   min_awareness: 30
   reward: { gold: 0, engagement: 20, item: { id: ward_bell, name: Ward Bell }, reputation: { npc_ilya: 5 } }
+
+# --- World-reactive postings: the board responds as the Dark crosses beats -----
+# Gated on requires_flag (a Doom Clock beat flag from data/world/doom_effects.yaml).
+# Hidden until the world sign falls — the village does not post a watch for a
+# tunnel that has not yet opened. See [[the-reactive-world]].
+
+watch_the_walking_scarecrow:
+  title: "Watch: The Walking Scarecrow"
+  giver: npc_sera
+  kind: bounty
+  summary: "Sergeant Sera has nailed a fresh notice: the brass scarecrow has left its post and walks the east field. Track where it goes and put it down before it reaches the road."
+  location: edgewood_square
+  requires_flag: scarecrow_awake
+  reward: { gold: 14, engagement: 10, item: { id: brass_tooth, name: Brass Tooth }, reputation: { npc_sera: 3 } }
+
+tend_the_forest_margin:
+  title: "Tend the Forest Margin"
+  giver: npc_aldric
+  kind: anti_dark
+  summary: "Aldric the woodcutter will not work past the first birch — the clockwork-vines have reached the margin. Cut the filigree back and ward the trees so the village still has firewood for winter."
+  location: edgewood_square
+  requires_flag: vines_breached
+  reward: { gold: 6, engagement: 12, item: { id: ward_pin, name: Ward Pin }, reputation: { npc_aldric: 3 } }
+
+seal_the_tunnel:
+  title: "Seal the Tunnel"
+  giver: npc_greta
+  kind: anti_dark
+  summary: "Greta Moss stands at the square's edge and watches the ground. The tunnels under Edgewood have opened, breathing oil and old time. Go down the hidden path, find what holds the seam open, and shut it — or learn why it cannot be shut."
+  location: edgewood_square
+  requires_flag: tunnels_open
+  reward: { gold: 0, engagement: 18, item: { id: iron_key, name: Iron Key }, reputation: { npc_greta: 4 } }

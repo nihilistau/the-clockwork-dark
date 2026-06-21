@@ -36,6 +36,11 @@ prices in `data/economy.yaml`.
 back the slow darkness. *Arcs* (quiet_life→consumed) and once-only *beats* live
 in `engine/game/doom_clock.py`. See [[doom-arcs]].
 
+**The reactive world** — crossing a beat *changes the world*: flags, discoveries
+(the tunnels opening unseals the hidden path), rumors, and notice-board postings,
+all from `data/world/doom_effects.yaml` (`engine/game/world_effects.py`). The
+Dark's spread is something you walk into. See [[the-reactive-world]].
+
 **Ephemeral challenges** — `start_challenge(spec)` / `resolve_challenge(choice,
 answer)`. Kinds: skill_gauntlet, decision_tree, puzzle, dice_table
 (`engine/game/challenges.py`). The AI supplies structure; the engine adjudicates.

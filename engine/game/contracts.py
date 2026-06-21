@@ -59,6 +59,11 @@ def _gate_ok(state: GameState, spec: dict[str, Any]) -> bool:
         return False
     if state.awareness < float(spec.get("min_awareness", 0)):
         return False
+    # World-reactive gate: a posting can wait on a flag a Doom Clock beat sets
+    # (e.g. ``tunnels_open``) so the board responds as the Dark spreads.
+    req_flag = spec.get("requires_flag")
+    if req_flag and not state.flags.get(req_flag):
+        return False
     return True
 
 
