@@ -1,0 +1,60 @@
+# Crafting recipes (v0.2, PR14). Engine-authoritative: craft_item rolls a craft
+# check, consumes inputs, and grants the output. Input/output ids align with
+# data/economy.yaml so foraged/traded goods feed crafting, and outputs feed the
+# combat item-effect keywords (loaf/bread -> heal, charm/rune -> steady nerve,
+# tonic/potion -> stamina).
+#
+# Fields:
+#   name        display name
+#   station     location_id where it can be made, or "any"
+#   skill       stat governing the check (craft | focus)
+#   dc          difficulty class for the d20 craft check
+#   focus_cost  focus spent attempting (default 0)
+#   time_hours  world hours advanced on success (default 0)
+#   inputs      [{id, qty}] consumed on success
+#   output      {id, name, qty}
+
+herb_poultice:
+  name: Herb Poultice
+  station: any
+  skill: craft
+  dc: 9
+  time_hours: 1
+  inputs:
+    - { id: wild_herbs, qty: 2 }
+  output: { id: bandage_poultice, name: Bandage Poultice, qty: 1 }
+
+forest_tonic:
+  name: Forest Tonic
+  station: any
+  skill: craft
+  dc: 10
+  time_hours: 1
+  inputs:
+    - { id: wild_berry, qty: 1 }
+    - { id: wild_herbs, qty: 1 }
+  output: { id: forest_tonic, name: Forest Tonic, qty: 1 }
+
+hearth_loaf:
+  name: Hearth Loaf
+  station: edgewood_bakery
+  skill: craft
+  dc: 8
+  focus_cost: 0
+  time_hours: 1
+  inputs:
+    - { id: honeycomb, qty: 1 }
+    - { id: wild_berry, qty: 1 }
+  output: { id: loaf, name: Warm Loaf, qty: 1 }
+
+warding_charm:
+  name: Warding Charm
+  station: tinker_caravan
+  skill: focus
+  dc: 12
+  focus_cost: 2
+  time_hours: 2
+  inputs:
+    - { id: brass_filings, qty: 1 }
+    - { id: old_clock_part, qty: 1 }
+  output: { id: ward_charm, name: Warding Charm, qty: 1 }

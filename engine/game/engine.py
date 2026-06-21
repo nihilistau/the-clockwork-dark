@@ -220,6 +220,18 @@ class GameEngine:
 
         return combat_snapshot(self.state)
 
+    def craft_item(self, recipe_id: str) -> dict[str, Any]:
+        """Craft a recipe; engine owns the check and inventory math (v0.2)."""
+        from engine.game.crafting import craft_item
+
+        return craft_item(self.state, recipe_id).to_dict()
+
+    def list_recipes(self) -> list[dict[str, Any]]:
+        """Return recipe summaries, flagging which are craftable here & now."""
+        from engine.game.crafting import list_recipes
+
+        return list_recipes(self.state)
+
 
 # Module-level engine for skill handlers (set per request in PR5+)
 _active_engine: Optional[GameEngine] = None

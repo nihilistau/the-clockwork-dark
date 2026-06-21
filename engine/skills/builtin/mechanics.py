@@ -174,3 +174,30 @@ def query_combat_state() -> str:
     """Current encounter snapshot for narration/UI."""
     engine = get_active_engine()
     return json.dumps(engine.combat_state())
+
+
+@skill(
+    pack="clockwork",
+    description=(
+        "Craft a recipe from the player's inventory (baking, herbalism, tinkering). "
+        "Engine consumes inputs and grants the output. Pass recipe_id."
+    ),
+    category="GAME",
+    trigger="optional",
+)
+def craft_item(recipe_id: str) -> str:
+    """Crafting via engine (v0.2)."""
+    engine = get_active_engine()
+    return json.dumps(engine.craft_item(recipe_id))
+
+
+@skill(
+    pack="clockwork",
+    description="List craftable recipes and whether each can be made here & now.",
+    category="GAME",
+    trigger="optional",
+)
+def list_recipes() -> str:
+    """Recipe list for the crafting UI."""
+    engine = get_active_engine()
+    return json.dumps(engine.list_recipes())
