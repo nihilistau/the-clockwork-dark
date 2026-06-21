@@ -192,6 +192,24 @@ def run_turn(
             {"url": milestone_job.url, "payload": milestone_job.payload}
         )
 
+    # Doom Clock: surface newly-crossed world signs; fire their cutscenes; end on consumed.
+    from engine.game.doom_clock import DoomClock
+    from engine.media.cutscene import CutsceneRunner
+
+    new_beats = DoomClock.pending_beats(state)
+    for beat in new_beats:
+        if beat.cutscene_id:
+            job = CutsceneRunner().enqueue_cutscene(beat.cutscene_id, state)
+            if job is not None:
+                storyteller_result.media.setdefault("cutscenes", []).append(
+                    {"url": job.url, "payload": job.payload}
+                )
+        if beat.id == "consumed":
+            storyteller_result.narration = (
+                (storyteller_result.narration or "").rstrip() + "\n\n" + beat.text
+            )
+    doom_snapshot = DoomClock.snapshot(state)
+
     scene_meta = place_metadata(state.location_id)
     loc_meta = location_metadata(state.location_id)
     scene_image = scene_meta.get("image_url", "") or resolve_location_image(state.location_id) or ""
@@ -204,6 +222,8 @@ def run_turn(
         "evaluation": storyteller_result.evaluation.to_dict(),
         "media": storyteller_result.media,
         "governance": storyteller_result.governance,
+        "doom": doom_snapshot,
+        "doom_beats": [{"id": b.id, "text": b.text} for b in new_beats],
         "assistant": assistant_result.to_dict(),
         "scene": _scene_payload(state, scene_meta, scene_image, loc_meta),
     }

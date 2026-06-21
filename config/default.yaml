@@ -92,6 +92,7 @@ paths:
 comms:
   interceptors:                 # PRE prompt-shapers, run in priority order
     - LoreInjectInterceptor     # priority 6  — inject canonical RAG lore
+    - DoomBeatInterceptor       # priority 15 — doom arc + latest world sign
     - EvilPhaseTone             # priority 20 — phase-appropriate tone
     - StorytellerMind           # priority 30 — agency knobs -> GM directives
     - AwarenessGateInterceptor  # priority 40 — strip spoilers below threshold (last)
