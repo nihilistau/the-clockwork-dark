@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div class="intro-overlay hidden" id="intro-overlay" role="dialog" aria-modal="true">
+  <div class="intro-overlay hidden" id="intro-overlay" role="dialog" aria-modal="true" aria-label="Intro cutscene" tabindex="-1">
     <video id="intro-video" controls playsinline></video>
     <button type="button" class="intro-skip" id="intro-skip">Skip</button>
   </div>
@@ -117,7 +117,7 @@
       <span class="footer-spacer"></span>
       <span class="phase-label">Evil phase</span>
       <div class="phase-chips" id="phase-chips" role="group" aria-label="Evil phase (display only)"></div>
-      <button type="button" class="mic-btn" id="mic-btn" title="Push to talk (stub)">🎤</button>
+      <button type="button" class="mic-btn" id="mic-btn" title="Voice input — not yet available" disabled aria-disabled="true">🎤</button>
       <span class="connection-status" id="connection-status">Connecting…</span>
     </footer>
   </div>
@@ -127,20 +127,21 @@
     <p class="dice-line" id="dice-line"></p>
   </div>
 
-  <div class="doom-toast hidden" id="doom-toast" aria-live="assertive" role="status">
+  <div class="doom-toast hidden" id="doom-toast" aria-live="polite" role="status">
     <span class="doom-toast-kicker" id="doom-toast-kicker">A world sign</span>
     <p class="doom-toast-text" id="doom-toast-text"></p>
   </div>
 
-  <div class="doom-end hidden" id="doom-end" role="dialog" aria-modal="true" aria-labelledby="doom-end-title">
+  <div class="doom-end hidden" id="doom-end" role="dialog" aria-modal="true" aria-labelledby="doom-end-title" tabindex="-1">
     <div class="doom-end-sheet">
       <span class="doom-end-glyph" id="doom-end-glyph">✶</span>
       <h2 class="doom-end-title" id="doom-end-title">The last clock-stroke</h2>
       <p class="doom-end-text" id="doom-end-text"></p>
+      <button type="button" class="doom-end-close" id="doom-end-close">Close</button>
     </div>
   </div>
 
-  <div class="overlay-panel hidden" id="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+  <div class="overlay-panel hidden" id="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title" tabindex="-1">
     <div class="overlay-backdrop" id="overlay-backdrop"></div>
     <div class="overlay-sheet" id="overlay-sheet">
       <header class="overlay-header">
@@ -151,7 +152,7 @@
     </div>
   </div>
 
-  <div class="cutscene-overlay hidden" id="cutscene-overlay" role="dialog" aria-modal="true">
+  <div class="cutscene-overlay hidden" id="cutscene-overlay" role="dialog" aria-modal="true" aria-label="Cutscene" tabindex="-1">
     <div class="cutscene-letterbox">
       <video id="cutscene-video" muted playsinline></video>
       <div class="cutscene-bars cutscene-bars--top"></div>
@@ -165,6 +166,7 @@
   <script>
     window.CLOCKWORK_DESIGN_ENABLED = {{ "true" if design_enabled else "false" }};
   </script>
+  <script src="/static/js/clockwork-helpers.js"></script>
   <script src="/static/js/clockwork.js"></script>
 </body>
 </html>

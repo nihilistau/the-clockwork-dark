@@ -51,6 +51,9 @@ config/local.yaml
 /cw-start-screen*.png
 /cw-*.png
 
+# ---- Node (frontend test harness) ----
+frontend-tests/node_modules/
+
 # ---- OS / editor cruft ----
 .DS_Store
 Thumbs.db

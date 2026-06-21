@@ -65,6 +65,64 @@
   const contractSlate = document.getElementById("contract-slate");
   const contractList = document.getElementById("contract-list");
 
+  // Pure presentation helpers live in clockwork-helpers.js (loaded first) so the
+  // vitest harness can unit-test them. Fall back to identity-ish stubs only if
+  // that script failed to load, so the UI never hard-crashes on a missing dep.
+  const _H = (typeof window !== "undefined" && window.ClockworkHelpers) || {};
+  const escapeHtml = _H.escapeHtml || ((s) => String(s == null ? "" : s));
+  const challengeView = _H.challengeView || ((ch) => ({
+    kind: String((ch && ch.kind) || "challenge"), text: (ch && ch.text) || "",
+    options: [], answerRequired: false, step: 0, total: 0, meta: "",
+  }));
+
+  // --- a11y: modal dialog focus management -----------------------------
+  // Open dialogs are stacked; Escape closes the topmost, Tab is trapped within
+  // it, focus moves in on open and is restored to the opener on close.
+  const _openDialogs = [];
+  function _focusables(el) {
+    return Array.from(
+      el.querySelectorAll(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((n) => !n.hasAttribute("disabled") && n.offsetParent !== null);
+  }
+  function openDialog(el) {
+    if (!el) return;
+    el.classList.remove("hidden");
+    if (_openDialogs.some((e) => e.el === el)) return; // already open: don't re-stack/steal focus
+    const opener = document.activeElement;
+    _openDialogs.push({ el, opener });
+    const f = _focusables(el);
+    try { (f[0] || el).focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeDialog(el) {
+    if (!el) return;
+    el.classList.add("hidden");
+    const idx = _openDialogs.map((e) => e.el).lastIndexOf(el);
+    if (idx === -1) return;
+    const entry = _openDialogs.splice(idx, 1)[0];
+    const opener = entry && entry.opener;
+    if (opener && typeof opener.focus === "function") {
+      try { opener.focus({ preventScroll: true }); } catch (e) {}
+    }
+  }
+  document.addEventListener("keydown", (ev) => {
+    if (!_openDialogs.length) return;
+    const top = _openDialogs[_openDialogs.length - 1].el;
+    if (ev.key === "Escape") {
+      ev.preventDefault();
+      closeDialog(top);
+    } else if (ev.key === "Tab") {
+      const f = _focusables(top);
+      if (!f.length) { ev.preventDefault(); try { top.focus(); } catch (e) {} return; }
+      const first = f[0], last = f[f.length - 1];
+      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+      else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    }
+  });
+  const doomEndClose = document.getElementById("doom-end-close");
+  if (doomEndClose) doomEndClose.addEventListener("click", () => closeDialog(doomEnd));
+
   const PHASES = ["dormant", "stirring", "spreading", "consuming"];
   const WEATHER = ["Overcast", "Mist", "Clear", "Rain"];
   const DEFAULT_ARCHETYPES = {
@@ -220,7 +278,7 @@
     if (doomEndTitle) doomEndTitle.textContent = title;
     if (doomEndText) doomEndText.textContent = text;
     doomEnd.className = "doom-end" + (mod ? " " + mod : "");
-    doomEnd.classList.remove("hidden");
+    openDialog(doomEnd);
   }
 
   function showDoomToast(beats) {
@@ -320,12 +378,12 @@
       assetManifest?.intro?.video_url;
     if (!url) return;
     introVideo.src = url;
-    introOverlay.classList.remove("hidden");
+    openDialog(introOverlay);
     introVideo.play().catch(() => {});
   }
 
   function hideIntro() {
-    introOverlay.classList.add("hidden");
+    closeDialog(introOverlay);
     introVideo.pause();
     introVideo.removeAttribute("src");
   }
@@ -382,7 +440,7 @@
 
   function hideOverlay() {
     activeOverlay = "";
-    if (overlayPanel) overlayPanel.classList.add("hidden");
+    closeDialog(overlayPanel);
     if (overlayBody) overlayBody.innerHTML = "";
   }
 
@@ -406,7 +464,7 @@
 
     if (overlayKey === "challenge") {
       renderChallengeBody(scene?.challenge);
-      overlayPanel.classList.remove("hidden");
+      openDialog(overlayPanel);
       return;
     }
 
@@ -496,54 +554,11 @@
     overlayBody.querySelectorAll("[data-overlay-action='close']").forEach((btn) => {
       btn.addEventListener("click", hideOverlay);
     });
-    overlayPanel.classList.remove("hidden");
+    openDialog(overlayPanel);
   }
 
-  function escapeHtml(s) {
-    return String(s == null ? "" : s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
-  // Derive a read-only display from the active challenge dict (internal shape from
-  // start_challenge, or the ChallengeResult.to_dict shape). Never throws on a partial.
-  function challengeView(ch) {
-    const kind = String(ch.kind || "challenge");
-    let text = ch.text || "";
-    let options = Array.isArray(ch.options) ? ch.options.slice() : [];
-    let answerRequired = !!ch.answer_required;
-    let step = Number.isFinite(ch.step) ? ch.step : 0;
-    let total =
-      Number.isFinite(ch.total_steps) ? ch.total_steps :
-      Array.isArray(ch.steps) ? ch.steps.length : 0;
-    let meta = ch.message || "";
-
-    if (kind === "skill_gauntlet" && Array.isArray(ch.steps) && ch.steps.length) {
-      const cur = ch.steps[Math.min(step, ch.steps.length - 1)] || {};
-      if (!text) text = cur.text || "";
-      if (!meta && (cur.skill || cur.dc != null)) {
-        meta = `${cur.skill || "?"} · DC ${cur.dc != null ? cur.dc : "?"}`;
-      }
-      if (!options.length) options = [{ id: "attempt", text: "Attempt it" }];
-    } else if (kind === "decision_tree" && ch.nodes && ch.current) {
-      const node = ch.nodes[ch.current] || {};
-      if (!text) text = node.text || "";
-      if (!options.length) {
-        options = (node.options || []).map((o) => ({ id: o.id, text: o.text }));
-      }
-    } else if (kind === "puzzle") {
-      answerRequired = true;
-      if (!text) text = ch.prompt || ch.title || "";
-      if (!meta && ch.attempts_left != null) meta = `${ch.attempts_left} attempts left`;
-    } else if (kind === "dice_table") {
-      if (!text) text = ch.prompt || ch.title || "";
-      if (!options.length) options = [{ id: "roll", text: "Roll" }];
-    }
-
-    return { kind, text, options, answerRequired, step, total, meta };
-  }
+  // escapeHtml + challengeView now live in clockwork-helpers.js (see the const
+  // bindings near the top) so the vitest harness can unit-test them.
 
   function renderChallengeBody(ch) {
     if (!overlayBody) return;
@@ -758,7 +773,7 @@
   }
 
   function hideCutscene() {
-    cutsceneOverlay.classList.add("hidden");
+    closeDialog(cutsceneOverlay);
     cutsceneVideo.pause();
     cutsceneVideo.removeAttribute("src");
     clearTimeout(cutsceneTimer);
@@ -772,7 +787,7 @@
     const captions = data.captions || [];
     captionIndex = 0;
     cutsceneCaption.textContent = captions[0] || "";
-    cutsceneOverlay.classList.remove("hidden");
+    openDialog(cutsceneOverlay);
     cutsceneVideo.play().catch(() => {});
 
     if (captions.length > 1) {
