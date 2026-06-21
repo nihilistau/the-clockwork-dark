@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import time
 import uuid
 from typing import Any, Callable, Generator, Optional
@@ -39,7 +40,12 @@ class LMSClient:
         cfg = get_config()
         self.base_url = (base_url or cfg.get("lmstudio.base_url", "http://localhost:1234/v1")).rstrip("/")
         self.timeout = timeout
-        self.api_key = api_key or cfg.get("lmstudio.api_key", "") or ""
+        self.api_key = (
+            api_key
+            or cfg.get("lmstudio.api_key", "")
+            or os.environ.get("LMSTUDIO_API_KEY", "")
+            or ""
+        )
         headers: dict[str, str] = {}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
