@@ -36,3 +36,48 @@ tinkers_lost_cog:
   summary: "Ilya the tinker lost a brass cog on the forest path and would pay to have it found."
   location: tinker_caravan
   reward: { gold: 5, item: { id: old_clock_part, name: Old Clock Part }, reputation: { npc_ilya: 2 } }
+
+# --- The Tinker's Reckoning: Ilya's questline (Assistant-as-tinker chain) -------
+# A short multi-step arc from Ilya of the Nine Pins — who is, or may be, the
+# Assistant wearing a tinker's face (see [[the-tinkers-questline]], [[the-two-powers]]).
+# Steps gate by min_awareness / min_phase so they unlock in rough order as the
+# player notices more; the Storyteller narrates the thread and calls
+# complete_contract when each objective is genuinely met. Rewards are engine-granted.
+# Capstone yields a real anti-Dark tool (a sympathy lamp) and engagement.
+
+ilya_1_gather_filings:
+  title: "Ilya's Errand: Brass Filings"
+  giver: npc_ilya
+  kind: mundane
+  summary: "Ilya wants a pouch of brass filings — the curls the corruption sheds where it has passed. 'For a lamp I am building. You'll see.' Gather them from the wilder roads and bring them back."
+  location: tinker_caravan
+  reward: { gold: 6, item: { id: brass_filings, name: Brass Filings }, reputation: { npc_ilya: 2 } }
+
+ilya_2_read_the_road:
+  title: "Ilya's Question: Read the Road"
+  giver: npc_ilya
+  kind: mundane
+  summary: "Now Ilya asks you to walk the Marches a little way and bring back what the milestones say — not the distance, the *other* number. 'I need to know how fast it is counting.' The tinker's smile does not quite reach the eyes."
+  location: tinker_caravan
+  min_awareness: 20
+  reward: { gold: 8, awareness: 4, item: { id: tinker_knowledge_map, name: Tinker Knowledge Map }, reputation: { npc_ilya: 3 } }
+
+ilya_3_the_naming_lamp:
+  title: "Ilya's Work: The Naming Lamp"
+  giver: npc_ilya
+  kind: anti_dark
+  summary: "Ilya has the filings and the count and now needs the last thing: a name spoken into the lamp's reservoir at a place the Dark has touched. 'Sympathy cuts both ways. We will teach the light to say *no*.' Light the lamp at a corrupted margin and bring it back lit."
+  location: tinker_caravan
+  min_phase: stirring
+  min_awareness: 25
+  reward: { gold: 10, engagement: 14, item: { id: sympathy_lamp, name: Sympathy Lamp }, reputation: { npc_ilya: 4 } }
+
+ilya_4_what_ilya_is:
+  title: "Ilya's Confidence: Nine Pins"
+  giver: npc_ilya
+  kind: anti_dark
+  summary: "With the lamp lit, Ilya tells you a little truth — or a little lie. 'I am not always from here. I have other roads, other faces. But I am fond of this small place, the way one is fond of a single candle.' The tinker presses a ward into your hand and asks one thing in return: hold the line a while longer. Confront the Dark once more, and report it done."
+  location: tinker_caravan
+  min_phase: spreading
+  min_awareness: 30
+  reward: { gold: 0, engagement: 20, item: { id: ward_bell, name: Ward Bell }, reputation: { npc_ilya: 5 } }

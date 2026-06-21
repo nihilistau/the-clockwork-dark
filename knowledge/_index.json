@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "aaf308d5c83cffa3",
+  "bundle_hash": "df21a2e96c714129",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -22,6 +22,27 @@
       "type": "Reference"
     },
     {
+      "hash": "777446295516ec02",
+      "links": [
+        "doom-arcs",
+        "sympathy-and-naming",
+        "the-clockwork-dark",
+        "the-convergence",
+        "the-harvest",
+        "the-heartlands"
+      ],
+      "slug": "beneath-the-tunnels",
+      "tags": [
+        "lore",
+        "tunnels",
+        "underground",
+        "corruption",
+        "barrows"
+      ],
+      "title": "Beneath the Tunnels",
+      "type": "Lore"
+    },
+    {
       "hash": "c99c612dba314719",
       "links": [
         "clockwork-engine",
@@ -42,9 +63,10 @@
       "type": "Reference"
     },
     {
-      "hash": "236126b689eb8027",
+      "hash": "f5494bf4d3053f3a",
       "links": [
         "agent-architecture",
+        "beneath-the-tunnels",
         "building-on-the-engine",
         "clockwork-architecture",
         "clockwork-engine",
@@ -58,9 +80,14 @@
         "okfs-conventions",
         "okfs-spec",
         "run-on-the-beast",
+        "sympathy-and-naming",
         "systems-catalog",
+        "the-convergence",
         "the-harvest",
+        "the-heartlands",
         "the-notice-board",
+        "the-tinkers",
+        "the-tinkers-questline",
         "the-two-powers",
         "turn-metrics"
       ],
@@ -129,8 +156,9 @@
       "type": "Runbook"
     },
     {
-      "hash": "7633463755a733f1",
+      "hash": "0a602498bf6aeae2",
       "links": [
+        "the-convergence",
         "the-harvest",
         "the-two-powers",
         "turn-metrics"
@@ -202,13 +230,15 @@
       "type": "Runbook"
     },
     {
-      "hash": "cde1b84aa69fd9e1",
+      "hash": "11e8bf8fcd9cf7a0",
       "links": [
         "agent-architecture",
+        "beneath-the-tunnels",
         "building-on-the-engine",
         "changelog",
         "clockwork-architecture",
         "clockwork-engine",
+        "doom-arcs",
         "evil-phases",
         "extending-the-engine",
         "install-comfyui",
@@ -231,8 +261,16 @@
         "okfs-conventions",
         "okfs-spec",
         "run-on-the-beast",
+        "sympathy-and-naming",
         "systems-catalog",
-        "the-clockwork-dark"
+        "the-clockwork-dark",
+        "the-convergence",
+        "the-harvest",
+        "the-heartlands",
+        "the-notice-board",
+        "the-tinkers",
+        "the-tinkers-questline",
+        "the-two-powers"
       ],
       "slug": "index",
       "tags": [
@@ -577,6 +615,29 @@
       "type": "Runbook"
     },
     {
+      "hash": "bca2a743b113f0ab",
+      "links": [
+        "beneath-the-tunnels",
+        "doom-arcs",
+        "the-clockwork-dark",
+        "the-convergence",
+        "the-harvest",
+        "the-tinkers",
+        "the-two-powers"
+      ],
+      "slug": "sympathy-and-naming",
+      "tags": [
+        "lore",
+        "magic",
+        "sympathy",
+        "naming",
+        "combat",
+        "mechanics"
+      ],
+      "title": "Sympathy & Naming",
+      "type": "Lore"
+    },
+    {
       "hash": "fa3660d12dab113a",
       "links": [
         "clockwork-engine",
@@ -599,10 +660,12 @@
       "type": "Reference"
     },
     {
-      "hash": "cc25b7d33330769e",
+      "hash": "e772c96c581c11af",
       "links": [
         "evil-phases",
-        "maris-hearth"
+        "maris-hearth",
+        "sympathy-and-naming",
+        "the-heartlands"
       ],
       "slug": "the-clockwork-dark",
       "tags": [
@@ -615,8 +678,30 @@
       "type": "Lore"
     },
     {
-      "hash": "6aa32ac8300662d8",
+      "hash": "33667ab8c63c7453",
       "links": [
+        "doom-arcs",
+        "sympathy-and-naming",
+        "the-clockwork-dark",
+        "the-harvest"
+      ],
+      "slug": "the-convergence",
+      "tags": [
+        "lore",
+        "finale",
+        "convergence",
+        "tower",
+        "reckoning",
+        "doom",
+        "mechanics"
+      ],
+      "title": "The Convergence",
+      "type": "Lore"
+    },
+    {
+      "hash": "00f5abd25e861fd6",
+      "links": [
+        "beneath-the-tunnels",
         "doom-arcs",
         "the-clockwork-dark"
       ],
@@ -629,6 +714,27 @@
         "tunnels"
       ],
       "title": "The Harvest \u2014 Signs of the Clockwork Dark",
+      "type": "Lore"
+    },
+    {
+      "hash": "5483dd7d7a99b53f",
+      "links": [
+        "doom-arcs",
+        "evil-phases",
+        "the-clockwork-dark",
+        "the-convergence",
+        "the-harvest",
+        "the-notice-board"
+      ],
+      "slug": "the-heartlands",
+      "tags": [
+        "lore",
+        "geography",
+        "heartlands",
+        "corruption",
+        "origin"
+      ],
+      "title": "The Heartlands",
       "type": "Lore"
     },
     {
@@ -650,12 +756,57 @@
       "type": "Lore"
     },
     {
-      "hash": "52fa32ac1f62c430",
+      "hash": "feca6036143d2fed",
+      "links": [
+        "maris-hearth",
+        "sympathy-and-naming",
+        "the-clockwork-dark",
+        "the-tinkers-questline",
+        "the-two-powers"
+      ],
+      "slug": "the-tinkers",
+      "tags": [
+        "lore",
+        "tinkers",
+        "npcs",
+        "ilya",
+        "sympathy",
+        "wards"
+      ],
+      "title": "The Tinkers",
+      "type": "Lore"
+    },
+    {
+      "hash": "e1fdf5f0056f6b79",
+      "links": [
+        "doom-arcs",
+        "sympathy-and-naming",
+        "the-clockwork-dark",
+        "the-convergence",
+        "the-notice-board",
+        "the-tinkers",
+        "the-two-powers"
+      ],
+      "slug": "the-tinkers-questline",
+      "tags": [
+        "lore",
+        "quest",
+        "contracts",
+        "ilya",
+        "assistant",
+        "tinkers"
+      ],
+      "title": "The Tinker's Reckoning \u2014 Ilya's Questline",
+      "type": "Lore"
+    },
+    {
+      "hash": "e1858756178599f8",
       "links": [
         "clockwork-architecture",
         "doom-arcs",
         "the-clockwork-dark",
-        "the-harvest"
+        "the-harvest",
+        "the-tinkers"
       ],
       "slug": "the-two-powers",
       "tags": [
@@ -684,5 +835,5 @@
       "type": "Metric"
     }
   ],
-  "count": 37
+  "count": 43
 }

@@ -20,7 +20,8 @@ weaves in as slow dread:
 - **Clockwork-vines** breach the forest margin, threading the birches with cold
   filigree that ticks where sap should run.
 - **The tunnels open.** Beneath the old stump a seam of worked stone yawns — the
-  passages under Edgewood, unsealed, breathing oil and old time. The way inward.
+  passages under Edgewood, unsealed, breathing oil and old time. The way inward
+  ([[beneath-the-tunnels]]).
 - **The tower assembles** on the horizon, gear fitting to gear, patient and
   enormous; it was not there yesterday.
 - **Consumed.** The last clock-stroke falls and Edgewood folds into mechanism —

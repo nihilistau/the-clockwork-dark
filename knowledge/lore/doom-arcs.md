@@ -20,7 +20,8 @@ Derived from evil_progress + awareness:
   warnings start to land.
 - **march** — the road inward opens (the Marches, Millhaven); the dark is
   undeniable to the watchful.
-- **convergence** — the late game; names are hunted, the horizon comes apart.
+- **convergence** — the late game; names are hunted, the horizon comes apart, and
+  the road's counting ends at the tower's foot in a last reckoning ([[the-convergence]]).
 - **consumed** — the terminal ending. If the player never pushes back, the world
   is taken anyway. The clock does not wait for a hero.
 

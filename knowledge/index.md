@@ -37,7 +37,9 @@ link integrity, and queried by the agents through a confidence cascade.
 - **Voxtral TTS/ASR voice** → [[install-voxtral]]
 
 ## Game lore
-- [[the-clockwork-dark]] · [[evil-phases]] · [[maris-hearth]]
+- **The world & the wound** → [[the-clockwork-dark]] · [[evil-phases]] · [[the-heartlands]] · [[the-harvest]] · [[beneath-the-tunnels]]
+- **Powers, people & craft** → [[the-two-powers]] · [[the-tinkers]] · [[maris-hearth]] · [[sympathy-and-naming]]
+- **Pacing, work & the end** → [[doom-arcs]] · [[the-notice-board]] · [[the-tinkers-questline]] · [[the-convergence]]
 
 ## LM Studio reference (provider-agnostic)
 LM Studio is our current local backend; these concepts capture its capabilities,
