@@ -23,6 +23,14 @@ link integrity, and queried by the agents through a confidence cascade.
 - **How we talk to the LLM today + where it's going** → [[lmstudio-integration-overview]]
 - **Native-LLM migration plan** (structured output, tool-calls, MCP) → [[llm-migration-plan]]
 
+## The Engine (more than this one game)
+- **The Clockwork Engine** (three layers, turn flow) → [[clockwork-engine]]
+- **Agent architecture** (the two powers, in depth) → [[agent-architecture]]
+- **Build your own game on it** (retargeting) → [[building-on-the-engine]]
+- **Systems catalog** (every system + its tools) → [[systems-catalog]]
+- **Extending the engine** (add a skill / interceptor / challenge / concept) → [[extending-the-engine]]
+- **Project log** → [[changelog]]
+
 ## Runbooks (setup)
 - **Run on the networked beast** → [[run-on-the-beast]]
 - **ComfyUI image generation** → [[install-comfyui]]

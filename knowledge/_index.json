@@ -1,18 +1,63 @@
 {
-  "bundle_hash": "918321d475fcf791",
+  "bundle_hash": "14b652565aa0160a",
   "concepts": [
     {
-      "hash": "721116161510acb6",
+      "hash": "6240301a2a6ea8ec",
       "links": [
+        "clockwork-engine",
+        "llm-migration-plan",
+        "lmstudio-integration-overview",
+        "the-two-powers"
+      ],
+      "slug": "agent-architecture",
+      "tags": [
+        "agents",
+        "storyteller",
+        "assistant",
+        "evaluator",
+        "governance",
+        "llm"
+      ],
+      "title": "Agent Architecture \u2014 the Two Powers",
+      "type": "Reference"
+    },
+    {
+      "hash": "c99c612dba314719",
+      "links": [
+        "clockwork-engine",
+        "extending-the-engine",
+        "okfs-conventions",
+        "okfs-spec"
+      ],
+      "slug": "building-on-the-engine",
+      "tags": [
+        "engine",
+        "okfs",
+        "reuse",
+        "retargeting",
+        "data",
+        "customization"
+      ],
+      "title": "Building Your Own Game on the Engine",
+      "type": "Reference"
+    },
+    {
+      "hash": "d4e75197eb53a8d4",
+      "links": [
+        "agent-architecture",
+        "building-on-the-engine",
         "clockwork-architecture",
+        "clockwork-engine",
         "doom-arcs",
         "ephemeral-challenges",
+        "extending-the-engine",
         "install-comfyui",
         "install-voxtral",
         "lmstudio-structured-output",
         "okfs-conventions",
         "okfs-spec",
         "run-on-the-beast",
+        "systems-catalog",
         "the-harvest",
         "the-notice-board",
         "the-two-powers",
@@ -44,6 +89,25 @@
         "governance"
       ],
       "title": "The Clockwork Dark \u2014 System Architecture",
+      "type": "Architecture"
+    },
+    {
+      "hash": "1043ee81fc75a93c",
+      "links": [
+        "agent-architecture",
+        "building-on-the-engine",
+        "clockwork-architecture",
+        "systems-catalog"
+      ],
+      "slug": "clockwork-engine",
+      "tags": [
+        "architecture",
+        "engine",
+        "agents",
+        "governance",
+        "reusable"
+      ],
+      "title": "The Clockwork Engine",
       "type": "Architecture"
     },
     {
@@ -98,10 +162,37 @@
       "type": "Lore"
     },
     {
-      "hash": "c4540a3cec333190",
+      "hash": "96f68e3dbad93e35",
       "links": [
+        "building-on-the-engine",
+        "clockwork-engine",
+        "ephemeral-challenges",
+        "okfs-spec",
+        "systems-catalog"
+      ],
+      "slug": "extending-the-engine",
+      "tags": [
+        "runbook",
+        "extending",
+        "skills",
+        "governance",
+        "challenges",
+        "okfs",
+        "developer"
+      ],
+      "title": "Extending the Engine",
+      "type": "Runbook"
+    },
+    {
+      "hash": "cde1b84aa69fd9e1",
+      "links": [
+        "agent-architecture",
+        "building-on-the-engine",
+        "changelog",
         "clockwork-architecture",
+        "clockwork-engine",
         "evil-phases",
+        "extending-the-engine",
         "install-comfyui",
         "install-voxtral",
         "llm-migration-plan",
@@ -122,6 +213,7 @@
         "okfs-conventions",
         "okfs-spec",
         "run-on-the-beast",
+        "systems-catalog",
         "the-clockwork-dark"
       ],
       "slug": "index",
@@ -467,6 +559,28 @@
       "type": "Runbook"
     },
     {
+      "hash": "fa3660d12dab113a",
+      "links": [
+        "clockwork-engine",
+        "doom-arcs",
+        "ephemeral-challenges",
+        "extending-the-engine",
+        "the-notice-board",
+        "turn-metrics"
+      ],
+      "slug": "systems-catalog",
+      "tags": [
+        "reference",
+        "systems",
+        "skills",
+        "tools",
+        "mechanics",
+        "data"
+      ],
+      "title": "Systems Catalog",
+      "type": "Reference"
+    },
+    {
       "hash": "cc25b7d33330769e",
       "links": [
         "evil-phases",
@@ -552,5 +666,5 @@
       "type": "Metric"
     }
   ],
-  "count": 31
+  "count": 36
 }
