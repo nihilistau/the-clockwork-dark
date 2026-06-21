@@ -41,8 +41,15 @@ To author a *new spec* of an existing kind, just pass a `start_challenge(spec)`
 object with `kind` in {skill_gauntlet, decision_tree, puzzle, dice_table}. To add
 a *new kind*, extend `KINDS`, the `start_challenge` validator, and a `_resolve_*`
 resolver in `engine/game/challenges.py`, applying outcomes through
-`_apply_effects` (engagement/item/hp/stamina/awareness). See
+`_apply_effects` (engagement / item / hp / stamina / awareness / `set_flags`). See
 [[ephemeral-challenges]].
+
+For a **discoverable, authored** challenge — a *set-piece* like the tunnel-mouth
+descent — add the spec to `data/set_pieces.yaml` with an optional
+`requires_flag` / `requires_discovery` gate, and present it with the
+`start_set_piece(id)` skill once the world has reached it (`engine/game/set_pieces.py`).
+Node `image` / `riddle` fields render as scene art + a parchment clue in the
+challenge overlay. See [[the-tunnel-mouth]] and [[the-reactive-world]].
 
 ## Add an OKFS concept
 

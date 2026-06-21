@@ -1,0 +1,88 @@
+# Authored set-pieces — discoverable, engine-adjudicated challenges.
+# Each entry is a normal start_challenge spec (kind: decision_tree | puzzle |
+# skill_gauntlet | dice_table) plus an optional gate (requires_flag /
+# requires_discovery) that keeps it sealed until the world has opened its ground.
+# Loaded by engine/game/set_pieces.py; started via the start_set_piece skill;
+# resolved by the standard challenge engine. Node `image` paths resolve under
+# /design/...; `riddle` renders as the parchment clue in the challenge overlay.
+# See [[the-tunnel-mouth]] and [[ephemeral-challenges]].
+
+tunnel_mouth:
+  kind: decision_tree
+  title: The Tunnel Mouth
+  requires_flag: tunnels_open        # set by the Doom Clock 'tunnels_open' beat
+  requires_discovery: hidden_path    # the same beat unseals the barrow road
+  start: descend
+  nodes:
+    descend:
+      image: assets/Tunnels/tunnel-entrance-reveal.jpg
+      text: "Beneath the old stump the seam has yawned into a ring of worked brass, big as a millwheel and faintly ticking. A lantern someone left behind still burns. The dark below breathes oil and old time."
+      riddle: "Carved around the ring, half-worn smooth: 'The low road keeps its head. The bright road keeps the hour. Follow the water down — never the gears.'"
+      options:
+        - { id: read, text: "Read the worn carvings around the ring", goto: read_carvings }
+        - { id: enter, text: "Climb down into the dark", goto: fork_ab }
+        - { id: leave, text: "Leave it be — climb back to the daylight", goto: t_retreat }
+    read_carvings:
+      image: assets/Tunnels/tunnel-entrance-closer.jpg
+      text: "You trace the worn lines. The makers warded this place against the very thing it now leads to. The low crawl bends away from the works; the rails run with the water; the bright tunnel keeps the Dark's hour. The wrong way, the carvings warn, is always the easy way."
+      riddle: "Hold it in mind: low, and with the water."
+      options:
+        - { id: down, text: "Climb down, the carvings in mind", goto: fork_ab }
+        - { id: leave, text: "Leave it be", goto: t_retreat }
+    fork_ab:
+      image: assets/Tunnels/tunnel-split-A-B.jpg
+      text: "The shaft splits. To the left, a low crawl drops away under fallen timber, miners' spikes scattered in the dirt. To the right, a wide dry tunnel runs straight — a cracked clock-face the size of a cartwheel set into its wall, the hands twitching."
+      options:
+        - { id: a, text: "A — take the low crawl, left", goto: junction_def }
+        - { id: b, text: "B — follow the clock-face tunnel, right", goto: clockface }
+    clockface:
+      image: assets/Tunnels/tunnel-split-A-B.jpg
+      text: "The clock-face tunnel is dry and straight and wrong. Something brass-ribbed unfolds itself from the dark ahead and begins, without hurry, to come apart and toward you. The roof here is held up by rotten timber and habit."
+      options:
+        - { id: back, text: "Back to the fork — take the low road", goto: fork_ab }
+        - { id: press, text: "Press past the thing in the dark", goto: t_collapse }
+    junction_def:
+      image: assets/Tunnels/tunnels-split-D-E-F.jpg
+      text: "The crawl opens onto a flooded junction: three arched mouths over rail tracks that vanish into black water. A burst-mark of scored stone scars the right-hand wall, as if something was unmade against it."
+      riddle: "Low, and with the water."
+      options:
+        - { id: d, text: "D — the left arch, where the water runs down", goto: chamber_gh }
+        - { id: e, text: "E — the center arch", goto: t_lost }
+        - { id: f, text: "F — the right arch, toward the burst-mark", goto: t_collapse }
+    chamber_gh:
+      image: assets/Tunnels/tunnel-split-G-H.jpg
+      text: "The water leads you into a vaulted clockwork chamber. Slow gears turn in the ceiling; two great brass rings are set into the flooded floor, and between them a seam of cold light is held open by a mechanism patient as a heart. This is what keeps the tunnels breathing."
+      options:
+        - { id: jam, text: "Drive a spike into the mechanism that holds the seam", goto: t_sealed }
+        - { id: take, text: "Pry a brass relic loose and go", goto: t_relic }
+        - { id: retreat, text: "Back the way you came", goto: t_retreat }
+    t_sealed:
+      terminal: true
+      outcome: success
+      image: assets/Tunnels/tunnels-stairs.jpg
+      text: "You drive a miner's spike into the mechanism's throat. The seam of light narrows, shrieks, and grinds shut; the chamber stops breathing. The tunnels are not gone — but they are closed now, and the draught of old time with them. You climb out by the stairs as they settle behind you."
+      reward: { engagement: 18, set_flags: [tunnel_sealed], item: { id: iron_key, name: Iron Key } }
+    t_relic:
+      terminal: true
+      outcome: success
+      image: assets/Tunnels/tunnel-split-G-H.jpg
+      text: "You pry a fist of meshed brass from the nearer ring — a true artefact of the works, warm and ticking faintly against your palm. The seam breathes on behind you as you climb out. You have a piece of the thing now; the thing still has the tunnels."
+      reward: { item: { id: old_clock_part, name: Old Clock Part }, awareness: 5 }
+    t_collapse:
+      terminal: true
+      outcome: failure
+      image: assets/Tunnels/tunnel-exit.jpg
+      text: "The wrong way is the easy way, until it isn't. Rotten timber gives all at once; the ceiling comes down in a roar of dust and rail-iron. You throw yourself back and scramble out half-buried, coughing, the tunnel mouth groaning shut behind you. The seam stays open."
+      fail: { hp: -7, awareness: 3 }
+    t_lost:
+      terminal: true
+      outcome: failure
+      image: assets/Tunnels/tunnels-stairs.jpg
+      text: "The center arch forks, and forks again, and the rails run out under black water. You lose hours to the dark before the guttering lantern drives you back the way you came — no nearer the heart of it, and the cold deep in your bones."
+      fail: { stamina: -25, awareness: 4 }
+    t_retreat:
+      terminal: true
+      outcome: failure
+      image: assets/Tunnels/tunnel-entrance-reveal.jpg
+      text: "You climb back to the daylight and the smell of crushed fern. The brass ring ticks behind you, patient as ever. The tunnels are still open; whatever holds them open is still down there. Another day, perhaps — if there are many more."
+      fail: {}

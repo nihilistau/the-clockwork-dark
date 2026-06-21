@@ -551,6 +551,17 @@
       : "";
     const metaHtml = v.meta ? `<p class="challenge-meta">${escapeHtml(v.meta)}</p>` : "";
 
+    // Optional scene art (set-pieces). Relative paths resolve under /design/.
+    const imgUrl = v.image
+      ? (/^(https?:|\/)/.test(v.image) ? v.image : "/design/" + v.image)
+      : "";
+    const imageHtml = imgUrl
+      ? `<div class="challenge-visual"><img src="${escapeHtml(imgUrl)}" alt="" loading="lazy" /></div>`
+      : "";
+    const riddleHtml = v.riddle
+      ? `<p class="challenge-riddle">${escapeHtml(v.riddle)}</p>`
+      : "";
+
     let bodyHtml = "";
     if (v.answerRequired) {
       bodyHtml = `<div class="challenge-answer">An answer is required — speak it in the action line below.</div>`;
@@ -567,7 +578,9 @@
           <span class="overlay-kicker" style="margin:0">${escapeHtml((v.kind || "").replace(/_/g, " "))}</span>
           <span class="challenge-kind">challenge</span>
         </div>
+        ${imageHtml}
         ${v.text ? `<p class="challenge-prompt">${escapeHtml(v.text)}</p>` : ""}
+        ${riddleHtml}
         ${progressHtml}
         ${metaHtml}
         ${bodyHtml}

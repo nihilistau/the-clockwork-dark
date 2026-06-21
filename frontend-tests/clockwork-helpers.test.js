@@ -74,6 +74,24 @@ describe("challengeView", () => {
     expect(v.meta).toContain("3");
   });
 
+  it("decision_tree surfaces the current node's scene art + carved clue (set-pieces)", () => {
+    const v = challengeView({
+      kind: "decision_tree",
+      current: "descend",
+      nodes: {
+        descend: {
+          text: "Down into the dark",
+          image: "assets/Tunnels/tunnel-entrance-reveal.jpg",
+          riddle: "low, and with the water",
+          options: [{ id: "enter", text: "Climb down" }],
+        },
+      },
+    });
+    expect(v.image).toBe("assets/Tunnels/tunnel-entrance-reveal.jpg");
+    expect(v.riddle).toContain("water");
+    expect(v.options[0].id).toBe("enter");
+  });
+
   it("dice_table offers a roll option", () => {
     const v = challengeView({ kind: "dice_table", title: "Fate" });
     expect(v.options[0].id).toBe("roll");

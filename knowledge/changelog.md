@@ -13,6 +13,22 @@ We keep this as a live example: OKFS used *on ourselves*. Append newest at top.
 Each entry is a date, a one-line summary, and the OKFS `bundle_hash` after the
 change (see [[okfs-spec]] and `knowledge/_index.json`).
 
+## 2026-06-22 — the tunnel-mouth set-piece
+The first **set-piece**: a discovery you descend into and *experience*, unlocked
+when the reactive world opens the tunnels ([[the-tunnel-mouth]]).
+- **`engine/game/set_pieces.py`** + `data/set_pieces.yaml` — authored, gated
+  (`requires_flag: tunnels_open` / `requires_discovery: hidden_path`) challenges
+  presented by the `start_set_piece` skill and resolved by the standard challenge
+  engine. The tunnel-mouth is a branching `decision_tree` mapping the art: the
+  brass ring, the A/B fork, the D/E/F rail junction, the G/H clockwork chamber —
+  to sealed (engagement + `tunnel_sealed` + iron key), relic, collapse, lost, or
+  retreat. The carved clue (*low, and with the water*) is the puzzle.
+- **`_apply_effects` gains `set_flags`** so a terminal can durably seal the seam.
+- **Bespoke overlay** — the challenge frame now renders per-node **scene art** and
+  a **parchment riddle** (`clockwork-helpers.js` + `clockwork.css`), matching the
+  tunnel UI mock; new assets served from `Design_files/assets/Tunnels/`.
+- Tests in `tests/test_set_pieces.py` (+ a vitest case). Bundle at 45 concepts.
+
 ## 2026-06-22 — the reactive world
 The Doom Clock's beats now **change the world** instead of only narrating it
 ([[the-reactive-world]]):

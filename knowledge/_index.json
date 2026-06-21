@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "9fc82cb169ee4468",
+  "bundle_hash": "794567a2b8f89a2b",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "708a1e8fe69c152b",
+      "hash": "25344b4de5662d82",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
@@ -89,6 +89,7 @@
         "the-reactive-world",
         "the-tinkers",
         "the-tinkers-questline",
+        "the-tunnel-mouth",
         "the-two-powers",
         "turn-metrics"
       ],
@@ -209,13 +210,15 @@
       "type": "Lore"
     },
     {
-      "hash": "96f68e3dbad93e35",
+      "hash": "27012962efdf2f9e",
       "links": [
         "building-on-the-engine",
         "clockwork-engine",
         "ephemeral-challenges",
         "okfs-spec",
-        "systems-catalog"
+        "systems-catalog",
+        "the-reactive-world",
+        "the-tunnel-mouth"
       ],
       "slug": "extending-the-engine",
       "tags": [
@@ -824,6 +827,27 @@
       "type": "Lore"
     },
     {
+      "hash": "e5be186c9cc5a632",
+      "links": [
+        "beneath-the-tunnels",
+        "ephemeral-challenges",
+        "the-convergence",
+        "the-notice-board",
+        "the-reactive-world"
+      ],
+      "slug": "the-tunnel-mouth",
+      "tags": [
+        "lore",
+        "tunnels",
+        "set-piece",
+        "discovery",
+        "challenge",
+        "doom"
+      ],
+      "title": "The Tunnel Mouth",
+      "type": "Lore"
+    },
+    {
       "hash": "e1858756178599f8",
       "links": [
         "clockwork-architecture",
@@ -859,5 +883,5 @@
       "type": "Metric"
     }
   ],
-  "count": 44
+  "count": 45
 }

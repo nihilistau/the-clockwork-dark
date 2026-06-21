@@ -330,6 +330,9 @@ def _apply_effects(state: GameState, effects: dict[str, Any]) -> dict[str, Any]:
     if "awareness" in effects:
         state.awareness = max(0.0, min(100.0, state.awareness + float(effects["awareness"])))
         applied["awareness"] = state.awareness
+    for flag in effects.get("set_flags", []) or []:
+        state.flags[str(flag)] = True
+        applied.setdefault("flags", []).append(str(flag))
     return applied
 
 
