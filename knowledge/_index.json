@@ -1,5 +1,5 @@
 {
-  "bundle_hash": "1163fa0bcb63de23",
+  "bundle_hash": "be083cb05838dec0",
   "concepts": [
     {
       "hash": "6240301a2a6ea8ec",
@@ -63,7 +63,7 @@
       "type": "Reference"
     },
     {
-      "hash": "3199aa3cda1f3181",
+      "hash": "df0ae249c1a574c0",
       "links": [
         "agent-architecture",
         "beneath-the-tunnels",
