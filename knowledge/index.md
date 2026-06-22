@@ -3,7 +3,7 @@ type: Architecture
 title: The Clockwork Dark — Knowledge Index
 description: Root of the OKFS knowledge bundle; start here and follow the links.
 tags: [index, okfs, clockwork]
-timestamp: 2026-06-21
+timestamp: 2026-06-22
 ---
 
 # The Clockwork Dark — Knowledge Index
@@ -35,6 +35,11 @@ link integrity, and queried by the agents through a confidence cascade.
 - **Run on the networked beast** → [[run-on-the-beast]]
 - **ComfyUI image generation** → [[install-comfyui]]
 - **Voxtral TTS/ASR voice** → [[install-voxtral]]
+
+## The reactive world
+- **How the world changes** → [[the-reactive-world]] · [[the-village-empties]]
+- **Set-pieces** → [[the-tunnel-mouth]] · [[the-first-warden]]
+- **Places & people** → [[the-forge]]
 
 ## Game lore
 - **The world & the wound** → [[the-clockwork-dark]] · [[evil-phases]] · [[the-heartlands]] · [[the-harvest]] · [[beneath-the-tunnels]]

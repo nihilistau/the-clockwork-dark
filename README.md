@@ -9,10 +9,12 @@
 <br/>
 
 ![Python 3.13](https://img.shields.io/badge/python-3.13+-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-359%20passing-2ea44f?logo=pytest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-393%20passing-2ea44f?logo=pytest&logoColor=white)
+![Frontend](https://img.shields.io/badge/frontend-19%20vitest%20·%20Playwright%20e2e-2ea44f?logo=vitest&logoColor=white)
+![CI](https://img.shields.io/badge/CI-pytest%20·%20vitest%20·%20Playwright-2ea44f?logo=githubactions&logoColor=white)
 ![Local-first](https://img.shields.io/badge/local--first-no%20cloud%20required-444)
 ![LLM](https://img.shields.io/badge/LLM-provider--agnostic%20(LM%20Studio)-555)
-![Status](https://img.shields.io/badge/status-v0.7%20·%20PR1–37%20landed-blueviolet)
+![Status](https://img.shields.io/badge/status-v0.9%20·%20PR1–35%20landed-blueviolet)
 ![License](https://img.shields.io/badge/license-private-lightgrey)
 
 </div>
@@ -45,7 +47,25 @@ You are dropped at the forest edge with **no quest thrust upon you**. You can pu
 | ![The clockwork tower](Design_files/assets/art/scenes/clockwork-tower.jpg) | ![Clockwork wheatfield](Design_files/assets/art/scenes/clockwork-wheatfield.jpg) |
 | **The Tower** — assembling on the horizon, gear fitting to gear. It was not there yesterday. | **The Harvest** — cog-harvesters cut the south field into rows too straight for any wind. |
 
-> **▶ Intro cutscene** — [`clockwork-dark-intro-720p.mp4`](Design_files/assets/video/clockwork-dark-intro-720p.mp4) (download / preview). Cutscenes are budgeted to phase-shifts only and skippable after 5s.
+> **▶ Intro cutscene** — [`clockwork-dark-intro-720p.mp4`](Design_files/assets/video/clockwork-dark-intro-720p.mp4) (download / preview). Cutscenes fire on phase-shifts, tunnel entries, and set-piece arrivals — all skippable.
+
+---
+
+## What's new (v0.9)
+
+The world is no longer static scenery — it **reacts**.
+
+- **The reactive world** — Doom Clock beats reshape the map: flags, discoveries, rumors, and NPC relocations fire as beats cross. The tunnels open new ground; villagers flee to the square; the notice board pins the Dark's own bounties.
+- **Set-pieces** — authored, world-gated challenges you descend into: the **tunnel-mouth** (a branching underground decision tree with per-node scene art) and the **warden barrow** at Hollow Hill (learn the older name — or trust the faceless Assistant, who points at the wrong star).
+- **The convergence payoff** — the older name learned in Hollow Hill sharpens the `unmake` reckoning at the tower. The narrative spine is complete: tunnels open → descend → Hollow Hill → name the Hollow Crown → carry the older name → unmake the Dark.
+- **NPCs move with the Dark** — Aldric, Greta, the gate — named villagers relocate as beats fire. Maris does not move.
+- **The Forge** — Brann Holt's smithy, station-gated recipes (warded blade, reforged relic), the mundane counterpart to Maris's oven.
+- **The world map** — a "known reaches" overlay: a hand-painted overview map above a list of every location, the current one lit, visited ones marked.
+- **Cutscenes & dice faces** — tunnel entrance reveal, tunnel descent, Hollow Hill arrival, and forge cutscenes wired; the dice toast shows the exact rolled d20 face as a still.
+- **Reactive notice board** — the board's face changes as the Dark spreads; bounties pin themselves up as their beat-flags fire.
+- **Frontend a11y** — Escape-to-close, focus-trap, focus-restore on all dialogs; `:focus-visible`; `prefers-reduced-motion`.
+- **CI pipeline** — pytest, vitest+jsdom, Playwright e2e on every push.
+- **393 backend tests, 19 vitest tests, 48 OKFS concepts.**
 
 ---
 
@@ -97,9 +117,15 @@ The balance we chase: let the AIs run loose enough to **surprise**; rein them wi
 | **Grounded combat** | Engine-authoritative d20 to-hit, damage dice, fear/exhaustion, fleeing, defending, and *sympathy* — the "unmaking" damage that works against clockwork foes. | `resolve_combat`, `query_combat_state` |
 | **Crafting** | Baking, herbalism, tinkering. Engine consumes inputs, grants output; recipes gate on location & ingredients. | `craft_item`, `list_recipes` |
 | **The Doom Clock** | Turns evil drift into a *story* — arcs `quiet_life → whisper → march → convergence → consumed`, once-only world-sign beats (cog-harvesters, brass scarecrow, vines, the opened tunnels, the tower), and the terminal **consumed** ending if you never push back. **Engagement** (rising when you confront the Dark) slows the tick ~40%, but decays — so you must keep pushing. | `confront_darkness` |
+| **The reactive world** | Doom Clock beats **reshape the map** — each fires declarative effects (flags, discoveries, rumors, NPC relocations) onto `GameState`. Crossing a beat unlocks new ground, displaces villagers, and gates notice-board postings. The world remembers. | `apply_beat_effects` |
+| **Set-pieces** | Authored, world-gated challenges — the **tunnel-mouth** (a branching underground descent) and the **warden barrow** (Hollow Hill — learn the older name or trust the faceless Assistant). Presented by the engine, resolved by the standard challenge system, with per-node scene art and riddles. | `start_set_piece` |
+| **NPC movement** | Named villagers **relocate** as the Dark spreads — Aldric abandons the forest margin, Greta leaves the shrine, the gate thins. `npcs_at` reflects it; displaced villagers are marked and wear road-worn faces. Maris does not move. | `npc_moves` effects |
+| **The Forge** | Brann Holt's smithy off the square — station-gated recipes (mend a blade, forge a warded blade, reforge a relic). The mundane anchor: honest anti-Dark gear, craftable only at the anvil. | `craft_item` (station: forge) |
+| **The convergence** | The approach to the clockwork tower as ordered reckoning beats and the player's **last engine-resolved choice** (`stand` / `unmake` / `walk_away`), adjudicated on d20 + engagement vs a progress-scaled DC. Learning the **older name** in Hollow Hill sharpens the `unmake` roll. | `resolve_reckoning` |
 | **The unreliable Assistant Director** | Each turn, from trust, your struggle, the evil phase, and how recently it last appeared, decides *whether* the Assistant shows up, *with what* (quip / hint / lore / warning / gift), and *how reliably* (low trust → its advice may mislead). Help feels **earned and uncertain**, never owed. | `grant_hint`, `reveal_lore`, `change_form`, `assistant_gift` |
 | **Ephemeral structured challenges** *(the novel bit)* | The Storyteller can **compose** a rule-bound encounter mid-narration — a `skill_gauntlet`, `decision_tree`, `puzzle`, or `dice_table` — by handing the engine a declarative spec validated against a fixed schema. **The AI supplies structure; the engine adjudicates the outcome.** An improvising narrator that can't cheat its own dice. | `start_challenge`, `resolve_challenge` |
-| **Notice board & contracts** | Opt-in work in three tempers: `mundane` (dawn-bread, a tinker's lost cog), `bounty` (the wandering scarecrow), and `anti_dark` (still the harvester — raises engagement). Rewards are engine-granted on genuine completion. | `list_contracts`, `accept_contract`, `complete_contract` |
+| **Notice board & contracts** | Opt-in work in three tempers: `mundane` (dawn-bread, a tinker's lost cog), `bounty` (the wandering scarecrow), and `anti_dark` (still the harvester — raises engagement). The board **reacts to the world** — postings appear as their beat-flags fire, with signpost poster art. Rewards are engine-granted on genuine completion. | `list_contracts`, `accept_contract`, `complete_contract` |
+| **Chance encounters** | Seeded, deterministic rolls on arrival — from the destination edge's `danger_dc` and the evil phase. Yields `none` (calm), a harmless `discovery` (engine-granted reward), or an `ambush` naming a clockwork-tagged foe. | `query_encounter_foes` |
 | **The Oracle** | A slim observability backbone. Every turn — latency, eval score, governance violations, the Assistant's intervention/gift rate, evil drift — is recorded and rolled into aggregates at `/api/metrics`, so pacing (the heart of the dread) stays visible. | `GET /api/metrics` |
 | **Knowledge at runtime** | Agents search the OKFS bundle and pull a single concept's body — progressive disclosure, not 3,000 lines at once. | `query_knowledge`, `read_concept` |
 
@@ -173,11 +199,14 @@ lmstudio:
 ## Running the tests
 
 ```bash
-pytest            # 359 tests, all passing
-pytest -v         # verbose
+pytest                        # 393 backend tests, all passing
+cd frontend-tests && npx vitest run   # 19 vitest/jsdom tests (helpers + dialog a11y)
+cd frontend-tests && npx playwright test  # Playwright e2e smoke (boots Flask, no LLM)
 ```
 
-Mechanics are proven by tests, not vibes — dice distributions, combat math, doom pacing, governance rules, the Assistant Director's contract, OKFS validation, and the content-hash index are all under test.
+**CI runs all three** on every push — see [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+Mechanics are proven by tests, not vibes — dice distributions, combat math, doom pacing, governance rules, the Assistant Director's contract, world effects, set-pieces, NPC moves, forge recipes, a11y dialog behavior, OKFS validation, and the content-hash index are all under test.
 
 ---
 
@@ -187,7 +216,8 @@ Mechanics are proven by tests, not vibes — dice distributions, combat math, do
 clockwork-dark/
 ├── engine/                 # the product — provider-agnostic, scene-agnostic
 │   ├── game/               # hard engine: dice, combat, crafting, doom_clock,
-│   │                       #   evil_ticker, challenges, contracts, state
+│   │                       #   evil_ticker, challenges, contracts, encounters,
+│   │                       #   set_pieces, world_effects, inventory, state
 │   ├── skills/             # @skill registry + builtin tool packs
 │   ├── agents/             # Storyteller, Assistant, AssistantDirector, Evaluator
 │   ├── governance/         # PRE/POST interceptor pipeline
@@ -195,19 +225,25 @@ clockwork-dark/
 │   ├── okfs/               # OKFSBundle loader / validator / hasher
 │   ├── lmstudio/           # OpenAI-compatible transport (+ speculative)
 │   ├── media/              # ComfyUI images, Voxtral voice, cutscenes
+│   ├── training/           # DataCollector (JSONL turn capture) + Scheduler
 │   └── observability/      # the Oracle (turn metrics → /api/metrics)
 ├── content/scenes/clockwork/   # the flagship scene wiring (Flask + Socket.IO)
-├── knowledge/              # OKFS bundle — START AT index.md
+├── knowledge/              # OKFS bundle (48 concepts) — START AT index.md
 │   ├── engine/             # clockwork-engine, agent-architecture, systems-catalog …
 │   ├── architecture/       # clockwork-architecture, ephemeral-challenges …
-│   ├── lore/               # the-clockwork-dark, the-two-powers, doom-arcs …
+│   ├── lore/               # the-clockwork-dark, the-two-powers, doom-arcs,
+│   │                       #   the-reactive-world, the-forge, the-first-warden …
 │   ├── runbooks/           # run-on-the-beast, install-comfyui, install-voxtral
 │   └── _index.json         # content-hashed manifest (build with scripts/)
-├── Design_files/assets/    # wordmark, scene/enemy/item art, cutscene video
+├── Design_files/assets/    # wordmark, scene/enemy/item art, cutscene video,
+│                           #   NPC portraits, dice faces, world-map icons
+├── frontend-tests/         # vitest/jsdom (19 tests) + Playwright e2e smoke
+├── .github/workflows/      # CI: pytest · vitest · Playwright on every push
 ├── config/default.yaml     # all ports, models, paths — never hard-coded
-├── data/                   # economy, bestiary, recipes, contracts, world content
+├── data/                   # economy, bestiary, recipes, contracts, set-pieces,
+│                           #   world content (doom_effects, encounters)
 ├── scripts/                # build_okfs_index.py, start.ps1 …
-├── tests/                  # 359 tests
+├── tests/                  # 393 tests
 └── launcher.py
 ```
 

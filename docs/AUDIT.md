@@ -1,8 +1,12 @@
 # Review & Audit — The Clockwork Dark
 
-> **Latest: 2026-06-22 — full-codebase review/audit (v0.7).** Five-dimension review
+> **Current state (2026-06-22, v0.9):** All items from both audits are resolved —
+> a11y, frontend test harness, backend test gaps, the `tool_dispatcher` receipt bug,
+> CI pipeline. Suite: **393 pytest + 19 vitest + Playwright e2e**, CI green.
+>
+> **Prior: 2026-06-22 — full-codebase review/audit (v0.7).** Five-dimension review
 > (correctness · security · architecture · tests · docs) over the whole engine,
-> every finding verified against the code. Suite: **327 passing**. The prior
+> every finding verified against the code. The prior
 > 2026-06-21 audit (PR1–11 baseline) is retained below.
 
 ## 2026-06-22 — Full review & audit (v0.7)

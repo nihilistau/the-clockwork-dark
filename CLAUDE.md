@@ -4,7 +4,7 @@ title: CLAUDE.md — The Clockwork Dark
 description: How Claude Code (and any coding agent) works in this repo, via the OKFS knowledge system.
 tags: [agent-guide, claude, okfs, onboarding]
 resource: knowledge/index.md
-timestamp: 2026-06-21
+timestamp: 2026-06-22
 ---
 
 # CLAUDE.md — The Clockwork Dark
@@ -46,14 +46,16 @@ then code.** (Why: [[okfs-conventions]].)
 
 ## Status
 Local-first AI RPG: deterministic engine + Storyteller/Assistant agents, OKFS
-knowledge, ComfyUI images + Voxtral voice. **PR1–PR25 landed (v0.5):** live LLM loop
-hardened (streaming, structured output, resilience), governance pipeline +
-SceneRulesEngine wired, OKFS backbone, ComfyUI/Voxtral setup. Next: Phase 5 (depth —
-the unreliable Assistant Director, systems, story arcs) and Phase 6 (observability).
+knowledge (48 concepts), ComfyUI images + Voxtral voice. **PR1–PR35 landed (v0.9):**
+live LLM loop hardened, governance pipeline, the reactive world (Doom beats reshape
+the map — flags, discoveries, NPC moves), set-pieces (tunnel-mouth + warden barrow),
+the Forge, the convergence finale, world map, cutscenes + dice faces, reactive notice
+board, frontend a11y, CI pipeline (pytest 393 + vitest 19 + Playwright e2e).
+Next: live LLM playtest on the beast.
 
 ## Canon IDs (do not rename)
 - Agents: `clockwork_storyteller`, `clockwork_assistant`
-- Locations: `forest_clearing`, `edgewood_square`, `edgewood_bakery`, `tinker_caravan`, `millhaven_gate`
+- Locations: `forest_clearing`, `edgewood_square`, `edgewood_bakery`, `edgewood_forge`, `tinker_caravan`, `millhaven_gate`
 - Evil phases: `dormant`, `stirring`, `spreading`, `consuming`
 
 For non-Claude agents see `AGENTS.md`; for a drop-in onboarding prompt see `prompt.md`.
